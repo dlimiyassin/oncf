@@ -1,0 +1,56 @@
+#navbar{
+  min-height: 10vh;
+  justify-content: space-between;
+}
+
+#img-oncf{
+  left: 20px;
+  bottom: 10px;
+  position: absolute;
+}
+
+#login-oncf{
+  text-decoration: none;
+  color: black;
+}
+
+
+#div1{
+  padding-left: 20px;
+  padding-right: 20px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  min-height: 90vh;
+
+}
+
+#div2{
+  min-height: 90vh;
+}
+
+.rect{
+  width: 734px;
+  height: 90vh;
+}
+
+button{
+  height: 55px;
+}
+ input
+{
+  height: 45px;
+}
+i{
+  margin: 5px;
+}
+
+label{
+  text-align: left;
+}
+
+a{
+  color: black;
+  margin: 4px;
+}

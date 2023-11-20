@@ -1,0 +1,44 @@
+#navbar{
+  min-height: 10vh;
+  justify-content: space-between;
+}
+
+#img-oncf{
+  left: 20px;
+  bottom: 10px;
+  position: absolute;
+}
+
+#login-oncf{
+  text-decoration: none;
+  color: black;
+}
+
+#div1{
+  padding: 10px 50px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  min-height: 90vh;
+
+}
+
+#div2{
+  min-height: 90vh;
+}
+
+.rect{
+  width: 734px;
+  height: 90vh;
+}
+
+a{
+  color: black;
+  margin: 4px;
+}
+
+input
+{
+  height: 35px;
+}

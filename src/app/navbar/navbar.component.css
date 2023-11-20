@@ -1,0 +1,15 @@
+#navbar{
+  min-height: 10vh;
+  justify-content: space-between;
+}
+
+#img-oncf{
+  left: 20px;
+  bottom: 10px;
+  position: absolute;
+}
+
+#login-oncf{
+  text-decoration: none;
+  color: black;
+}
