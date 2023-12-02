@@ -2,37 +2,37 @@
 
 <div class="container-fluid">
   <div class="row">
-     <!-- login form -->
+    <!-- login form -->
     <div class="col-sm-5" id="div1">
-       <h1 class="item" style="color: red;">REGISTER</h1>
-        <!-- <label for="email">Email</label> -->
-       <input type="text" name="first-name" placeholder="First name">
-       <input type="text" name="last-name" placeholder="Last name">
-       <input type="email" name="email" placeholder="Email">
-       <!-- <label for="password">Password</label> -->
-       <input class="item" type="password" name="password" placeholder="Password">
-       <input type="date" name="Date of Birth">
+      <h1 style="color: red;">REGISTER</h1>
+      <!-- <label for="email">Email</label> -->
+      <div class="container">
 
-
-       <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
-        <input type="radio" class="btn-check" name="btnradio" id="btnradio1" autocomplete="off" checked>
-        <label class="btn btn-outline-secondary" for="btnradio1">Male</label>
-
-        <input type="radio" class="btn-check" name="btnradio" id="btnradio2" autocomplete="off">
-        <label class="btn btn-outline-secondary" for="btnradio2">Female</label>
-
-
+      
+      <form>
+        <input type="text" name="firstname" [(ngModel)]="registerObj.firstname" placeholder="First name">
+        <input type="text" name="lastname" [(ngModel)]="registerObj.lastname" placeholder="Last name">
+        <input type="email" name="email" [(ngModel)]="registerObj.email"  placeholder="Email">
+        <!-- <label for="password">Password</label> -->
+        <input  type="password" name="password" [(ngModel)]="registerObj.password" placeholder="Password">
+         
+        <input type="date" name="birthdate" [(ngModel)]="registerObj.birthdate">
+  
+         <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
+          <input type="radio" class="btn-check" name="gender" [(ngModel)]="registerObj.gender" id="btnradio1" autocomplete="off"  (ngModelChange)="registerObj.gender='Male'">
+          <label class="btn btn-outline-secondary" for="btnradio1">Male</label>
+  
+          <input type="radio" class="btn-check" name="gender" [(ngModel)]="registerObj.gender" id="btnradio2" autocomplete="off" (ngModelChange)="registerObj.gender='Female'">
+          <label class="btn btn-outline-secondary" for="btnradio2">Female</label>
+        </div>
+      
+        <button (click)="onRegister()" class="item btn btn-dark">Join Us<i class="bi bi-arrow-right"></i></button>
+      </form>
       </div>
-
-
-       <button class="item btn btn-dark">Sign In<i class="bi bi-arrow-right"></i></button>
-       <h6 class="item">Not a member ?<a href="#">Create an account</a></h6>
     </div>
     <!-- login photo -->
     <div class="col-sm-7" id="div2">
-        <img class="rect" src="/../assets/images/Rectangle 11.png" alt="" >
+      <img class="rect" src="/../assets/images/Rectangle 11.png" alt="">
     </div>
   </div>
 </div>
-
-

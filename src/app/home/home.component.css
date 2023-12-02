@@ -1,6 +1,7 @@
 
 #navbar{
   min-height: 10vh;
+    color: #ffffff;
   justify-content: space-between;
 }
 
@@ -28,24 +29,24 @@
 }
 
 #login{
-width: 150px;
+width: 220px;
+height: 50px;
 color: #fff;
 background-color: #F0900A;
-height: 40px;
 top: 80px;
-left: 1100px;
+left: 1000px;
 border-radius: 45.5px;
 position: absolute;
 font-weight: bold;
 }
 
 #register{
-  width: 150px;
-  height: 40px;
+  width: 220px;
+  height: 50px;
   background-color: #fff;
   color: black;
   top: 80px;
-  left: 940px;
+  left: 740px;
   border-radius: 45.5px;
   position: absolute;
   font-weight: bold;
@@ -54,6 +55,7 @@ font-weight: bold;
 h1{
   font-family: Inter, Helvetica, sans-serif;
   font-weight: bold;
+  font-size: 86px;
 }
 span{
   color: #F0900A;

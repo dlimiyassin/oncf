@@ -40,6 +40,7 @@ button{
 }
  input
 {
+  margin-top: 30px;
   height: 45px;
 }
 i{
@@ -53,4 +54,19 @@ label{
 a{
   color: black;
   margin: 4px;
+}
+h2.badge-style {
+  display: inline-block;
+  padding: 12px 24px;
+  padding-left: 150px;
+  padding-right: 150px;
+  font-size: 1rem;
+  font-weight: 500;
+  background-color: #000000;
+  color: #e8e8e8;
+  border-radius: 12px;
+  margin-bottom: 10px;
+}
+.card-body {
+  margin-top: 50px;
 }

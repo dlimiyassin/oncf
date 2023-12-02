@@ -1,15 +1,37 @@
 #navbar{
   min-height: 10vh;
+  box-shadow: 0 6px 6px rgba(0, 0, 0, 0.1);
+    background-color: #ffffff;
+      /* Set the background color of the navbar */
+      padding: 10px;
+      /* Add some padding for better visibility of the shadow */
   justify-content: space-between;
 }
-
+#navbar input {
+  height: auto;
+  width: auto;
+  justify-content: space-between;
+}
 #img-oncf{
   left: 20px;
-  bottom: 10px;
-  position: absolute;
+    bottom: 10px;
+    position: absolute;
 }
 
 #login-oncf{
-  text-decoration: none;
+  text-decoration: dashed;
   color: black;
+  font-weight: bold;
+  
+}
+#logout-oncf {
+  text-decoration: dashed;
+  color: black;
+  font-weight: bold;
+}
+
+#search{
+  height: auto;
+  width: 50;
+    justify-content: space-between;
 }

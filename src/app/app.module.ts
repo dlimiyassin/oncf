@@ -6,8 +6,15 @@ import { LoginComponent } from './login/login.component';
 import { AppRoutingModule } from './app-routing.module';
 import { RegisterComponent } from './register/register.component';
 import { NavbarComponent } from './navbar/navbar.component';
-
-
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
+import { DashboardComponent } from './dashboard/dashboard.component';
+import { SidebareComponent } from './sidebare/sidebare.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MaterialModule } from './material/material.module';
+import { VerificationEmailComponent } from './email-verification/verification-message/verification-email.component';
+import { SuccessMessageComponent } from './email-verification/success-message/success-message.component';
+import { FailMessageComponent } from './email-verification/fail-message/fail-message.component';
 
 @NgModule({
   declarations: [
@@ -15,13 +22,23 @@ import { NavbarComponent } from './navbar/navbar.component';
     HomeComponent,
     RegisterComponent,
     NavbarComponent,
-    LoginComponent
+    LoginComponent,
+    DashboardComponent,
+    SidebareComponent,
+    VerificationEmailComponent,
+    SuccessMessageComponent,
+    FailMessageComponent,
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    ReactiveFormsModule,
+    FormsModule,
+    HttpClientModule,
+    BrowserAnimationsModule,
+    MaterialModule,
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

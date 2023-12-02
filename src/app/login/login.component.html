@@ -4,20 +4,27 @@
     <div class="row">
        <!-- login form -->
       <div class="col-sm-5" id="div1">
-         <h1 class="item" style="color: red;">LOGIN</h1>
-         <button class="item btn btn-danger"><i class="bi bi-google"></i>Sign With Google</button>
-         <button class="item btn btn-dark"><i class="bi bi-apple"></i>Sign With Apple</button>
-          <hr>
-          <!-- <label for="email">Email</label> -->
-         <input class="item" type="text" name="email" placeholder="Email">
-         <!-- <label for="password">Password</label> -->
-         <input class="item" type="password" name="password" placeholder="Password  ">
-         <button class="item btn btn-dark">Sign In<i class="bi bi-arrow-right"></i></button>
-         <h6 class="item">Not a member ?<a href="#">Create an account</a></h6>
+        <div class="card-body">
+          <h2 class="badge-style" >Login Page</h2>
+          <form >
+            <div class="mb-3">
+              <input type="email" class="form-control" name="email" [(ngModel)]="loginObj.email"  placeholder="Email">
+            </div>
+            <div class="mb-3">
+              <input type="password" class="form-control" name="password" [(ngModel)]="loginObj.password"  placeholder="password">
+            </div>
+                  <!-- Display error message -->
+                  <div *ngIf="errorMessage" class="alert alert-danger mt-3">
+                    {{ errorMessage }}
+                  </div>
+            <button (click)="onLogin()" class="item btn btn-dark">Sign In<i class="bi bi-arrow-right"></i></button>
+          </form>
+          <h6 class="item">Not a member ?<a href="#">Create an account</a></h6>
+        </div>
       </div>
       <!-- login photo -->
       <div class="col-sm-7" id="div2">
-          <img class="rect" src="/../assets/images/Rectangle 10.png" alt="" >
+          <img class="rect img-fluid" src="/../assets/images/Rectangle 10.png" alt="" >
       </div>
     </div>
   </div>
