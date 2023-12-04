@@ -19,6 +19,7 @@ import { FailMessageComponent } from './email-verification/fail-message/fail-mes
 import { AjoutEmployeComponent } from './ajout-employe/ajout-employe.component';
 import { UpdateEmployeComponent } from './update-employe/update-employe.component';
 import { EmployeComponent } from './employe/employe.component';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [
@@ -44,6 +45,7 @@ import { EmployeComponent } from './employe/employe.component';
     HttpClientModule,
     BrowserAnimationsModule,
     MaterialModule,
+    NgbModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
