@@ -8,9 +8,10 @@
   justify-content: space-between;
 }
 #navbar input {
-  height: auto;
-  width: auto;
-  justify-content: space-between;
+
+  width: 600px;
+  padding-top: 5px;
+  padding-bottom: 5px;
 }
 #img-oncf{
   left: 20px;
@@ -22,7 +23,7 @@
   text-decoration: dashed;
   color: black;
   font-weight: bold;
-  
+
 }
 #logout-oncf {
   text-decoration: dashed;
@@ -31,7 +32,16 @@
 }
 
 #search{
-  height: auto;
-  width: 50;
-    justify-content: space-between;
+  position: absolute;
+  left: 400px;
+
+}
+.bi-person-circle{
+   margin-left: 6px;
+}
+
+.row{
+  position: absolute;
+  left: 1150px;
+
 }

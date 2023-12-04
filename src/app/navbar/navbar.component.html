@@ -14,13 +14,19 @@
   </div>
 
 
-<div *ngIf="loggedIn" class="row">
-  <div class="col">
-    <a routerLink="#" class="nav-link">{{ userInfos.sub }}</a>
-  </div>
 
-  <div class="col">
-    <a *ngIf="loggedIn" (click)="handleLogout()" id="logout-oncf" routerLink="/">logout</a>
+<div *ngIf="loggedIn" class="row">
+
+  <div class="dropdown col">
+    <i class="bi bi-bell"></i>
+    <i class="bi bi-person-circle"></i>
+    <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+      Profile
+    </button>
+    <ul class="dropdown-menu">
+      <li><a class="dropdown-item" href="#">Edit profile</a></li>
+      <li> <a class="dropdown-item" (click)="handleLogout()" id="logout-oncf" routerLink="/">logout</a></li>
+    </ul>
   </div>
 </div>
   </div>

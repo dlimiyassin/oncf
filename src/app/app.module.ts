@@ -15,6 +15,9 @@ import { MaterialModule } from './material/material.module';
 import { VerificationEmailComponent } from './email-verification/verification-message/verification-email.component';
 import { SuccessMessageComponent } from './email-verification/success-message/success-message.component';
 import { FailMessageComponent } from './email-verification/fail-message/fail-message.component';
+import { AjoutEmployeComponent } from './ajout-employe/ajout-employe.component';
+import { UpdateEmployeComponent } from './update-employe/update-employe.component';
+import { EmployeComponent } from './employe/employe.component';
 
 @NgModule({
   declarations: [
@@ -28,6 +31,9 @@ import { FailMessageComponent } from './email-verification/fail-message/fail-mes
     VerificationEmailComponent,
     SuccessMessageComponent,
     FailMessageComponent,
+    AjoutEmployeComponent,
+    UpdateEmployeComponent,
+    EmployeComponent,
   ],
   imports: [
     BrowserModule,

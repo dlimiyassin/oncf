@@ -1,0 +1,26 @@
+<div class="m-5">
+  <button class="btn btn-info m-3" routerLink="/ajouter">Ajouter un Etudiant:</button>
+  <div class="card">
+      <div class="card-header">Liste  des étudiants:</div>
+      <div class="card-body">
+        <table class="table">
+          <thead>
+            <th>Nom</th><th>Prénom</th><th>Cne</th><th>Modifier</th><th>Supprimer</th>
+          </thead>
+          <tbody>
+            <tr *ngFor="let e of employes">
+              <td>{{e.lastname}}</td>
+              <td>{{e.firstname}}</td>
+              <td>{{e.id}}</td>
+              <td><button class="btn btn-success" routerLink="/modifier/{{e.id}}"><i class="bi bi-pencil"></i></button></td>
+              <td><button class="btn btn-danger" (click)="supprimerEmploye(e.id)"><i class="bi bi-trash"></i></button></td>
+            </tr>
+          </tbody>
+        </table>
+    </div>
+    </div>
+  </div>
+
+
+
+
