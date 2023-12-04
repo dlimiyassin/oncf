@@ -9,8 +9,8 @@
 }
 #navbar input {
   width: 600px;
-    padding-top: 5px;
-    padding-bottom: 5px;
+  padding-top: 5px;
+  padding-bottom: 5px;
 }
 #img-oncf{
   left: 20px;
@@ -22,7 +22,7 @@
   text-decoration: dashed;
   color: black;
   font-weight: bold;
-  
+
 }
 #logout-oncf {
   text-decoration: dashed;
@@ -31,13 +31,16 @@
 }
 
 #search{
-  padding-top: 10px;
-  padding-bottom: 10px;
+
   position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
+  left: 400px;
+
 }
-span {
-  font-size: x-small;
-  font-weight: 500;
+.bi-person-circle{
+   margin-left: 6px;
+}
+
+.row{
+  position: absolute;
+  left: 1150px;
 }

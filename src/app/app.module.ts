@@ -15,7 +15,11 @@ import { MaterialModule } from './material/material.module';
 import { VerificationEmailComponent } from './email-verification/verification-message/verification-email.component';
 import { SuccessMessageComponent } from './email-verification/success-message/success-message.component';
 import { FailMessageComponent } from './email-verification/fail-message/fail-message.component';
-import { MatMenuModule } from '@angular/material/menu';
+
+import { AjoutEmployeComponent } from './ajout-employe/ajout-employe.component';
+import { UpdateEmployeComponent } from './update-employe/update-employe.component';
+import { EmployeComponent } from './employe/employe.component';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -28,6 +32,9 @@ import { MatMenuModule } from '@angular/material/menu';
     VerificationEmailComponent,
     SuccessMessageComponent,
     FailMessageComponent,
+    AjoutEmployeComponent,
+    UpdateEmployeComponent,
+    EmployeComponent,
   ],
   imports: [
     BrowserModule,
@@ -37,7 +44,6 @@ import { MatMenuModule } from '@angular/material/menu';
     HttpClientModule,
     BrowserAnimationsModule,
     MaterialModule,
-    MatMenuModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
