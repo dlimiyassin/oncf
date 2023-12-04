@@ -15,7 +15,7 @@ import { MaterialModule } from './material/material.module';
 import { VerificationEmailComponent } from './email-verification/verification-message/verification-email.component';
 import { SuccessMessageComponent } from './email-verification/success-message/success-message.component';
 import { FailMessageComponent } from './email-verification/fail-message/fail-message.component';
-
+import { MatMenuModule } from '@angular/material/menu';
 @NgModule({
   declarations: [
     AppComponent,
@@ -37,6 +37,7 @@ import { FailMessageComponent } from './email-verification/fail-message/fail-mes
     HttpClientModule,
     BrowserAnimationsModule,
     MaterialModule,
+    MatMenuModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

@@ -3,25 +3,40 @@
     <a class="navbar-brand" href="/">
       <img id="img-oncf" src="../assets/images/Rectangle 9.png" alt="" width="100" height="50">
     </a>
-<div *ngIf="loggedIn" id="search" class="rounded nav-item">
-  <input type="search" class="form-control rounded" placeholder="Search" aria-label="Search"
-    aria-describedby="search-addon" />
+    <div *ngIf="loggedIn" id="search" class="rounded nav-item">
+      <input type="search" class="form-control rounded" placeholder="Search" aria-label="Search"
+        aria-describedby="search-addon" />
+    </div>
+
+
+    <div *ngIf="!loggedIn" class="nav-item">
+      <a id="login-oncf" routerLink="/login">login</a>
+    </div>
+
+
+<div class="dropdown">
+  <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Dropdown button
+  </button>
+  <ul class="dropdown-menu">
+    <li><a class="dropdown-item" href="#">Action</a></li>
+    <li><a class="dropdown-item" href="#">Another action</a></li>
+    <li><a class="dropdown-item" href="#">Something else here</a></li>
+  </ul>
 </div>
 
 
-  <div *ngIf="!loggedIn" class="nav-item">
-    <a  id="login-oncf" routerLink="/login">login</a>
-  </div>
 
-
-<div *ngIf="loggedIn" class="row">
+    <!-- 
+    <div *ngIf="loggedIn" class="row">
   <div class="col">
     <a routerLink="#" class="nav-link">{{ userInfos.sub }}</a>
   </div>
-
   <div class="col">
     <a *ngIf="loggedIn" (click)="handleLogout()" id="logout-oncf" routerLink="/">logout</a>
   </div>
 </div>
+  -->
+
   </div>
-  </nav>
+</nav>
