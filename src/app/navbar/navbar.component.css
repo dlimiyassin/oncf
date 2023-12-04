@@ -5,8 +5,9 @@
       /* Set the background color of the navbar */
       padding: 10px;
       /* Add some padding for better visibility of the shadow */
-  justify-content: space-between;
+
 }
+
 #login-oncf{
   text-decoration: dashed;
   color: black;
@@ -48,3 +49,4 @@
   left: 1130px;
 
 } */
+
