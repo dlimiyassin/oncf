@@ -21,8 +21,6 @@ const routes: Routes = [
   { path: 'dashboard', component: DashboardComponent },
   { path : "ajouter", component : AjoutEmployeComponent},
   { path : "modifier/:id", component : UpdateEmployeComponent},
-  { path : "employe" , component : EmployeComponent}
-
 ];
 
 @NgModule({

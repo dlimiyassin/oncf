@@ -7,18 +7,6 @@
       /* Add some padding for better visibility of the shadow */
   justify-content: space-between;
 }
-#navbar input {
-
-  width: 600px;
-  padding-top: 5px;
-  padding-bottom: 5px;
-}
-#img-oncf{
-  left: 20px;
-    bottom: 10px;
-    position: absolute;
-}
-
 #login-oncf{
   text-decoration: dashed;
   color: black;
@@ -30,18 +18,33 @@
   color: black;
   font-weight: bold;
 }
-
 #search{
-  position: absolute;
-  left: 400px;
-
+  width: 550px;
+  margin: auto;
 }
+
+
+/* #navbar input {
+
+  width: 600px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+#img-oncf{
+  left: 20px;
+    bottom: 10px;
+    position: absolute;
+}
+
+
+
+
 .bi-person-circle{
    margin-left: 6px;
 }
 
 .row{
   position: absolute;
-  left: 1150px;
+  left: 1130px;
 
-}
+} */
