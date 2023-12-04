@@ -1,15 +1,15 @@
 import { Component } from '@angular/core';
 import { Employe } from '../employe/employe.model';
-import { EmployeService } from '../employe.service';
+import { EmployeService } from '../services/employe.service';
 import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-update-employe',
   templateUrl: './update-employe.component.html',
-  styleUrls: ['./update-employe.component.css']
+  styleUrls: ['./update-employe.component.css'],
 })
 export class UpdateEmployeComponent {
-  employe! : Employe;
+  employe!: Employe;
 
   constructor(
     private employeService: EmployeService,

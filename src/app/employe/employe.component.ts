@@ -1,24 +1,26 @@
 import { Component } from '@angular/core';
 import { Employe } from './employe.model';
-import { EmployeService } from '../employe.service';
+import { EmployeService } from '../services/employe.service';
 
 @Component({
   selector: 'app-employe',
   templateUrl: './employe.component.html',
-  styleUrls: ['./employe.component.css']
+  styleUrls: ['./employe.component.css'],
 })
 export class EmployeComponent {
-  employes : Employe[]=[];
+  employes: Employe[] = [];
 
-  constructor(private employeService : EmployeService){}
+  constructor(private employeService: EmployeService) {}
 
-     ngOnInit(): void {
-       this.employeService.getAllEmployes().subscribe(employes => this.employes=employes)
-     }
+  ngOnInit(): void {
+    this.employeService
+      .getAllEmployes()
+      .subscribe((employes) => (this.employes = employes));
+  }
 
-     supprimerEmploye(id : number){
-      this.employeService.deleteEmploye(id).subscribe(()=>{
-        this.employes = this.employes.filter(employe => employe.id !== id);
-      })
-     }
+  supprimerEmploye(id: number) {
+    this.employeService.deleteEmploye(id).subscribe(() => {
+      this.employes = this.employes.filter((employe) => employe.id !== id);
+    });
+  }
 }

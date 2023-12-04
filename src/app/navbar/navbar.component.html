@@ -1,6 +1,6 @@
 <nav class="navbar " id="navbar">
   <div class="container">
-    <a class="navbar-brand" href="/">
+    <a class="navbar-brand" href="#">
       <img id="img-oncf" src="../assets/images/Rectangle 9.png" alt="" width="100" height="50">
     </a>
     <div *ngIf="loggedIn" id="search" class="rounded nav-item">
@@ -13,22 +13,21 @@
       <a id="login-oncf" routerLink="/login">login</a>
     </div>
 
-<div *ngIf="loggedIn" class="row">
+    <div *ngIf="loggedIn" class="row">
 
-  <div class="dropdown col">
-    <i class="bi bi-bell"></i>
-    <i class="bi bi-person-circle"></i>
-    <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-      Profile
-    </button>
-    <ul class="dropdown-menu">
-      <li><a class="dropdown-item" href="#">Edit profile</a></li>
-      <li> <a class="dropdown-item" (click)="handleLogout()" id="logout-oncf" routerLink="/">logout</a></li>
-    </ul>
+      <div class="dropdown col">
+        <i class="bi bi-bell"></i>
+        <i class="bi bi-person-circle"></i>
+        <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+          Profile
+        </button>
+        <ul class="dropdown-menu">
+          <li><a class="dropdown-item" href="#">Edit profile</a></li>
+          <li> <a class="dropdown-item" (click)="handleLogout()" id="logout-oncf" routerLink="/">logout</a></li>
+        </ul>
 
-  </div>
-</div>
-  -->
+      </div>
+    </div>
 
   </div>
 </nav>
