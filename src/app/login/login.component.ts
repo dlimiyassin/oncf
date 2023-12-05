@@ -3,11 +3,13 @@ import { AuthService } from '../services/auth.service';
 import { Router } from '@angular/router';
 import { TokenService } from '../services/token.service';
 import { AccountService } from '../services/account.service';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css'],
+  providers : [DatePipe],
 })
 export class LoginComponent implements OnInit {
   loginObj: any = {

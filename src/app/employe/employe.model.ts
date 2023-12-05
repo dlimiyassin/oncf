@@ -3,11 +3,11 @@ export class Employe {
   firstname: string;
   lastname: string;
   email: string;
-  date_naissance: string; // Assuming you want to represent LocalDate as a string
+  date_naissance: Date | null; // Assuming you want to represent LocalDate as a string
   performanceComment: string;
 
   constructor( id: number, firstname: string, lastname: string,email: string,
-    date_naissance: string, performanceComment: string) {
+    date_naissance: Date, performanceComment: string) {
     this.id = id;
     this.firstname = firstname;
     this.lastname = lastname;

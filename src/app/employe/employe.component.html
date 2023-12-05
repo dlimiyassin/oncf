@@ -1,5 +1,6 @@
 <div class="m-5">
-  <button class="btn btn-info m-3" routerLink="/ajouter">Ajouter un Etudiant:</button>
+  <button class="btn btn-info m-3" data-bs-toggle="modal"
+  data-bs-target="#exampleModal">Ajouter un Etudiant:</button>
   <div class="card">
       <div class="card-header">Liste  des étudiants:</div>
       <div class="card-body">
@@ -20,6 +21,50 @@
     </div>
     </div>
   </div>
+
+
+  <!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Ajouter</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+            <form (submit)="ajouterEmploye()">
+              <div class="mb-2">
+                <label for="lastname" class="form-label">Nom:</label>
+                <input type="text" class="form-control" id="lastname" [(ngModel)]="newEmploye.lastname" name="lastname" required>
+              </div>
+              <div class="mb-2">
+                <label for="firstname" class="form-label">Prénom:</label>
+                <input type="text" class="form-control" id="firstname" [(ngModel)]="newEmploye.firstname" name="firstname" required>
+              </div>
+              <div class="mb-2">
+                <label for="email" class="form-label">Email:</label>
+                <input type="email" class="form-control" id="email" [(ngModel)]="newEmploye.email" name="email" required>
+              </div>
+              <div class="mb-2">
+                <label for="date_naissance" class="form-label">Date de naissance :</label>
+                <input type="date" class="form-control" id="date_naissance" [(ngModel)]="newEmploye.date_naissance" name="date_naissance" required>
+              </div>
+              <div class="mb-2">
+                <label for="performanceComment" class="form-label"> Performance:</label>
+                <input type="text" class="form-control" id="performanceComment" [(ngModel)]="newEmploye.performanceComment" name="performanceComment" required>
+              </div>
+
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-primary">Ajouter</button>
+              </div>
+            </form>
+      </div>
+
+    </div>
+  </div>
+</div>
+
 
 
 

@@ -7,9 +7,8 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { VerificationEmailComponent } from './email-verification/verification-message/verification-email.component';
 import { SuccessMessageComponent } from './email-verification/success-message/success-message.component';
 import { FailMessageComponent } from './email-verification/fail-message/fail-message.component';
-import { AjoutEmployeComponent } from './ajout-employe/ajout-employe.component';
 import { UpdateEmployeComponent } from './update-employe/update-employe.component';
-import { EmployeComponent } from './employe/employe.component';
+
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -19,7 +18,6 @@ const routes: Routes = [
   { path: 'success', component: SuccessMessageComponent},
   { path: 'fail', component: FailMessageComponent},
   { path: 'dashboard', component: DashboardComponent },
-  { path : "ajouter", component : AjoutEmployeComponent},
   { path : "modifier/:id", component : UpdateEmployeComponent},
 ];
 
