@@ -1,24 +1,27 @@
 import { Component } from '@angular/core';
 import { Employe } from './employe.model';
-import { EmployeService } from '../employe.service';
+
 import { Router } from '@angular/router';
 import { DatePipe } from '@angular/common';
+import { EmployeService } from '../services/employe.service';
 
 @Component({
   selector: 'app-employe',
   templateUrl: './employe.component.html',
-  styleUrls: ['./employe.component.css']
+  styleUrls: ['./employe.component.css'],
 })
 export class EmployeComponent {
-  employes : Employe[]=[];
+  employes: Employe[] = [];
 
   newEmploye : Employe = {id:0,firstname:'',lastname:'',email:'',date_naissance: new Date(),performanceComment:''};
 
   constructor(private employeService : EmployeService, private router: Router, private datePipe: DatePipe){}
+  ngOnInit(): void {
+    this.employeService
+      .getAllEmployes()
+      .subscribe((employes) => (this.employes = employes));
+  }
 
-     ngOnInit(): void {
-       this.employeService.getAllEmployes().subscribe(employes => this.employes=employes)
-     }
 
      supprimerEmploye(id : number){
       this.employeService.deleteEmploye(id).subscribe(()=>{
@@ -41,5 +44,6 @@ export class EmployeComponent {
 
       })
     }
+
 
 }
