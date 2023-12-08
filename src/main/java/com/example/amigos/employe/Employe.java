@@ -6,6 +6,7 @@
     import lombok.Data;
     import lombok.NoArgsConstructor;
 
+    import java.time.LocalDate;
     import java.util.Date;
 
 
@@ -17,11 +18,16 @@
         @Id
         @GeneratedValue
         private Long id;
+
+        private String cni;
         private  String firstname;
         private String lastname;
         private String email;
         @Column(name = "date_naissance")
-        private Date birthDate;
+        private LocalDate birthDate;
+        private int rendement;
+        private int objectif;
+        private int atteint;
         private String performanceComment;
 
     }
