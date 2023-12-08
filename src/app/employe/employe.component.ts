@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
-import { Employe } from './employe.model';
-
-import { Router } from '@angular/router';
-import { DatePipe } from '@angular/common';
+import { Employe } from '../models/employe.model';
 import { EmployeService } from '../services/employe.service';
+import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { Router } from '@angular/router';
+import { NgForm } from '@angular/forms';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-employe',
@@ -12,38 +13,89 @@ import { EmployeService } from '../services/employe.service';
 })
 export class EmployeComponent {
   employes: Employe[] = [];
+  employe: Employe = {
+    id: 0,
+    cni: '',
+    firstname: '',
+    lastname: '',
+    email: '',
+    birthDate: new Date(),
+    rendement: 0,
+    objectif: 0,
+    atteint: 0,
+    performanceComment: '',
+  };
+  newEmploye: Employe = {
+    id: 0,
+    cni: '',
+    firstname: '',
+    lastname: '',
+    email: '',
+    birthDate: new Date(),
+    rendement: 0,
+    objectif: 0,
+    atteint: 0,
+    performanceComment: '',
+  };
 
-  newEmploye : Employe = {id:0,firstname:'',lastname:'',email:'',date_naissance: new Date(),performanceComment:''};
-
-  constructor(private employeService : EmployeService, private router: Router, private datePipe: DatePipe){}
+  constructor(
+    private employeService: EmployeService,
+    private router: Router,
+    private datePipe: DatePipe,
+    private modalService: NgbModal
+  ) {}
   ngOnInit(): void {
     this.employeService
       .getAllEmployes()
       .subscribe((employes) => (this.employes = employes));
   }
 
+  supprimerEmploye(id: number) {
+    this.employeService.deleteEmploye(id).subscribe(() => {
+      this.employes = this.employes.filter((employe) => employe.id !== id);
+    });
+  }
 
-     supprimerEmploye(id : number){
-      this.employeService.deleteEmploye(id).subscribe(()=>{
-        this.employes = this.employes.filter(employe => employe.id !== id);
-      })
-     }
+  ajouterEmploye() {
+    this.employeService.createEmploye(this.newEmploye).subscribe(() => {
+      this.newEmploye = {
+        id: 0,
+        cni: '',
+        firstname: '',
+        lastname: '',
+        email: '',
+        birthDate: new Date(),
+        rendement: 0,
+        objectif: 0,
+        atteint: 0,
+        performanceComment: '',
+      };
+      // Mettre à jour la liste d'employés après l'ajout réussi
+      this.employeService
+        .getAllEmployes()
+        .subscribe((employes) => (this.employes = employes));
+    });
+  }
 
-     ajouterEmploye(){
-      // const dateNaissanceFormatted = this.datePipe.transform(this.newEmploye.date_naissance, 'yyyy-MM-dd');
-      // {{ debugger }}
-      // // Mettre à jour la date de newEmploye avec la date formatée
-      // this.newEmploye.date_naissance = dateNaissanceFormatted? new Date(dateNaissanceFormatted) : null;
+  modifierEmploye() {
+    this.employeService.updateEmploye(this.employe).subscribe(() => {
+      this.employeService.getAllEmployes().subscribe((employes) => {
+        this.employes = employes;
+        this.modalService.activeInstances.closed;
+      });
+    });
+  }
 
+  afficherDetailsEmploye(id: number) {
+    this.employeService.getEmployeById(id).subscribe((employe) => {
+      this.employe = employe;
+      // Ouvrir la modal de modification
+      // this.modalService.open('modifierEmployeModal');
+      // this.modalRef = this.modalService.open(this.modifierEmployeMod, { size: 'lg' });
+    });
+  }
 
-      this.employeService.createEmploye(this.newEmploye).subscribe(()=>{
-        this.newEmploye ={id:0,firstname:'',lastname:'',email:'',date_naissance: new Date(),performanceComment:''};
-          // Mettre à jour la liste d'employés après l'ajout réussi
-        this.employeService.getAllEmployes().subscribe(employes => this.employes = employes);
-
-
-      })
-    }
-
-
+  formatDate(date: Date | null): string {
+    return this.datePipe.transform(date, 'yyyy-MM-dd') ?? '';
+  }
 }

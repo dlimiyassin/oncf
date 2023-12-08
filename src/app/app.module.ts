@@ -7,18 +7,18 @@ import { AppRoutingModule } from './app-routing.module';
 import { RegisterComponent } from './register/register.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { SidebareComponent } from './sidebare/sidebare.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MaterialModule } from './material/material.module';
 import { VerificationEmailComponent } from './email-verification/verification-message/verification-email.component';
 import { SuccessMessageComponent } from './email-verification/success-message/success-message.component';
 import { FailMessageComponent } from './email-verification/fail-message/fail-message.component';
-import { UpdateEmployeComponent } from './update-employe/update-employe.component';
 import { EmployeComponent } from './employe/employe.component';
 import { DatePipe } from '@angular/common';
-
+import { ProfileComponent } from './profile/profile.component';
+import { LocationStrategy, HashLocationStrategy } from '@angular/common';
+import { JwtInterceptor } from './services/jwt.interceptor';
 @NgModule({
   declarations: [
     AppComponent,
@@ -31,8 +31,8 @@ import { DatePipe } from '@angular/common';
     VerificationEmailComponent,
     SuccessMessageComponent,
     FailMessageComponent,
-    UpdateEmployeComponent,
     EmployeComponent,
+    ProfileComponent,
   ],
   imports: [
     BrowserModule,
@@ -41,9 +41,19 @@ import { DatePipe } from '@angular/common';
     FormsModule,
     HttpClientModule,
     BrowserAnimationsModule,
-    MaterialModule,
   ],
-  providers: [DatePipe],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: JwtInterceptor,
+      multi: true,
+    },
+    { 
+      provide: LocationStrategy, 
+      useClass: HashLocationStrategy
+    },
+      DatePipe,
+    ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

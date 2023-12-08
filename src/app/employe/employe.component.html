@@ -1,23 +1,31 @@
 <div class="m-5">
-  <button class="btn btn-info m-3" data-bs-toggle="modal"
-  data-bs-target="#exampleModal">Ajouter un Etudiant:</button>
+  <button class="btn btn-info m-3" data-bs-toggle="modal" data-bs-target="#exampleModal">Ajouter un Etudiant:</button>
   <div class="card">
     <div class="card-header">Liste des étudiants:</div>
     <div class="card-body">
       <table class="table">
         <thead>
-          <th>id</th>
+          <th>cni</th>
           <th>Prénom</th>
           <th>Nom</th>
+          <th>birth date</th>
+          <th>rendement</th>
+          <th>objectif</th>
+          <th>atteint</th>
           <th>Modifier</th>
           <th>Supprimer</th>
         </thead>
         <tbody>
           <tr *ngFor="let e of employes">
-            <td>{{e.id}}</td>
+            <td>{{e.cni}}</td>
             <td>{{e.lastname}}</td>
             <td>{{e.firstname}}</td>
-            <td><button class="btn btn-success" routerLink="/modifier/{{e.id}}"><i class="bi bi-pencil"></i></button>
+            <td>{{e.birthDate}}</td>
+            <td>{{e.rendement}}</td>
+            <td>{{e.objectif}}</td>
+            <td>{{e.atteint}}%</td>
+            <td><button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#modifierEmployeModal"
+                (click)="afficherDetailsEmploye(e.id)"><i class="bi bi-pencil"></i></button>
             </td>
             <td><button class="btn btn-danger" (click)="supprimerEmploye(e.id)"><i class="bi bi-trash"></i></button>
             </td>
@@ -27,44 +35,109 @@
     </div>
   </div>
 
-  <!-- Modal -->
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h1 class="modal-title fs-5" id="exampleModalLabel">Ajouter</h1>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-            <form (submit)="ajouterEmploye()">
-              <div class="mb-2">
-                <label for="lastname" class="form-label">Nom:</label>
-                <input type="text" class="form-control" id="lastname" [(ngModel)]="newEmploye.lastname" name="lastname" required>
-              </div>
-              <div class="mb-2">
-                <label for="firstname" class="form-label">Prénom:</label>
-                <input type="text" class="form-control" id="firstname" [(ngModel)]="newEmploye.firstname" name="firstname" required>
-              </div>
-              <div class="mb-2">
-                <label for="email" class="form-label">Email:</label>
-                <input type="email" class="form-control" id="email" [(ngModel)]="newEmploye.email" name="email" required>
-              </div>
-              <div class="mb-2">
-                <label for="date_naissance" class="form-label">Date de naissance :</label>
-                <input type="date" class="form-control" id="date_naissance" [(ngModel)]="newEmploye.date_naissance" name="date_naissance" required>
-              </div>
-              <div class="mb-2">
-                <label for="performanceComment" class="form-label"> Performance:</label>
-                <input type="text" class="form-control" id="performanceComment" [(ngModel)]="newEmploye.performanceComment" name="performanceComment" required>
-              </div>
+  <!-- ajouter Modal -->
+  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="exampleModalLabel">Ajouter</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form (submit)="ajouterEmploye()">
+            <div class="mb-2">
+              <label for="cni" class="form-label">Cni :</label>
+              <input type="text" class="form-control" id="cni" [(ngModel)]="newEmploye.cni" name="cni" required>
+            </div>
+            <div class="mb-2">
+              <label for="lastname" class="form-label">Nom:</label>
+              <input type="text" class="form-control" id="lastname" [(ngModel)]="newEmploye.lastname" name="lastname"
+                required>
+            </div>
+            <div class="mb-2">
+              <label for="firstname" class="form-label">Prénom:</label>
+              <input type="text" class="form-control" id="firstname" [(ngModel)]="newEmploye.firstname" name="firstname"
+                required>
+            </div>
+            <div class="mb-2">
+              <label for="email" class="form-label">Email:</label>
+              <input type="email" class="form-control" id="email" [(ngModel)]="newEmploye.email" name="email" required>
+            </div>
+            <div class="mb-2">
+              <label for="birthDate" class="form-label">Date de naissance :</label>
+              <input type="date" class="form-control" id="birthDate" [(ngModel)]="newEmploye.birthDate"
+                name="birthDate" required>
+            </div>
+            <div class="mb-2">
+              <label for="rendement" class="form-label">Rendement :</label>
+              <input type="number" class="form-control" id="rendement" [(ngModel)]="newEmploye.rendement"
+                name="rendement" required>
+            </div>
+            <div class="mb-2">
+              <label for="objectif" class="form-label">Objectif :</label>
+              <input type="number" class="form-control" id="objectif" [(ngModel)]="newEmploye.objectif" name="objectif"
+                required>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+              <button type="submit" class="btn btn-primary">Ajouter</button>
+            </div>
+          </form>
+        </div>
 
-              <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="submit" class="btn btn-primary">Ajouter</button>
-              </div>
-            </form>
       </div>
-
     </div>
   </div>
-</div>
+
+  <!-- modal Mofication -->
+  
+  <div class="modal fade" id="modifierEmployeModal" tabindex="-1" role="dialog"
+    aria-labelledby="modifierEmployeModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="modifierEmployeModal">Modifier </h5>
+        </div>
+        <div class="modal-body">
+          <form (submit)="modifierEmploye()" #modifierEmployeForm>
+            <div class="mb-2">
+              <label for="lastname" class="form-label">Nom :</label>
+              <input type="text" class="form-control" id="lastname" [(ngModel)]="employe.lastname" name="lastname"
+                required>
+            </div>
+            <div class="mb-2">
+              <label for="firstname" class="form-label">Prénom :</label>
+              <input type="text" class="form-control" id="firstname" [(ngModel)]="employe.firstname" name="firstname"
+                required>
+            </div>
+            <div class="mb-2">
+              <label for="id" class="form-label">ID :</label>
+              <input type="text" class="form-control" id="id" [(ngModel)]="employe.id" name="id" required readonly>
+            </div>
+            <div class="mb-2">
+              <label for="email" class="form-label">Email :</label>
+              <input type="email" class="form-control" id="email" [(ngModel)]="employe.email" name="email" required>
+            </div>
+            <div class="mb-2">
+              <label for="birthDate" class="form-label">Date de naissance :</label>
+              <input type="date" class="form-control" id="birthDate" [ngModel]="formatDate(employe.birthDate)"
+                name="birthDate" required>
+            </div>
+            <div class="mb-2">
+              <label for="rendement" class="form-label">Rendement :</label>
+              <input type="number" class="form-control" id="rendement" [(ngModel)]="employe.rendement" name="rendement" required>
+            </div>
+            <div class="mb-2">
+              <label for="objectif" class="form-label">Objectif :</label>
+              <input type="number" class="form-control" id="objectif" [(ngModel)]="employe.objectif" name="objectif" required>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+              <button type="submit" class="btn btn-primary">Modifier</button>
+            </div>
+          </form>
+        </div>
+  
+      </div>
+    </div>
+  </div>

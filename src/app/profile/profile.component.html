@@ -1,0 +1,47 @@
+<div class="container">
+    <div class="row mt-5">
+        <div class="col-md-12">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item" style="font-size: large;"><a routerLink="/dashboard">Dashboard</a></li>
+                <li class="breadcrumb-item active" style="font-size: large;">Profile</li>
+            </ol>
+            <div class="card border-primary mb-3">
+                <div class="card-header">Profile</div>
+                <div class="card-body" style="background-color: rgb(207, 207, 207);">
+                    <fieldset>
+                        <legend>Update informations</legend>
+                        <div class="form-group row">
+                            <label for="staticEmail" class="col-md-3 col-form-label">Email</label>
+                            <div class="col-md-9">
+                                <input type="text" readonly="" class="form-control-plaintext" id="staticEmail"
+                                value="{{ user.email }}" >
+                            </div>
+                        </div>
+                        <form (submit)="modifierUser()">
+
+                            <div class="form-group">
+                                <label for="firstname" class="form-label mt-4">Firstname</label>
+                                <input type="firstname" class="form-control" name="firstname" [(ngModel)]="user.firstname" [ngModelOptions]="{standalone: true}" id="firstname">
+                            </div>
+                            <div class="form-group">
+                                <label for="lastname" class="form-label mt-4">Lastname</label>
+                                <input type="lastname" class="form-control" name="lastname" [(ngModel)]="user.lastname" [ngModelOptions]="{standalone: true}" id="lastname">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="password" class="form-label mt-4">Password</label>
+                                <input type="password" class="form-control" id="password"
+                                    [(ngModel)]="user.password"  [ngModelOptions]="{standalone: true}"
+                                     placeholder="Password">
+                            </div>
+
+                            <button type="submit" class="btn btn-primary mt-2">Update</button>
+                        </form>
+                        </fieldset> 
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+</div>
