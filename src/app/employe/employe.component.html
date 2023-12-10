@@ -1,5 +1,6 @@
 <div class="m-5">
-  <button class="btn btn-primary mt-4 m-2"  data-bs-toggle="modal" data-bs-target="#exampleModal">Ajouter un Etudiant:</button>
+  <button class="btn btn-primary mt-4 m-2" data-bs-toggle="modal" data-bs-target="#exampleModal">Ajouter un
+    Etudiant:</button>
   <div class="card">
     <div class="card-header">Liste des étudiants:</div>
     <div class="card-body">
@@ -44,7 +45,7 @@
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-          <form (submit)="ajouterEmploye()">
+          <form (submit)="ajouterEmploye()" #myForm="ngForm">
             <div class="mb-2">
               <label for="cni" class="form-label">Cni :</label>
               <input type="text" class="form-control" id="cni" [(ngModel)]="newEmploye.cni" name="cni" required>
@@ -65,8 +66,8 @@
             </div>
             <div class="mb-2">
               <label for="birthDate" class="form-label">Date de naissance :</label>
-              <input type="date" class="form-control" id="birthDate" [(ngModel)]="newEmploye.birthDate"
-                name="birthDate" required>
+              <input type="date" class="form-control" id="birthDate" [(ngModel)]="newEmploye.birthDate" name="birthDate"
+                required>
             </div>
             <div class="mb-2">
               <label for="rendement" class="form-label">Rendement :</label>
@@ -80,7 +81,7 @@
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-              <button type="submit" class="btn btn-primary">Ajouter</button>
+              <button type="submit" class="btn btn-primary" [disabled]="!myForm.form.valid">Ajouter</button>
             </div>
           </form>
         </div>
@@ -90,16 +91,20 @@
   </div>
 
   <!-- modal Modification -->
-  
+
   <div class="modal fade" id="modifierEmployeModal" tabindex="-1" role="dialog"
     aria-labelledby="modifierEmployeModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="modifierEmployeModal" >Modifier </h5>
+          <h5 class="modal-title" id="modifierEmployeModal">Modifier </h5>
         </div>
         <div class="modal-body">
-          <form (ngSubmit)="modifierEmploye()" #modifierEmployeForm>
+          <form (ngSubmit)="modifierEmploye()" #modifierForm="ngForm">
+            <div class="mb-2">
+              <label for="cni" class="form-label">Cni :</label>
+              <input type="text" class="form-control" id="cni" [(ngModel)]="employe.cni" name="cni" required readonly>
+            </div>
             <div class="mb-2">
               <label for="lastname" class="form-label">Nom :</label>
               <input type="text" class="form-control" id="lastname" [(ngModel)]="employe.lastname" name="lastname"
@@ -110,10 +115,7 @@
               <input type="text" class="form-control" id="firstname" [(ngModel)]="employe.firstname" name="firstname"
                 required>
             </div>
-            <div class="mb-2">
-              <label for="id" class="form-label">ID :</label>
-              <input type="text" class="form-control" id="id" [(ngModel)]="employe.id" name="id" required readonly>
-            </div>
+
             <div class="mb-2">
               <label for="email" class="form-label">Email :</label>
               <input type="email" class="form-control" id="email" [(ngModel)]="employe.email" name="email" required>
@@ -125,19 +127,21 @@
             </div>
             <div class="mb-2">
               <label for="rendement" class="form-label">Rendement :</label>
-              <input type="number" class="form-control" id="rendement" [(ngModel)]="employe.rendement" name="rendement" required>
+              <input type="number" class="form-control" id="rendement" [(ngModel)]="employe.rendement" name="rendement"
+                required>
             </div>
             <div class="mb-2">
               <label for="objectif" class="form-label">Objectif :</label>
-              <input type="number" class="form-control" id="objectif" [(ngModel)]="employe.objectif" name="objectif" required>
+              <input type="number" class="form-control" id="objectif" [(ngModel)]="employe.objectif" name="objectif"
+                required>
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-              <button type="submit" class="btn btn-primary">Modifier</button>
+              <button type="submit" class="btn btn-primary" [disabled]="!modifierForm.form.valid">Modifier</button>
             </div>
           </form>
         </div>
-  
+
       </div>
     </div>
   </div>
