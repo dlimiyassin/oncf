@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { AccountService } from '../services/account.service';
 import { Observable } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
+import { DatePipe } from '@angular/common';
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.component.html',
@@ -21,27 +22,28 @@ export class ProfileComponent implements OnInit {
 
   constructor(
     private account: AccountService,
-    private routee: ActivatedRoute
+    private routee: ActivatedRoute,
+    private datePipe: DatePipe
   ) {}
   @Input() email!: string;
   ngOnInit(): void {
-
     console.log(this.email);
-    this.account
-      .getUserByEmail('dlimiyassine13@gmail.com')
-      .subscribe({
-        next: (user) => {
-          this.user = user;
-        },
-        error: (err) => {
-          console.log(err)
-        }
-      });
+    this.account.getUserByEmail('dlimiyassine13@gmail.com').subscribe({
+      next: (user) => {
+        this.user = user;
+      },
+      error: (err) => {
+        console.log(err);
+      },
+    });
   }
 
   modifierUser() {
     this.account.updateUser(this.user).subscribe((res) => {
-      console.log(res)
+      console.log(res);
     });
+  }
+  formatDate(date: Date | null): string {
+    return this.datePipe.transform(date, 'yyyy-MM-dd') ?? '';
   }
 }

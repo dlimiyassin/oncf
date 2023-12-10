@@ -1,40 +1,54 @@
-<div class="wrapper d-flex align-items-stretch">
-    <nav id="sidebar">
+<!-- ======= Sidebar ======= -->
+<aside id="sidebar" class="sidebar">
 
-        <div class="p-4 pt-5">
-            <h5 class="logo"><b>Pole Voyageurs</b></h5>
-        
-            <ul class="list-unstyled components mb-5">
-                <li class="active">
-                    <a href="/dashboard"><b>RH Formation</b></a>
-                    
-                </li>
-                <li class="active">
-                    <a href="/dashboard"><h6>Formation et developement</h6></a>
-                </li>
-                <li class="active">
-                    <a href="/dashboard"><h6>Gestion de carriere</h6></a>
-                </li>
-                <li class="active">
-                    <a href="/dashboard"><h6>Remuneration</h6></a>
-                </li>
-                <li class="active">
-                    <a href="/dashboard"><h6>S.M.S</h6></a>
-                </li>
-                <li class="active">
-                    <a href="/dashboard"><h6>Stagaires militaires</h6></a>
-                </li>
-                <li class="active">
-                    <a href="/dashboard"><h6>Securite</h6> </a>
-                </li>
+    <ul class="sidebar-nav" id="sidebar-nav">
 
+        <li class="nav-item">
+            <a class="nav-link " href="/">
+                <i class="bi bi-grid"></i>
+                <span>Dashboard</span>
+            </a>
+        </li><!-- End Dashboard Nav -->
+
+        <li class="nav-item">
+            <a class="nav-link collapsed" data-bs-target="#components-nav" data-bs-toggle="collapse" href="#">
+                <i class="bi bi-menu-button-wide"></i><span>RH Formation</span><i
+                    class="bi bi-chevron-down ms-auto"></i>
+            </a>
+            <ul id="components-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+                <li>
+                    <a href="/">
+                        <i class="bi bi-circle"></i><span>Formation et developement</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="/">
+                        <i class="bi bi-circle"></i><span>Gestion de carriere</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="/">
+                        <i class="bi bi-circle"></i><span>Remuneration</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="/">
+                        <i class="bi bi-circle"></i><span>S.M.S</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="/">
+                        <i class="bi bi-circle"></i><span>Stagaires militaires</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="/">
+                        <i class="bi bi-circle"></i><span>Securite</span>
+                    </a>
+                </li>
             </ul>
-        </div>
-    </nav>
-</div>
-<!-- Page Content  -->
+        </li><!-- End Components Nav -->
 
-<script src="js/jquery.min.js"></script>
-<script src="js/popper.js"></script>
-<script src="js/bootstrap.min.js"></script>
-<script src="js/main.js"></script>
+    </ul>
+
+</aside><!-- End Sidebar-->

@@ -1,41 +1,107 @@
+<!-- ======= Header ======= -->
+<header id="header" class="header fixed-top d-flex align-items-center">
 
-<nav class="navbar row" id="navbar">
-
-  <div class="col-sm-2 logo">
-  <!-- logo -->
-    <a class="navbar-brand col-sm-4" href="/">
-      <img id="img-oncf" src="../assets/images/Rectangle 9.png" alt="" width="100" height="50">
+  <div class="d-flex align-items-center justify-content-between">
+    <a href="/" class="logo d-flex align-items-center">
+      <img src="../assets/images/Rectangle 9.png" alt="">
     </a>
-  </div>
+  </div><!-- End Logo -->
 
-  <div class="col-sm-8">
-    <!-- Search -->
-      <div *ngIf="loggedIn" id="search" class="rounded nav-item col-sm-4">
-        <input type="search" class="form-control rounded" placeholder="Search" aria-label="Search"
-          aria-describedby="search-addon" />
-      </div>
-  </div>
+  <div *ngIf="loggedIn" class="search-bar mt-3 " style="margin-left: auto;">
+    
+    <form class="search-form d-flex align-items-center" method="POST" action="#">
+      <input type="text" name="query" placeholder="Search" title="Enter search keyword">
+      <button type="submit" title="Search"><i class="bi bi-search"></i></button>
+    </form>
+  </div><!-- End Search Bar -->
 
-    <div class="col-sm-2">
 
-      <!--login - logout -->
-        <div *ngIf="!loggedIn" class="nav-item">
-          <a  id="login-oncf" routerLink="/login">login</a>
-        </div>
 
-       <div *ngIf="loggedIn" class="row">
-        <div class="dropdown col">
-          <i class="bi bi-bell"></i>
-          <i class="bi bi-person-circle"></i>
-          <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-            Profile
-          </button>
-          <ul class="dropdown-menu">
-            <li><a class="dropdown-item" routerLink="/dashboard/profile/{{tokenInfos.sub}}" routerLinkActive="router-link-active" >Edit profile</a></li>
-            <li> <a class="dropdown-item" (click)="handleLogout()" id="logout-oncf" routerLink="/">logout</a></li>
-          </ul>
-        </div>
-      </div>
+  <nav class="header-nav ms-auto">
+    <!-- logout -->
+    <div *ngIf="!loggedIn" id="login-oncf" class="nav-item">
+      <a id="login-oncf" routerLink="/login">login</a>
     </div>
-</nav>
 
+
+    <!-- login -->
+    <ul *ngIf="loggedIn" class="d-flex align-items-center">
+
+      <li class="nav-item dropdown">
+
+        <a class="nav-link nav-icon" href="#" data-bs-toggle="dropdown">
+          <i class="bi bi-bell"></i>
+          <span class="badge bg-primary badge-number">4</span>
+        </a><!-- End Notification Icon -->
+
+        <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow notifications">
+
+          <li class="notification-item">
+            <i class="bi bi-info-circle text-danger"></i>
+            <div>
+              <h4>Achraf Kamal</h4>
+              <p>contrat va terminer le 01/01/2025</p>
+              <p>1 an, 1 mois</p>
+            </div>
+          </li>
+
+          <li>
+            <hr class="dropdown-divider">
+          </li>
+
+          <li class="notification-item">
+            <i class="bi bi-check-circle text-success"></i>
+            <div>
+              <h4>Achraf Kamal</h4>
+              <p>contrat va terminer le 01/01/2025</p>
+              <p>1 an, 1 mois</p>
+            </div>
+          </li>
+
+        </ul><!-- End Notification Dropdown Items -->
+
+      </li><!-- End Notification Nav -->
+
+      <li class="nav-item dropdown pe-3">
+
+        <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
+           <img src="../assets/images/profile.jpg" alt="Profile" class="rounded-circle"> 
+          <span class="d-none d-md-block dropdown-toggle ps-2">Y. Dlimi </span>
+        </a><!-- End Profile Iamge Icon -->
+
+        <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
+          <li class="dropdown-header">
+            <h6>Yassine Dlimi</h6>
+            <span>Manager</span>
+          </li>
+          <li>
+            <hr class="dropdown-divider">
+          </li>
+
+          <li>
+            <a class="dropdown-item d-flex align-items-center" routerLink="/dashboard/profile/{{tokenInfos.sub}}"
+              routerLinkActive="router-link-active">
+              <i class="bi bi-person"></i>
+              <span>My Profile</span>
+            </a>
+          </li>
+
+          <li>
+            <hr class="dropdown-divider">
+          </li>
+
+          <li>
+            <a class="dropdown-item d-flex align-items-center" (click)="handleLogout()">
+              <i class="bi bi-box-arrow-right"></i>
+
+              <span>Sign Out</span>
+            </a>
+          </li>
+
+        </ul><!-- End Profile Dropdown Items -->
+      </li><!-- End Profile Nav -->
+
+    </ul>
+  </nav><!-- End Icons Navigation -->
+
+</header>
