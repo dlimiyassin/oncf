@@ -48,10 +48,10 @@ public class AuthenticationController {
     public void verifyUser(@RequestParam("code") String code, HttpServletResponse response) throws IOException, IOException {
         if (service.verify(code)) {
             // Redirect to your Angular application upon successful verification
-            response.sendRedirect("http://localhost:4200/success");
+            response.sendRedirect("http://localhost:4200/#/success");
         } else {
             // Redirect to a failure page in your Angular application
-            response.sendRedirect("http://localhost:4200/fail");
+            response.sendRedirect("http://localhost:4200/#/fail");
         }
     }
 
