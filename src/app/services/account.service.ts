@@ -27,13 +27,12 @@ export class AccountService {
   }
 
   updateUser(user : User): Observable<User>{
-  const { firstname, lastname, password } = user;
+  const { firstname, lastname } = user;
 
   // Create a new object with the selected properties
   const updatedUser = {
     firstname,
     lastname,
-    password,
   };
     const url = `${this.apiUrl}/${user.email}`
     return this.http.put<User>(url, updatedUser);

@@ -1,0 +1,9 @@
+<body>
+    <div class="container text-center">
+        <p class="card bg-dark text-light py-1 rounded-2">Enter your email</p>
+        <form (ngSubmit)="forget()">
+            <input class="form-control" type="email" name="email" [(ngModel)]="email">
+            <button type="submit" class="btn btn-primary mt-3">Send</button>
+        </form>
+    </div>
+</body>

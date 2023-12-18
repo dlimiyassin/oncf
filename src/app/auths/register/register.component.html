@@ -1,0 +1,44 @@
+<app-navbar></app-navbar>
+
+<div class="container-fluid">
+  <div class="row">
+    <!-- login form -->
+    <div class="col-6" id="div1">
+      <h1 style="color: red;">REGISTER</h1>
+      <!-- <label for="email">Email</label> -->
+      <div class="container">
+
+
+        <form>
+          <input type="text" name="firstname" [(ngModel)]="registerObj.firstname" placeholder="First name">
+          <input type="text" name="lastname" [(ngModel)]="registerObj.lastname" placeholder="Last name">
+          <input type="email" name="email" [(ngModel)]="registerObj.email" placeholder="Email">
+          <!-- <label for="password">Password</label> -->
+          <input type="password" name="password" [(ngModel)]="registerObj.password" placeholder="Password">
+
+          <input type="date" name="birthdate" [(ngModel)]="registerObj.birthdate">
+
+          <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
+            <input type="radio" class="btn-check" name="gender" [(ngModel)]="registerObj.gender" id="btnradio1"
+              autocomplete="off" (ngModelChange)="registerObj.gender='Male'">
+            <label class="btn btn-outline-secondary" for="btnradio1">Male</label>
+
+            <input type="radio" class="btn-check" name="gender" [(ngModel)]="registerObj.gender" id="btnradio2"
+              autocomplete="off" (ngModelChange)="registerObj.gender='Female'">
+            <label class="btn btn-outline-secondary" for="btnradio2">Female</label>
+          </div>
+                      <div *ngIf="errorMessage" class="alert alert-danger my-3 row col-sm-12 align-center">
+                <div class="align-center" >{{ errorMessage }}</div>
+            </div>
+
+          <button (click)="onRegister()" class="item btn btn-dark">Join Us<i class="bi bi-arrow-right"></i></button>
+        </form>
+      </div>
+    </div>
+    <!-- login photo -->
+    <div class="col-6" id="">
+      <img class="" style="object-fit: cover; object-position: right; width: 49vw; height: 100vh;"
+        src="/../assets/images/Rectangle 11.png" alt="">
+    </div>
+  </div>
+</div>

@@ -3,5 +3,6 @@ CODE PLAYGROUND CSS input.ng-valid {
 }
 
 input.ng-invalid {
-    background-color: #f58c84;
+    border-color: #f58c84;
+    border-width: 2px;
 }

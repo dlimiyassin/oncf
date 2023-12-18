@@ -6,23 +6,14 @@
         border: 1px solid #ccc;
         border-radius: 5px;
         box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        max-width: 400px;
+        max-width: 500px;
         margin-left: auto;
         margin-right: auto;
-    }
-
-    h1 {
-        color: #f30a0a;
-    }
-
-    p {
-        color: #333;
     }
 
     a {
         display: inline-block;
         padding: 10px 20px;
-        background-color: #fdd02d;
         color: #fff;
         text-decoration: none;
         border-radius: 5px;
@@ -36,3 +27,8 @@
     a:hover {
         background-color: #0056b3;
     }
+                .img {
+                    height: 20vh;
+                    width: 10vw;
+                    margin-bottom: 30px;
+                }

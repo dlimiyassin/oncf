@@ -1,5 +1,5 @@
 import { Router } from '@angular/router';
-import { AuthService } from './../services/auth.service';
+import { AuthService } from '../../services/auth.service';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -18,15 +18,16 @@ export class RegisterComponent implements OnInit {
   };
   constructor(private authService: AuthService, private router: Router) {}
   ngOnInit(): void {}
-
+errorMessage! : string;
   onRegister() {
     this.authService.register(this.registerObj).subscribe({
       next: (data) => {
         console.log(data);
-          this.router.navigateByUrl('/verification');
+        this.router.navigateByUrl('/verification');
       },
       error: (err) => {
         console.log(err);
+        this.errorMessage="This user is already exist!"
       },
     });
   }

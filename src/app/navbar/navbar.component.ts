@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { AccountService } from '../services/account.service';
 import { TokenService } from '../services/token.service';
 import { User } from '../models/user.model';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-navbar',
@@ -19,7 +20,8 @@ export class NavbarComponent implements OnInit {
     private router: Router,
     private account: AccountService,
     private token: TokenService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private toaster: ToastrService
   ) {}
 
   ngOnInit(): void {
@@ -27,12 +29,12 @@ export class NavbarComponent implements OnInit {
       this.loggedIn = value;
       this.tokenInfos = this.token.getInfos();
     });
-    
   }
   handleLogout() {
     this.token.remove();
     this.account.changeAuthStatus(false);
-    this.router.navigateByUrl('/');
+    this.router.navigateByUrl('/login');
+    this.toaster.success('You logged out successfully', 'Success', { timeOut: 3000 });
   }
   profile() {}
 }

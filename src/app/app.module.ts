@@ -2,9 +2,9 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
-import { LoginComponent } from './login/login.component';
+import { LoginComponent } from './auths/login/login.component';
 import { AppRoutingModule } from './app-routing.module';
-import { RegisterComponent } from './register/register.component';
+import { RegisterComponent } from './auths/register/register.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
@@ -19,6 +19,11 @@ import { DatePipe } from '@angular/common';
 import { ProfileComponent } from './profile/profile.component';
 import { LocationStrategy, HashLocationStrategy } from '@angular/common';
 import { JwtInterceptor } from './services/jwt.interceptor';
+import { ForgetPasswordComponent } from './email-verification/forget-password/forget-password.component';
+import { AskForEmailComponent } from './email-verification/ask-for-email/ask-for-email.component';
+import { NewPasswordComponent } from './email-verification/new-password/new-password.component';
+import { ToastrModule } from 'ngx-toastr';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 @NgModule({
   declarations: [
     AppComponent,
@@ -33,6 +38,9 @@ import { JwtInterceptor } from './services/jwt.interceptor';
     FailMessageComponent,
     EmployeComponent,
     ProfileComponent,
+    ForgetPasswordComponent,
+    AskForEmailComponent,
+    NewPasswordComponent,
   ],
   imports: [
     BrowserModule,
@@ -41,6 +49,8 @@ import { JwtInterceptor } from './services/jwt.interceptor';
     FormsModule,
     HttpClientModule,
     BrowserAnimationsModule,
+    BrowserAnimationsModule, 
+    ToastrModule.forRoot(), NgbModule, 
   ],
   providers: [
     {
@@ -48,12 +58,12 @@ import { JwtInterceptor } from './services/jwt.interceptor';
       useClass: JwtInterceptor,
       multi: true,
     },
-    { 
-      provide: LocationStrategy, 
-      useClass: HashLocationStrategy
+    {
+      provide: LocationStrategy,
+      useClass: HashLocationStrategy,
     },
-      DatePipe,
-    ],
+    DatePipe,
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

@@ -1,8 +1,8 @@
 <div class="m-5">
-  <button class="btn btn-primary mt-4 m-2" data-bs-toggle="modal" data-bs-target="#exampleModal">Ajouter un
-    Etudiant:</button>
+  <button class="btn btn-primary mt-4 m-2" (click)="ajouterEmployeModal(AjouterModal)">Ajouter un
+    employe:</button>
   <div class="card">
-    <div class="card-header">Liste des étudiants:</div>
+    <div class="card-header">Liste des employes:</div>
     <div class="card-body">
       <table class="table">
         <thead>
@@ -25,9 +25,7 @@
             <td>{{e.rendement}}</td>
             <td>{{e.objectif}}</td>
             <td>{{e.atteint}}%</td>
-            <td><button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#modifierEmployeModal"
-                (click)="afficherDetailsEmploye(e.id)"><i class="bi bi-pencil"></i></button>
-            </td>
+            <td><button class="btn btn-success" (click)="modifierEmployeModal(modifierEmployee, e.id)"><i class="bi bi-pencil"></i></button></td>
             <td><button class="btn btn-danger" (click)="supprimerEmploye(e.id)"><i class="bi bi-trash"></i></button>
             </td>
           </tr>
@@ -37,111 +35,95 @@
   </div>
 
   <!-- ajouter Modal -->
-  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h1 class="modal-title fs-5" id="exampleModalLabel">Ajouter</h1>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-          <form (submit)="ajouterEmploye()" #myForm="ngForm">
-            <div class="mb-2">
-              <label for="cni" class="form-label">Cni :</label>
-              <input type="text" class="form-control" id="cni" [(ngModel)]="newEmploye.cni" name="cni" required>
-            </div>
-            <div class="mb-2">
-              <label for="lastname" class="form-label">Nom:</label>
-              <input type="text" class="form-control" id="lastname" [(ngModel)]="newEmploye.lastname" name="lastname"
-                required>
-            </div>
-            <div class="mb-2">
-              <label for="firstname" class="form-label">Prénom:</label>
-              <input type="text" class="form-control" id="firstname" [(ngModel)]="newEmploye.firstname" name="firstname"
-                required>
-            </div>
-            <div class="mb-2">
-              <label for="email" class="form-label">Email:</label>
-              <input type="email" class="form-control" id="email" [(ngModel)]="newEmploye.email" name="email" required>
-            </div>
-            <div class="mb-2">
-              <label for="birthDate" class="form-label">Date de naissance :</label>
-              <input type="date" class="form-control" id="birthDate" [(ngModel)]="newEmploye.birthDate" name="birthDate"
-                required>
-            </div>
-            <div class="mb-2">
-              <label for="rendement" class="form-label">Rendement :</label>
-              <input type="number" class="form-control" id="rendement" [(ngModel)]="newEmploye.rendement"
-                name="rendement" required>
-            </div>
-            <div class="mb-2">
-              <label for="objectif" class="form-label">Objectif :</label>
-              <input type="number" class="form-control" id="objectif" [(ngModel)]="newEmploye.objectif" name="objectif"
-                required>
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-              <button type="submit" class="btn btn-primary" [disabled]="!myForm.form.valid">Ajouter</button>
-            </div>
-          </form>
-        </div>
-
-      </div>
+  <ng-template #AjouterModal let-modal>
+    <div class="modal-header pb-0">
+      <h4 class="modal-title" id="ajouter-modal-title">Ajouter</h4>
     </div>
-  </div>
+    <form (submit)="ajouterEmploye()" #myForm="ngForm" class="px-3">
+      <div class="mb-2">
+        <label for="cni" class="form-label">Cni :</label>
+        <input type="text" class="form-control" id="cni" [(ngModel)]="newEmploye.cni" name="cni" required>
+      </div>
+      <div class="mb-2">
+        <label for="lastname" class="form-label">Nom:</label>
+        <input type="text" class="form-control" id="lastname" [(ngModel)]="newEmploye.lastname" name="lastname" required>
+      </div>
+      <div class="mb-2">
+        <label for="firstname" class="form-label">Prénom:</label>
+        <input type="text" class="form-control" id="firstname" [(ngModel)]="newEmploye.firstname" name="firstname"
+          required>
+      </div>
+      <div class="mb-2">
+        <label for="email" class="form-label">Email:</label>
+        <input type="email" class="form-control" id="email" [(ngModel)]="newEmploye.email" name="email" required>
+      </div>
+      <div class="mb-2">
+        <label for="birthDate" class="form-label">Date de naissance :</label>
+        <input type="date" class="form-control" id="birthDate" [(ngModel)]="newEmploye.birthDate" name="birthDate"
+          required>
+      </div>
+      <div class="mb-2">
+        <label for="rendement" class="form-label">Rendement :</label>
+        <input type="number" class="form-control" id="rendement" [(ngModel)]="newEmploye.rendement" name="rendement"
+          required>
+      </div>
+      <div class="mb-2">
+        <label for="objectif" class="form-label">Objectif :</label>
+        <input type="number" class="form-control" id="objectif" [(ngModel)]="newEmploye.objectif" name="objectif"
+          required>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="modal.dismiss('Cross click')">Close</button>
+        <button type="submit" class="btn btn-primary" [disabled]="!myForm.form.valid">Save</button>
+      </div>
+    </form>
+  </ng-template>
 
   <!-- modal Modification -->
 
-  <div class="modal fade" id="modifierEmployeModal" tabindex="-1" role="dialog"
-    aria-labelledby="modifierEmployeModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="modifierEmployeModal">Modifier </h5>
-        </div>
-        <div class="modal-body">
-          <form (ngSubmit)="modifierEmploye()" #modifierForm="ngForm">
-            <div class="mb-2">
-              <label for="cni" class="form-label">Cni :</label>
-              <input type="text" class="form-control" id="cni" [(ngModel)]="employe.cni" name="cni" required readonly>
-            </div>
-            <div class="mb-2">
-              <label for="lastname" class="form-label">Nom :</label>
-              <input type="text" class="form-control" id="lastname" [(ngModel)]="employe.lastname" name="lastname"
-                required>
-            </div>
-            <div class="mb-2">
-              <label for="firstname" class="form-label">Prénom :</label>
-              <input type="text" class="form-control" id="firstname" [(ngModel)]="employe.firstname" name="firstname"
-                required>
-            </div>
-
-            <div class="mb-2">
-              <label for="email" class="form-label">Email :</label>
-              <input type="email" class="form-control" id="email" [(ngModel)]="employe.email" name="email" required>
-            </div>
-            <div class="mb-2">
-              <label for="birthDate" class="form-label">Date de naissance :</label>
-              <input type="date" class="form-control" id="birthDate" [ngModel]="formatDate(employe.birthDate)"
-                name="birthDate" required>
-            </div>
-            <div class="mb-2">
-              <label for="rendement" class="form-label">Rendement :</label>
-              <input type="number" class="form-control" id="rendement" [(ngModel)]="employe.rendement" name="rendement"
-                required>
-            </div>
-            <div class="mb-2">
-              <label for="objectif" class="form-label">Objectif :</label>
-              <input type="number" class="form-control" id="objectif" [(ngModel)]="employe.objectif" name="objectif"
-                required>
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-              <button type="submit" class="btn btn-primary" [disabled]="!modifierForm.form.valid">Modifier</button>
-            </div>
-          </form>
-        </div>
-
-      </div>
+  <ng-template #modifierEmployee let-modal>
+    <div class="modal-header">
+      <h4 class="modal-title" id="modifier-modal-title">Modifier</h4>
     </div>
-  </div>
+    <form (ngSubmit)="modifierEmploye()" #modifierForm="ngForm">
+      <div class="modal-body">
+        <div class="mb-2">
+          <label for="cni" class="form-label">Cni :</label>
+          <input type="text" class="form-control" id="cni" [(ngModel)]="employe.cni" name="cni" required readonly>
+        </div>
+        <div class="mb-2">
+          <label for="lastname" class="form-label">Nom :</label>
+          <input type="text" class="form-control" id="lastname" [(ngModel)]="employe.lastname" name="lastname" required>
+        </div>
+        <div class="mb-2">
+          <label for="firstname" class="form-label">Prénom :</label>
+          <input type="text" class="form-control" id="firstname" [(ngModel)]="employe.firstname" name="firstname" required>
+        </div>
+    
+        <div class="mb-2">
+          <label for="email" class="form-label">Email :</label>
+          <input type="email" class="form-control" id="email" [(ngModel)]="employe.email" name="email" required>
+        </div>
+        <div class="mb-2">
+          <label for="birthDate" class="form-label">Date de naissance :</label>
+          <input type="date" class="form-control" id="birthDate" [ngModel]="formatDate(employe.birthDate)" name="birthDate"
+            required>
+        </div>
+        <div class="mb-2">
+          <label for="rendement" class="form-label">Rendement :</label>
+          <input type="number" class="form-control" id="rendement" [(ngModel)]="employe.rendement" name="rendement"
+            required>
+        </div>
+        <div class="mb-2">
+          <label for="objectif" class="form-label">Objectif :</label>
+          <input type="number" class="form-control" id="objectif" [(ngModel)]="employe.objectif" name="objectif" required>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="modal.dismiss('Cross click')">Close</button>
+        <button type="submit" class="btn btn-primary" [disabled]="!modifierForm.form.valid">Save</button>
+      </div>
+    </form>
+  </ng-template>
+
+

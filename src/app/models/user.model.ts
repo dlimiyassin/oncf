@@ -3,7 +3,6 @@ export class User {
   firstname: string;
   lastname: string;
   email: string;
-  password: string;
   birthdate: Date;
 
 
@@ -20,6 +19,5 @@ export class User {
     this.lastname = lastname;
     this.email = email;
     this.birthdate = birthdate;
-    this.password = password;
   }
 }

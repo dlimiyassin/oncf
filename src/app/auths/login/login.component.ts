@@ -1,15 +1,15 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthService } from '../services/auth.service';
+import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
-import { TokenService } from '../services/token.service';
-import { AccountService } from '../services/account.service';
+import { TokenService } from '../../services/token.service';
+import { AccountService } from '../../services/account.service';
 import { DatePipe } from '@angular/common';
-
+import { ToastrService } from 'ngx-toastr';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css'],
-  providers : [DatePipe],
+  providers: [DatePipe],
 })
 export class LoginComponent implements OnInit {
   loginObj: any = {
@@ -21,7 +21,8 @@ export class LoginComponent implements OnInit {
     private authService: AuthService,
     private router: Router,
     private token: TokenService,
-    private account: AccountService
+    private account: AccountService,
+    private toaster : ToastrService
   ) {}
 
   ngOnInit(): void {}
@@ -33,6 +34,7 @@ export class LoginComponent implements OnInit {
         console.log(data);
         this.authService.handleResponse(data),
           this.router.navigateByUrl('/dashboard');
+        this.toaster.success('You logged in successfully', 'Success', { timeOut: 2000 })
       },
       error: (err) => {
         console.log(err);
@@ -45,5 +47,8 @@ export class LoginComponent implements OnInit {
         }
       },
     });
+  }
+  forgetPassword() {
+    this.router.navigateByUrl('/ask-email');
   }
 }

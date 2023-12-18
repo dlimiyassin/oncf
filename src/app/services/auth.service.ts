@@ -3,6 +3,7 @@ import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http';
 import { jwtDecode } from 'jwt-decode';
 import { TokenService } from './token.service';
 import { AccountService } from './account.service';
+import { Observable, catchError } from 'rxjs';
 //import { BehaviorSubject } from 'rxjs';
 @Injectable({
   providedIn: 'root',
@@ -20,7 +21,6 @@ export class AuthService {
   ) {}
 
   public login(data: { email: string; password: string }) {
-    
     return this.http.post('http://localhost:8080/api/auth/authenticate', data);
   }
 
@@ -38,6 +38,29 @@ export class AuthService {
   handleResponse(data: any) {
     this.token.handle(data);
     this.account.changeAuthStatus(true);
+  }
+
+  forgetPassword(email: string) {
+    const url = `http://localhost:8080/api/auth/forget-password?email=${email}`;
+    return this.http.get(url);
+  }
+
+  updatePassword(data: { email: string; password: string , renewPassword: string}) {
+    return this.http.post(
+      'http://localhost:8080/api/auth/update-password',
+      data
+    );
+  }
+
+  updateProfilePassword(data: {
+    oldPassword: string;
+    newPassword: string;
+    renewPassword: string;
+    username: string;
+  }) : Observable<string>
+  {
+    const url = `http://localhost:8080/api/auth/${data.username}/update-password?oldPassword=${data.oldPassword}&newPassword=${data.newPassword}`;
+    return this.http.put<string>(url, null);
   }
 
   //loadProfile(data: any) {

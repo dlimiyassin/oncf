@@ -3,7 +3,7 @@
   <div class="container-fluid mt-5">
     <div class="row">
        <!-- login form -->
-      <div class="col-sm-5" id="div1">
+      <div class="col-6" id="div1">
         <div class="card-body">
           <h2 class="badge-style" >Login Page</h2>
           <form >
@@ -19,12 +19,16 @@
                   </div>
             <button (click)="onLogin()" class="item btn btn-dark">Sign In<i class="bi bi-arrow-right"></i></button>
           </form>
-          <h6 class="item">Not a member ?<a href="#">Create an account</a></h6>
+          <h4><a (click)="forgetPassword()" class="item" routerLink="" >Forget password ?</a></h4>
+          <h5 class="item">Not a member ?<a routerLink="/register">Create an account</a></h5> 
+          <span class="vr"></span>
+          
         </div>
       </div>
       <!-- login photo -->
-      <div class="col-sm-7" id="div2">
-          <img class="rect img-fluid" src="/../assets/images/Rectangle 10.png" alt="" >
+      <div class="col-6" id="">
+          <img class="" style="object-fit: cover; object-position: right; width: 48vw; height: 90vh;" src="/../assets/images/Rectangle 10.png" alt="" >
+          
       </div>
     </div>
   </div>
