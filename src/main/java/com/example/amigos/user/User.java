@@ -1,6 +1,7 @@
 package com.example.amigos.user;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -37,6 +38,7 @@ public class User implements UserDetails {
     private String email;
 
     @Column
+    @JsonIgnore
     private String password;
 
     @Column

@@ -53,7 +53,31 @@ public class AuthenticationController {
             // Redirect to a failure page in your Angular application
             response.sendRedirect("http://localhost:4200/#/fail");
         }
+
     }
 
+    @GetMapping("/forget-password")
+    public void forgetPassword(@RequestParam("email") String email) throws MessagingException, UnsupportedEncodingException {
+        service.forgetPassword(email);
+    }
+    @PostMapping("/update-password")
+    public void forgetPwd(@RequestBody AuthenticationRequest request) {
+        service.updatePassword(request);
+    }
 
+    @PutMapping("/{username}/update-password")
+    public ResponseEntity<UpdatePasswordResponse> updatePassword(
+            @PathVariable String username,
+            @RequestParam("oldPassword") String oldPassword,
+            @RequestParam("newPassword") String newPassword) {
+
+        boolean success = service.updateProfilePassword(username, oldPassword, newPassword);
+
+        if (success) {
+            return ResponseEntity.ok(new UpdatePasswordResponse("Password updated successfully"));
+        } else {
+            return new ResponseEntity<>(new UpdatePasswordResponse("Password updated successfully"),HttpStatus.UNAUTHORIZED);
+            //return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid old password");
+        }
+    }
 }

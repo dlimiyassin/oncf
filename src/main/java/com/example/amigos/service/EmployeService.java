@@ -54,7 +54,6 @@ public class EmployeService {
         User updatedUser = search.get();
         updatedUser.setFirstname(user.getFirstname());
         updatedUser.setLastname(user.getLastname());
-        updatedUser.setPassword(passwordEncoder.encode(user.getPassword()));
        return Optional.of(userRepository.save(updatedUser));
     }
 }

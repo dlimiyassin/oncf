@@ -120,4 +120,55 @@ public class AuthenticationService {
 
     }
 
+    public void forgetPassword(String email) throws MessagingException, UnsupportedEncodingException{
+
+        String toAddress = email;
+        String fromAddress = "oncf3308@gmail.com";
+        String senderName = "Oncf Team";
+        String subject = "Please update your password";
+        String content =  "Please click the link below to update your password:<br>"
+                + "<h3><a href=\"[[URL]]\" target=\"_self\">UPDATE</a></h3>"
+                + "Thank you,<br>"
+                + "ONCF TEAM.";
+
+        MimeMessage message = mailSender.createMimeMessage();
+        MimeMessageHelper helper = new MimeMessageHelper(message);
+
+        helper.setFrom(fromAddress, senderName);
+        helper.setTo(toAddress);
+        helper.setSubject(subject);
+
+
+        String URL = "http://localhost:4200/#/new-password/" + email;
+
+        content = content.replace("[[URL]]", URL);
+
+        helper.setText(content, true);
+
+        mailSender.send(message);
+    }
+
+    public void updatePassword(AuthenticationRequest request) {
+        Optional<User> checkEmail = repository.findByEmail(request.getEmail());
+        if(checkEmail.isEmpty()) throw new RuntimeException("user does not exist !");
+        var user = repository.findByEmail(request.getEmail())
+                .orElseThrow();
+        user.setPassword(passwordEncoder.encode(request.getPassword()));
+
+        repository.save(user);
+    }
+
+    public boolean updateProfilePassword(String username, String oldPassword, String newPassword) {
+        User user = repository.findByEmail(username).orElseThrow();
+
+        if (passwordEncoder.matches(oldPassword, user.getPassword())) {
+            // Old password matches, update the password
+            user.setPassword(passwordEncoder.encode(newPassword));
+            repository.save(user);
+            return true;
+        } else {
+            // Old password doesn't match
+            return false;
+        }
+    }
 }
