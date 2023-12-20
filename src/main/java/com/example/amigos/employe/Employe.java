@@ -28,6 +28,7 @@
         private int rendement;
         private int objectif;
         private int atteint;
+        private LocalDate retraite;
         private String performanceComment;
 
     }

@@ -28,6 +28,10 @@ public class EmployeService {
        return employeRepository.findAll();
    }
 
+    public List<Employe> getAllNotifications(){
+        return employeRepository.findEmployeesWithRetirementInNext3Months();
+    }
+
    public Employe getEmployeById(Long id){
        return employeRepository.findById(id).orElse(null);
    }
@@ -35,6 +39,7 @@ public class EmployeService {
    public Employe saveEmpolye(Employe em){
        int atteint = em.getRendement()*100/em.getObjectif();
        em.setAtteint(atteint);
+       em.setRetraite(em.getBirthDate().plusYears(60));
        return employeRepository.save(em);
    }
 

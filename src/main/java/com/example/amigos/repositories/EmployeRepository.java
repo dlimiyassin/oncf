@@ -14,5 +14,6 @@ import java.util.List;
 @EnableJpaRepositories
 public interface EmployeRepository extends JpaRepository<Employe, Long>{
 
-
+    @Query("SELECT e FROM Employe e WHERE TIMESTAMPDIFF(DAY, CURRENT_DATE, e.retraite) BETWEEN 0 AND 90 ORDER BY e.retraite")
+    List<Employe> findEmployeesWithRetirementInNext3Months();
 }

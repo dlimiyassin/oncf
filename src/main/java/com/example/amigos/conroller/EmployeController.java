@@ -22,6 +22,11 @@ public class EmployeController {
         return employeService.getAllEmploye();
     }
 
+    @GetMapping("/notify")
+    public List<Employe> getAllNotifications(){
+        return employeService.getAllNotifications();
+    }
+
     @GetMapping("/{id}")
     public Employe getEmployeById(@PathVariable Long id){
         return employeService.getEmployeById(id);
