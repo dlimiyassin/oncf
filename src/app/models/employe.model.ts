@@ -8,6 +8,7 @@ export class Employe {
   rendement: number;
   objectif: number;
   atteint: number;
+  retraite: Date;
   performanceComment: string;
 
   constructor(
@@ -20,6 +21,7 @@ export class Employe {
     rendement: number,
     objectif: number,
     atteint: number,
+    retraite: Date,
     performanceComment: string
   ) {
     this.id = id;
@@ -31,7 +33,7 @@ export class Employe {
     this.rendement = rendement;
     this.objectif = objectif;
     this.atteint = atteint;
+    this.retraite = retraite
     this.performanceComment = performanceComment;
   }
-  
 }

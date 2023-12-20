@@ -1,0 +1,38 @@
+<body>
+
+    <main id="main" class="main">
+        <div class="container-fluid ms-5">
+            <div class="pagetitle">
+                <h1 class="mb-0 fw-bold">Notification</h1>
+                <nav class="mt-0">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a routerLink="/dashboard">Dashboard</a></li>
+                        <li class="breadcrumb-item active">Notifications</li>
+                    </ol>
+                </nav>
+            </div>
+            <div class="col-8 ms-5 mt-4 text-center bg-light">
+                <div class="list-group">
+                    <a *ngFor="let e of employes" routerLink="/dashboard/contrat"
+                        class="list-group-item list-group-item-action my-1 py-4">
+                        <div class="row">
+                            <div class="col-3 mt-3">
+                                <i class="bi bi-info-circle m-1 text-danger"></i>
+                            </div>
+                            <div class="col-6">
+                                <div class="d-flex flex-column align-items-start">
+                                    <p class="mb-1 fw-bolder">{{ e.firstname }} {{ e.lastname }}</p>
+                                    <small>Le contrat va terminer le <span class="fw-bold">{{ formatDate(e.retraite)
+                                            }}</span></small>
+                                </div>
+                            </div>
+                            <div class="col-3 ">
+                                <small class="text-danger fw-bold ">{{ timeLeftValue(e.retraite) }}</small>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </main><!-- End #main -->
+</body>

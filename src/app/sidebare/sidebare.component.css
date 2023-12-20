@@ -2,8 +2,6 @@
     scroll-behavior: smooth;
 }
 
-
-
 a {
     color: #0080ff;
     text-decoration: none;
@@ -42,8 +40,6 @@ h6 {
     background-color: #fff;
 }
 
-
-
 .sidebar::-webkit-scrollbar {
     width: 5px;
     height: 8px;
@@ -54,13 +50,7 @@ h6 {
     background-color: #aab7cf;
 }
 
-
-.sidebar-nav {
-    padding: 0;
-    margin: 0;
-    list-style: none;
-}
-
+.sidebar-nav,
 .sidebar-nav li {
     padding: 0;
     margin: 0;
@@ -69,14 +59,6 @@ h6 {
 
 .sidebar-nav .nav-item {
     margin-bottom: 5px;
-}
-
-.sidebar-nav .nav-heading {
-    font-size: 11px;
-    text-transform: uppercase;
-    color: #899bbd;
-    font-weight: 600;
-    margin: 10px 0 5px 15px;
 }
 
 .sidebar-nav .nav-link {
@@ -113,6 +95,11 @@ h6 {
 
 .sidebar-nav .nav-link:hover i {
     color: #0080ff;
+}
+
+.sidebar-nav .nav-link.active {
+    color: #ff0000; /* Red color for the active link */
+    background: #f6f9ff;
 }
 
 .sidebar-nav .nav-link .bi-chevron-down {
@@ -156,119 +143,5 @@ h6 {
 .sidebar-nav .nav-content a.active i {
     background-color: #4154f1;
 }
+/* ... Your existing CSS ... */
 
-/*--------------------------------------------------------------
-# Override some default Bootstrap stylings
---------------------------------------------------------------*/
-/* Dropdown menus */
-.dropdown-menu {
-    border-radius: 4px;
-    padding: 10px 0;
-    animation-name: dropdown-animate;
-    animation-duration: 0.2s;
-    animation-fill-mode: both;
-    border: 0;
-    box-shadow: 0 5px 30px 0 rgba(82, 63, 105, 0.2);
-}
-
-.dropdown-menu .dropdown-header,
-.dropdown-menu .dropdown-footer {
-    text-align: center;
-    font-size: 15px;
-    padding: 10px 25px;
-}
-
-.dropdown-menu .dropdown-footer a {
-    color: #444444;
-    text-decoration: underline;
-}
-
-.dropdown-menu .dropdown-footer a:hover {
-    text-decoration: none;
-}
-
-.dropdown-menu .dropdown-divider {
-    color: #a5c5fe;
-    margin: 0;
-}
-
-.dropdown-menu .dropdown-item {
-    font-size: 14px;
-    padding: 10px 15px;
-    transition: 0.3s;
-}
-
-.dropdown-menu .dropdown-item i {
-    margin-right: 10px;
-    font-size: 18px;
-    line-height: 0;
-}
-
-.dropdown-menu .dropdown-item:hover {
-    background-color: #f6f9ff;
-}
-
-@media (min-width: 768px) {
-    .dropdown-menu-arrow::before {
-        content: "";
-        width: 13px;
-        height: 13px;
-        background: #fff;
-        position: absolute;
-        top: -7px;
-        right: 20px;
-        transform: rotate(45deg);
-        border-top: 1px solid #eaedf1;
-        border-left: 1px solid #eaedf1;
-    }
-}
-
-@keyframes dropdown-animate {
-    0% {
-        opacity: 0;
-    }
-
-    100% {
-        opacity: 1;
-    }
-
-    0% {
-        opacity: 0;
-    }
-}
-
-/* Light Backgrounds */
-.bg-primary-light {
-    background-color: #cfe2ff;
-    border-color: #cfe2ff;
-}
-
-.bg-secondary-light {
-    background-color: #e2e3e5;
-    border-color: #e2e3e5;
-}
-
-.bg-success-light {
-    background-color: #d1e7dd;
-    border-color: #d1e7dd;
-}
-
-.bg-danger-light {
-    background-color: #f8d7da;
-    border-color: #f8d7da;
-}
-
-.bg-warning-light {
-    background-color: #fff3cd;
-    border-color: #fff3cd;
-}
-
-.bg-info-light {
-    background-color: #cff4fc;
-    border-color: #cff4fc;
-}
-
-.bg-dark-light {
-    background-color: #d3d3d4;
-    border-color: #d3d3d4;
-}

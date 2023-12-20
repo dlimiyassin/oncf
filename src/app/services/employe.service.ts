@@ -14,6 +14,10 @@ export class EmployeService {
   getAllEmployes(): Observable<Employe[]> {
     return this.http.get<Employe[]>(this.apiUrl);
   }
+  getAllNotifications(): Observable<Employe[]> {
+    const url = `${this.apiUrl}/notify`;
+    return this.http.get<Employe[]>(url);
+  }
 
   // get un Employe par cne
   getEmployeById(id: number): Observable<Employe> {
@@ -36,5 +40,19 @@ export class EmployeService {
   deleteEmploye(id: number): Observable<void> {
     const url = `${this.apiUrl}/${id}`;
     return this.http.delete<void>(url);
+  }
+
+  timeLeft(date: Date | null): string {
+    if (!date || !(date instanceof Date)) {
+      return '';
+    }
+
+    const currentDate = new Date();
+    const differenceInMilliseconds = date.getTime() - currentDate.getTime();
+    const differenceInDays = Math.floor(
+      differenceInMilliseconds / (1000 * 60 * 60 * 24)
+    );
+
+    return `${differenceInDays} days left`;
   }
 }

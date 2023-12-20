@@ -28,6 +28,7 @@ export class EmployeComponent {
     rendement: 0,
     objectif: 0,
     atteint: 0,
+    retraite: new Date(),
     performanceComment: '',
   };
   newEmploye: Employe = {
@@ -40,6 +41,7 @@ export class EmployeComponent {
     rendement: 0,
     objectif: 0,
     atteint: 0,
+    retraite: new Date(),
     performanceComment: '',
   };
 
@@ -73,6 +75,7 @@ export class EmployeComponent {
         rendement: 0,
         objectif: 0,
         atteint: 0,
+        retraite: new Date(),
         performanceComment: '',
       };
       this.employeService

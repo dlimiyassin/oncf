@@ -13,6 +13,8 @@ import { afterAuthGuard } from './gaurds/after-auth.guard';
 import { ForgetPasswordComponent } from './email-verification/forget-password/forget-password.component';
 import { AskForEmailComponent } from './email-verification/ask-for-email/ask-for-email.component';
 import { NewPasswordComponent } from './email-verification/new-password/new-password.component';
+import { ContratNotificationComponent } from './contrat-notification/contrat-notification.component';
+import { DashboardLayoutComponent } from './dashboard-layout/dashboard-layout.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent, canActivate: [afterAuthGuard] },
@@ -32,11 +34,13 @@ const routes: Routes = [
   { path: 'new-password/:email', component: NewPasswordComponent },
   {
     path: 'dashboard',
+    component: DashboardLayoutComponent,
+    canActivate: [authGuard],
     children: [
       { path: '', component: DashboardComponent },
       { path: 'profile/:email', component: ProfileComponent },
+      { path: 'contrat', component: ContratNotificationComponent },
     ],
-    canActivate: [authGuard],
   },
 ];
 

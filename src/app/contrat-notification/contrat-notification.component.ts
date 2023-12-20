@@ -1,39 +1,22 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthService } from '../services/auth.service';
-import { ActivatedRoute, Router } from '@angular/router';
-import { AccountService } from '../services/account.service';
-import { TokenService } from '../services/token.service';
-import { User } from '../models/user.model';
-import { ToastrService } from 'ngx-toastr';
+import { Router } from '@angular/router';
 import { EmployeService } from '../services/employe.service';
-import { Employe } from '../models/employe.model';
 import { DatePipe } from '@angular/common';
+import { Employe } from '../models/employe.model';
 
 @Component({
-  selector: 'app-navbar',
-  templateUrl: './navbar.component.html',
-  styleUrls: ['./navbar.component.css'],
+  selector: 'app-contrat-notification',
+  templateUrl: './contrat-notification.component.html',
+  styleUrls: ['./contrat-notification.component.css'],
 })
-export class NavbarComponent implements OnInit {
-  public loggedIn: boolean = false;
-  public tokenInfos: any = null;
-  user!: User;
+export class ContratNotificationComponent implements OnInit {
   employes: Employe[] = [];
   constructor(
-    public authservice: AuthService,
     private router: Router,
-    private account: AccountService,
-    private token: TokenService,
-    private toaster: ToastrService,
     private employe: EmployeService,
     private datePipe: DatePipe
   ) {}
-
   ngOnInit(): void {
-    this.account.authStatus.subscribe((value) => {
-      this.loggedIn = value;
-      this.tokenInfos = this.token.getInfos();
-    });
     this.employe.getAllNotifications().subscribe({
       next: (employes) => {
         this.employes = employes.map(
@@ -58,19 +41,9 @@ export class NavbarComponent implements OnInit {
       },
     });
   }
-  handleLogout() {
-    this.token.remove();
-    this.account.changeAuthStatus(false);
-    this.router.navigateByUrl('/login');
-    this.toaster.success('You logged out successfully', 'Success', {
-      timeOut: 3000,
-    });
-  }
-
   formatDate(date: Date | null): string {
     return this.datePipe.transform(date, 'yyyy-MM-dd') ?? '';
   }
-
   timeLeftValue(date: Date): string {
     return this.employe.timeLeft(date);
   }

@@ -8,7 +8,7 @@
   </div><!-- End Logo -->
 
   <div *ngIf="loggedIn" class="search-bar mt-3 " style="margin-left: auto;">
-    
+
     <form class="search-form d-flex align-items-center" method="POST" action="#">
       <input type="text" name="query" placeholder="Search" title="Enter search keyword">
       <button type="submit" title="Search"><i class="bi bi-search"></i></button>
@@ -36,28 +36,21 @@
 
         <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow notifications">
 
-          <li class="notification-item">
+          <li *ngFor="let e of employes.slice(0, 3)" class="notification-item">
             <i class="bi bi-info-circle text-danger"></i>
-            <div>
-              <h4>Achraf Kamal</h4>
-              <p>contrat va terminer le 01/01/2025</p>
-              <p>1 an, 1 mois</p>
+            <div> 
+              <h4>{{ e.firstname }} {{ e.lastname }}</h4>
+              <p>contrat va terminer le <span class="fw-bold">{{ formatDate(e.retraite) }}</span> </p>
+              <p class="text-danger">{{ timeLeftValue(e.retraite) }}</p>
             </div>
           </li>
 
           <li>
             <hr class="dropdown-divider">
           </li>
-
-          <li class="notification-item">
-            <i class="bi bi-check-circle text-success"></i>
-            <div>
-              <h4>Achraf Kamal</h4>
-              <p>contrat va terminer le 01/01/2025</p>
-              <p>1 an, 1 mois</p>
-            </div>
-          </li>
-
+          <div class="text-center">
+            <a class="link-primary" routerLink="/dashboard/contrat">Show All</a>
+          </div>
         </ul><!-- End Notification Dropdown Items -->
 
       </li><!-- End Notification Nav -->
@@ -65,7 +58,7 @@
       <li class="nav-item dropdown pe-3">
 
         <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
-           <img src="../assets/images/profile.jpg" alt="Profile" class="rounded-circle"> 
+          <img src="../assets/images/profile.jpg" alt="Profile" class="rounded-circle">
           <span class="d-none d-md-block dropdown-toggle ps-2">Y. Dlimi </span>
         </a><!-- End Profile Iamge Icon -->
 

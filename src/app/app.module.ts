@@ -24,6 +24,8 @@ import { AskForEmailComponent } from './email-verification/ask-for-email/ask-for
 import { NewPasswordComponent } from './email-verification/new-password/new-password.component';
 import { ToastrModule } from 'ngx-toastr';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { ContratNotificationComponent } from './contrat-notification/contrat-notification.component';
+import { DashboardLayoutComponent } from './dashboard-layout/dashboard-layout.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -41,6 +43,8 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     ForgetPasswordComponent,
     AskForEmailComponent,
     NewPasswordComponent,
+    ContratNotificationComponent,
+    DashboardLayoutComponent,
   ],
   imports: [
     BrowserModule,

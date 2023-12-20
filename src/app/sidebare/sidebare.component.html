@@ -3,8 +3,8 @@
 
     <ul class="sidebar-nav" id="sidebar-nav">
 
-        <li class="nav-item">
-            <a class="nav-link " href="/">
+        <li class="nav-item" routerLinkActive="active">
+            <a class="nav-link " routerLink="/">
                 <i class="bi bi-grid"></i>
                 <span>Dashboard</span>
             </a>
@@ -17,33 +17,13 @@
             </a>
             <ul id="components-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
                 <li>
-                    <a href="/">
-                        <i class="bi bi-circle"></i><span>Formation et developement</span>
+                    <a routerLink="/dashboard/contrat" routerLinkActive="active">
+                        <i class="bi bi-circle"></i><span>Contrats</span>
                     </a>
                 </li>
                 <li>
-                    <a href="/">
+                    <a  routerLinkActive="active" >
                         <i class="bi bi-circle"></i><span>Gestion de carriere</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="/">
-                        <i class="bi bi-circle"></i><span>Remuneration</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="/">
-                        <i class="bi bi-circle"></i><span>S.M.S</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="/">
-                        <i class="bi bi-circle"></i><span>Stagaires militaires</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="/">
-                        <i class="bi bi-circle"></i><span>Securite</span>
                     </a>
                 </li>
             </ul>

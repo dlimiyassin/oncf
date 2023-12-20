@@ -1,6 +1,6 @@
-<div class="m-5">
+<div class="">
   <button class="btn btn-primary mt-4 m-2" (click)="ajouterEmployeModal(AjouterModal)">Ajouter un
-    employe:</button>
+    employe</button>
   <div class="card">
     <div class="card-header">Liste des employes:</div>
     <div class="card-body">
@@ -9,22 +9,24 @@
           <th>cni</th>
           <th>Prénom</th>
           <th>Nom</th>
-          <th>birth date</th>
-          <th>rendement</th>
-          <th>objectif</th>
-          <th>atteint</th>
+          <th class="px-1">Birth date</th>
+          <th class="px-1">Rend.</th>
+          <th class="px-1">Obj.</th>
+          <th class="px-1">Atteint</th>
+          <th class="px-1">Retraite</th>
           <th>Modifier</th>
           <th>Supprimer</th>
         </thead>
         <tbody>
           <tr *ngFor="let e of employes">
-            <td>{{e.cni}}</td>
-            <td>{{e.lastname}}</td>
-            <td>{{e.firstname}}</td>
-            <td>{{formatDate(e.birthDate)}}</td>
-            <td>{{e.rendement}}</td>
-            <td>{{e.objectif}}</td>
-            <td>{{e.atteint}}%</td>
+            <td class="px-1">{{e.cni}}</td>
+            <td class="px-1">{{e.lastname}}</td>
+            <td class="px-1">{{e.firstname}}</td>
+            <td class="px-1">{{formatDate(e.birthDate)}}</td>
+            <td class="px-1">{{e.rendement}}</td>
+            <td class="px-1">{{e.objectif}}</td>
+            <td class="px-1">{{e.atteint}}%</td>
+            <td class="px-1">{{formatDate(e.retraite)}}</td>
             <td><button class="btn btn-success" (click)="modifierEmployeModal(modifierEmployee, e.id)"><i class="bi bi-pencil"></i></button></td>
             <td><button class="btn btn-danger" (click)="supprimerEmploye(e.id)"><i class="bi bi-trash"></i></button>
             </td>
