@@ -4,17 +4,6 @@
     transition: all 0.3s;
 }
 
-@media (max-width: 1199px) {
-    #main {
-        padding: 20px;
-    }
-}
-
-body {
-    font-family: "Open Sans", sans-serif;
-    background: #f6f9ff;
-    color: #444444;
-}
 
 .pagetitle {
     margin-bottom: 10px;

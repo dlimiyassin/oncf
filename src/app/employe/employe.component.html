@@ -1,33 +1,40 @@
-<div class="">
-  <button class="btn btn-primary mt-4 m-2" (click)="ajouterEmployeModal(AjouterModal)">Ajouter un
-    employe</button>
-  <div class="card">
-    <div class="card-header">Liste des employes:</div>
-    <div class="card-body">
-      <table class="table">
+<div class="col-12 mt-5">
+  <div class="d-flex justify-content-between mb-0 mt-4">
+    <button class="btn btn-primary fw-bold mb-3" (click)="ajouterEmployeModal(AjouterModal)">Add New Employe</button>
+    <div class="search-bar me-5 pe-5 pe-3 w-50">
+      <form class="search-form d-flex align-items-center" method="POST" action="#">
+        <input type="text" name="query" placeholder="Search" title="Enter search keyword">
+        <button type="submit" title="Search"><i class="bi bi-search"></i></button>
+      </form>
+    </div><!-- End Search Bar -->
+  </div>
+  <div class="card me-3">
+    <div class="card-body table-responsive-xl ">
+      <table class="table table-hover table-striped">
         <thead>
-          <th>cni</th>
-          <th>Prénom</th>
-          <th>Nom</th>
-          <th class="px-1">Birth date</th>
-          <th class="px-1">Rend.</th>
-          <th class="px-1">Obj.</th>
-          <th class="px-1">Atteint</th>
-          <th class="px-1">Retraite</th>
-          <th>Modifier</th>
-          <th>Supprimer</th>
+          <th class="pb-2 pt-0 ">CNI</th>
+          <th class="pb-2 pt-0">First Name</th>
+          <th class="pb-2 pt-0">Last Name</th>
+          <th class="pb-2 pt-0">Goal</th>
+          <th class="pb-2 pt-0">Reach</th>
+          <th class="pb-2 pt-0">Prod.</th>
+          <th class="pb-2 pt-0">Birthdate</th>
+          <th class="pb-2 pt-0">Retirement</th>
+          <th class="pb-2 pt-0">Update</th>
+          <th class="pb-2 pt-0">Delete</th>
         </thead>
         <tbody>
-          <tr *ngFor="let e of employes">
+          <tr class="align-middle" *ngFor="let e of employes">
             <td class="px-1">{{e.cni}}</td>
             <td class="px-1">{{e.lastname}}</td>
             <td class="px-1">{{e.firstname}}</td>
-            <td class="px-1">{{formatDate(e.birthDate)}}</td>
-            <td class="px-1">{{e.rendement}}</td>
             <td class="px-1">{{e.objectif}}</td>
+            <td class="px-1">{{e.rendement}}</td>
             <td class="px-1">{{e.atteint}}%</td>
+            <td class="px-1">{{formatDate(e.birthDate)}}</td>
             <td class="px-1">{{formatDate(e.retraite)}}</td>
-            <td><button class="btn btn-success" (click)="modifierEmployeModal(modifierEmployee, e.id)"><i class="bi bi-pencil"></i></button></td>
+            <td><button class="btn btn-success" (click)="modifierEmployeModal(modifierEmployee, e.id)"><i
+                  class="bi bi-pencil"></i></button></td>
             <td><button class="btn btn-danger" (click)="supprimerEmploye(e.id)"><i class="bi bi-trash"></i></button>
             </td>
           </tr>
@@ -48,7 +55,8 @@
       </div>
       <div class="mb-2">
         <label for="lastname" class="form-label">Nom:</label>
-        <input type="text" class="form-control" id="lastname" [(ngModel)]="newEmploye.lastname" name="lastname" required>
+        <input type="text" class="form-control" id="lastname" [(ngModel)]="newEmploye.lastname" name="lastname"
+          required>
       </div>
       <div class="mb-2">
         <label for="firstname" class="form-label">Prénom:</label>
@@ -99,17 +107,18 @@
         </div>
         <div class="mb-2">
           <label for="firstname" class="form-label">Prénom :</label>
-          <input type="text" class="form-control" id="firstname" [(ngModel)]="employe.firstname" name="firstname" required>
+          <input type="text" class="form-control" id="firstname" [(ngModel)]="employe.firstname" name="firstname"
+            required>
         </div>
-    
+
         <div class="mb-2">
           <label for="email" class="form-label">Email :</label>
           <input type="email" class="form-control" id="email" [(ngModel)]="employe.email" name="email" required>
         </div>
         <div class="mb-2">
           <label for="birthDate" class="form-label">Date de naissance :</label>
-          <input type="date" class="form-control" id="birthDate" [ngModel]="formatDate(employe.birthDate)" name="birthDate"
-            required>
+          <input type="date" class="form-control" id="birthDate" [ngModel]="formatDate(employe.birthDate)"
+            name="birthDate" required>
         </div>
         <div class="mb-2">
           <label for="rendement" class="form-label">Rendement :</label>
@@ -118,7 +127,8 @@
         </div>
         <div class="mb-2">
           <label for="objectif" class="form-label">Objectif :</label>
-          <input type="number" class="form-control" id="objectif" [(ngModel)]="employe.objectif" name="objectif" required>
+          <input type="number" class="form-control" id="objectif" [(ngModel)]="employe.objectif" name="objectif"
+            required>
         </div>
       </div>
       <div class="modal-footer">
@@ -127,5 +137,3 @@
       </div>
     </form>
   </ng-template>
-
-

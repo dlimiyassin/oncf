@@ -1,9 +1,4 @@
-#main {
-    padding: 20px 30px;
-    transition: all 0.3s;
-}
-body {
-    font-family: "Open Sans", sans-serif;
-    background: #f6f9ff;
-    color: #444444;
+.custom-icon-size {
+    font-size: 44px;
+    /* Adjust the size as needed */
 }
