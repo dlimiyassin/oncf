@@ -2,9 +2,9 @@
   <div class="d-flex justify-content-between mb-0 mt-4">
     <button class="btn btn-primary fw-bold mb-3" (click)="ajouterEmployeModal(AjouterModal)">Add New Employe</button>
     <div class="search-bar me-5 pe-5 pe-3 w-50">
-      <form class="search-form d-flex align-items-center" method="POST" action="#">
-        <input type="text" name="query" placeholder="Search" title="Enter search keyword">
-        <button type="submit" title="Search"><i class="bi bi-search"></i></button>
+      <form class="search-form d-flex align-items-center" (ngSubmit)="searchEmployee()">
+        <input type="text" placeholder="Search" [(ngModel)]="keyword" [ngModelOptions]="{standalone: true}">
+        <button type="submit"><i class="bi bi-search"></i></button>
       </form>
     </div><!-- End Search Bar -->
   </div>
@@ -23,6 +23,9 @@
           <th class="pb-2 pt-0">Update</th>
           <th class="pb-2 pt-0">Delete</th>
         </thead>
+        <tbody *ngIf="employes.length === 0">
+          <td colspan="20" class="alert alert-info text-center rounded-4 border-0">No Records found ...!</td>
+        </tbody>
         <tbody>
           <tr class="align-middle" *ngFor="let e of employes">
             <td class="px-1">{{e.cni}}</td>

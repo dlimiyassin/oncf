@@ -14,6 +14,10 @@ export class EmployeService {
   getAllEmployes(): Observable<Employe[]> {
     return this.http.get<Employe[]>(this.apiUrl);
   }
+  searchEmployes(keyword: string): Observable<Employe[]> {
+    const url = `${this.apiUrl}/search/${keyword}`;
+    return this.http.get<Employe[]>(url);
+  }
   getAllNotifications(): Observable<Employe[]> {
     const url = `${this.apiUrl}/notify`;
     return this.http.get<Employe[]>(url);
@@ -55,5 +59,4 @@ export class EmployeService {
 
     return `${differenceInDays} days left`;
   }
-
 }

@@ -44,8 +44,8 @@ export class EmployeComponent {
     retraite: new Date(),
     performanceComment: '',
   };
-
-  closeResult!: string;
+  keyword!: string; // fro search on table
+  closeResult!: string; // for modal pop up
 
   constructor(
     private employeService: EmployeService,
@@ -60,6 +60,12 @@ export class EmployeComponent {
     this.employeService
       .getAllEmployes()
       .subscribe((employes) => (this.employes = employes));
+  }
+  searchEmployee() {
+    this.employeService.searchEmployes(this.keyword).subscribe({
+      next : value => {this.employes = value; console.log(value) },
+      error : err => { console.log(err) }
+    })
   }
 
   /*--------------------------------- TRAITEMENT DE L'AJOUT ----------------------------- */
