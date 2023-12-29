@@ -37,10 +37,12 @@ public class SecurityConfiguration {
                 .csrf()
                 .disable()
                 .authorizeHttpRequests()
-                .requestMatchers("/api/auth/**")
-                .permitAll()
-                .anyRequest()
-                .authenticated()
+
+                .requestMatchers( "/api/auth/**").permitAll()
+
+                .requestMatchers(AUTH_WHITELIST).permitAll()
+
+                .anyRequest().authenticated()
                 .and()
                 .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
@@ -50,5 +52,18 @@ public class SecurityConfiguration {
 
         return http.build();
     }
+    private static final String[] AUTH_WHITELIST ={
 
+            "/v1/api/auth/**",
+            "/v2/api-docs",
+            "/v3/api-docs",
+            "/v3/api-docs/**",
+            "/swagger-resources",
+            "/swagger-resources/**",
+            "/configuration/ui",
+            "/configuration/security",
+            "/swagger-ui/**",
+            "/webjars/**",
+            "/swagger-ui.html"
+    };
 }

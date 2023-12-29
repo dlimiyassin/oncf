@@ -5,8 +5,10 @@ import com.example.amigos.employe.Employe;
 import com.example.amigos.service.EmployeService;
 import com.example.amigos.user.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -17,9 +19,19 @@ public class EmployeController {
     @Autowired
     EmployeService employeService;
 
+//    @GetMapping()
+//    public List<Employe> getAllEmploye(){
+//        return employeService.getAllEmploye();
+//    }
     @GetMapping()
-    public List<Employe> getAllEmploye(){
-        return employeService.getAllEmploye();
+    public List<Employe> getAllUsers(@RequestParam(value = "keyword", defaultValue = "") String keyword,
+                                     @RequestParam(value = "page", defaultValue = "1") int page,
+                                     @RequestParam(value = "size", defaultValue = "5") int size){
+        return employeService.getAllEmployes(page,size,keyword);
+    }
+    @GetMapping("/search/{keyword}")
+    public List<Employe> searchEmploye(@PathVariable String keyword){
+        return employeService.searchEmploye(keyword);
     }
 
     @GetMapping("/notify")
