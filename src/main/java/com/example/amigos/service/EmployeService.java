@@ -36,7 +36,7 @@ public class EmployeService {
  //      return employeRepository.findAll();
  //  }
 
-    public List<Employe> getAllEmployes(int page, int size, String keyword) {
+    public Page<Employe> getAllEmployes(int page, int size, String keyword) {
         if (page > 0) page -= 1;
         Pageable Pageable= PageRequest.of(page, size);
         Page<Employe> employePage;
@@ -46,7 +46,7 @@ public class EmployeService {
         }else{
             employePage = employeRepository.findAll(Pageable);
         }
-        return employePage.getContent();
+        return employePage;
     }
     public List<Employe> getAllNotifications(){
         return employeRepository.findEmployeesWithRetirementInNext3Months();
@@ -82,7 +82,4 @@ public class EmployeService {
        return Optional.of(userRepository.save(updatedUser));
     }
 
-    public List<Employe> searchEmploye(String keyword) {
-       return employeRepository.findByKeyword(keyword);
-    }
 }

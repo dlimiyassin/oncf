@@ -24,8 +24,6 @@ public interface EmployeRepository extends PagingAndSortingRepository<Employe, L
     @Query("SELECT e FROM Employe e WHERE TIMESTAMPDIFF(DAY, CURRENT_DATE, e.retraite) BETWEEN 0 AND 90 ORDER BY e.retraite")
     List<Employe> findEmployeesWithRetirementInNext3Months();
 
-    @Query(value = "SELECT * FROM employe e WHERE ( e.firstname LIKE %:keyword% OR e.lastname LIKE %:keyword% )", nativeQuery = true )
-    List<Employe> findByKeyword(@Param("keyword") String keyword);
     @Query(value = "SELECT * FROM employe e WHERE ( e.firstname LIKE %:keyword% OR e.lastname LIKE %:keyword% )",
             countQuery = "SELECT count(*) FROM employe e WHERE ( e.firstname LIKE %:keyword% OR e.lastname LIKE %:keyword% )",
             nativeQuery = true)
