@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Employe } from '../models/employe.model';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
+import { EmployeResponse } from '../models/employe-response.model';
 
 @Injectable({
   providedIn: 'root',
@@ -11,12 +12,13 @@ export class EmployeService {
 
   constructor(private http: HttpClient) {}
 
-  getAllEmployes(): Observable<Employe[]> {
-    return this.http.get<Employe[]>(this.apiUrl);
-  }
-  searchEmployes(keyword: string): Observable<Employe[]> {
-    const url = `${this.apiUrl}/search/${keyword}`;
-    return this.http.get<Employe[]>(url);
+  getAllEmployes(
+    keyword: string = '',
+    page: number,
+    size: number
+  ): Observable<EmployeResponse> {
+    const url = `${this.apiUrl}?keyword=${keyword}&page=${page}&size=${size}`;
+    return this.http.get<EmployeResponse>(url);
   }
   getAllNotifications(): Observable<Employe[]> {
     const url = `${this.apiUrl}/notify`;

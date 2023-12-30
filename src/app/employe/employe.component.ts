@@ -1,15 +1,11 @@
 import { Component } from '@angular/core';
 import { Employe } from '../models/employe.model';
 import { EmployeService } from '../services/employe.service';
-import {
-  NgbActiveModal,
-  NgbModal,
-  ModalDismissReasons,
-} from '@ng-bootstrap/ng-bootstrap';
-import { Router } from '@angular/router';
-import { NgForm } from '@angular/forms';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { DatePipe } from '@angular/common';
 import { ToastrService } from 'ngx-toastr';
+import { EmployeResponse } from '../models/employe-response.model';
+import { NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-employe',
@@ -44,12 +40,14 @@ export class EmployeComponent {
     retraite: new Date(),
     performanceComment: '',
   };
-  keyword!: string; // fro search on table
+  keyword: string = ''; // fro search on table
+  currentPage: number = 1;
+  pageSize: number = 7;
+  totalPages: number = 0;
   closeResult!: string; // for modal pop up
 
   constructor(
     private employeService: EmployeService,
-    private router: Router,
     private datePipe: DatePipe,
     private modalService: NgbModal,
     private toaster: ToastrService
@@ -57,15 +55,33 @@ export class EmployeComponent {
 
   /*--------------------------------- fETCH DATA FOR TABLE ----------------------------- */
   ngOnInit(): void {
-    this.employeService
-      .getAllEmployes()
-      .subscribe((employes) => (this.employes = employes));
+    this.FetchEmployes();
   }
-  searchEmployee() {
-    this.employeService.searchEmployes(this.keyword).subscribe({
-      next : value => {this.employes = value; console.log(value) },
-      error : err => { console.log(err) }
-    })
+  FetchEmployes() {
+    this.employeService
+      .getAllEmployes(this.keyword, this.currentPage, this.pageSize)
+      .subscribe((response: EmployeResponse) => {
+        this.employes = response.content;
+        this.totalPages = response.totalPages;
+      });
+  }
+  /*-------------------------------------- Pagination ------------------------------------ */
+  handleGoToPage(keyword? : string, page?: number ) {
+    this.currentPage = page || 1 ;
+    this.keyword = keyword || '';
+    this.FetchEmployes();
+  }
+  handleNext() {
+    if (this.currentPage < this.totalPages) {
+      this.currentPage++;
+      this.FetchEmployes();
+    }
+  }
+  handlePrevious() {
+    if (this.currentPage > 1) {
+      this.currentPage--;
+      this.FetchEmployes();
+    }
   }
 
   /*--------------------------------- TRAITEMENT DE L'AJOUT ----------------------------- */
@@ -85,8 +101,11 @@ export class EmployeComponent {
         performanceComment: '',
       };
       this.employeService
-        .getAllEmployes()
-        .subscribe((employes) => (this.employes = employes));
+        .getAllEmployes(this.keyword, this.currentPage, this.pageSize)
+        .subscribe((response: EmployeResponse) => {
+          this.employes = response.content;
+          this.totalPages = response.totalPages;
+        });
       this.modalService.dismissAll();
     });
     this.toaster.success('New empolye added successfully', 'Success', {
@@ -110,10 +129,13 @@ export class EmployeComponent {
   /*--------------------------------- TRAITEMENT DE LA MODIFICATION ----------------------------- */
   modifierEmploye() {
     this.employeService.updateEmploye(this.employe).subscribe(() => {
-      this.employeService.getAllEmployes().subscribe((employes) => {
-        this.employes = employes;
-        this.modalService.activeInstances.closed;
-      });
+      this.employeService
+        .getAllEmployes(this.keyword, this.currentPage, this.pageSize)
+        .subscribe((response: EmployeResponse) => {
+          this.employes = response.content;
+          this.totalPages = response.totalPages;
+          this.modalService.activeInstances.closed;
+        });
     });
     this.toaster.warning('The empolye modified successfully', 'Warning', {
       timeOut: 3000,

@@ -2,8 +2,8 @@
   <div class="d-flex justify-content-between mb-0 mt-4">
     <button class="btn btn-primary fw-bold mb-3" (click)="ajouterEmployeModal(AjouterModal)">Add New Employe</button>
     <div class="search-bar me-5 pe-5 pe-3 w-50">
-      <form class="search-form d-flex align-items-center" (ngSubmit)="searchEmployee()">
-        <input type="text" placeholder="Search" [(ngModel)]="keyword" [ngModelOptions]="{standalone: true}">
+      <form #searchFrom="ngForm" class="search-form d-flex align-items-center" (ngSubmit)="handleGoToPage(searchFrom.value.name)">
+        <input type="text" name="name" placeholder="Search" ngModel>
         <button type="submit"><i class="bi bi-search"></i></button>
       </form>
     </div><!-- End Search Bar -->
@@ -45,6 +45,25 @@
       </table>
     </div>
   </div>
+  <nav aria-label="Page navigation example" class="mt-4">
+    <ul class="pagination justify-content-center">
+      <li class="page-item m-1" [class.disabled]="currentPage == 1">
+        <button (click)="handlePrevious()" class="page-link btn" aria-label="Previous">
+          <span style="color: #0080ff; font-weight:600;" aria-hidden="true">&laquo; Previous</span>
+        </button>
+      </li>
+      <li *ngFor="let Page of [].constructor(totalPages); let i = index;" class="page-item">
+        <button [ngClass]="currentPage==(i+1)?'btn btn-primary m-1':'page-link btn m-1'" (click)="handleGoToPage('',i+1)">
+          {{ i + 1 }}
+        </button>
+      </li>
+      <li class="page-item m-1" [class.disabled]="currentPage == totalPages">
+        <button (click)="handleNext()" class="page-link btn" aria-label="Next">
+          <span style="color: #0080ff; font-weight:600;" aria-hidden="true">Next &raquo;</span>
+        </button>
+      </li>
+    </ul>
+  </nav>
 
   <!-- ajouter Modal -->
   <ng-template #AjouterModal let-modal>
