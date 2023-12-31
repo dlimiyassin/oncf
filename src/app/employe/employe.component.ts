@@ -1,15 +1,11 @@
 import { Component } from '@angular/core';
 import { Employe } from '../models/employe.model';
 import { EmployeService } from '../services/employe.service';
-import {
-  NgbActiveModal,
-  NgbModal,
-  ModalDismissReasons,
-} from '@ng-bootstrap/ng-bootstrap';
-import { Router } from '@angular/router';
-import { NgForm } from '@angular/forms';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { DatePipe } from '@angular/common';
 import { ToastrService } from 'ngx-toastr';
+import { EmployeResponse } from '../models/employe-response.model';
+import { NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-employe',
@@ -50,12 +46,10 @@ export class EmployeComponent {
     retraite: new Date(),
     performanceComment: '',
   };
-
-  closeResult!: string;
+  closeResult!: string; // for modal pop up
 
   constructor(
     private employeService: EmployeService,
-    private router: Router,
     private datePipe: DatePipe,
     private modalService: NgbModal,
     private toaster: ToastrService
@@ -63,42 +57,33 @@ export class EmployeComponent {
 
   /*--------------------------------- fETCH DATA FOR TABLE ----------------------------- */
   ngOnInit(): void {
-    this.getEmployes();
+    this.FetchEmployes();
   }
-
-
-  previousPage() {
-    if (this.currentPage > 0) {
-      this.currentPage--;
-      this.getEmployes();
-    }
+  FetchEmployes() {
+    this.employeService
+      .getAllEmployes(this.keyword, this.currentPage, this.pageSize)
+      .subscribe((response: EmployeResponse) => {
+        this.employes = response.content;
+        this.totalPages = response.totalPages;
+      });
   }
-
-  nextPage() {
-    if (this.currentPage < this.totalPages - 1) {
+  /*-------------------------------------- Pagination ------------------------------------ */
+  handleGoToPage(keyword? : string, page?: number ) {
+    this.currentPage = page || 1 ;
+    this.keyword = keyword || '';
+    this.FetchEmployes();
+  }
+  handleNext() {
+    if (this.currentPage < this.totalPages) {
       this.currentPage++;
-      this.getEmployes();
+      this.FetchEmployes();
     }
   }
-
-  goToPage(page : number){
-  this.currentPage=page;
-  this.getEmployes();
-  }
-
-  getEmployes(){
-    this.employeService.getAllEmployes(this.keyword,this.currentPage,this.pageSize).
-    subscribe({
-      next : (resp) =>{
-        this.employes = resp.body as Employe[];
-        let totalEmployes : number = parseInt(resp.headers.get('x-total-count')!);
-        this.totalPages = Math.floor(totalEmployes/this.pageSize);
-        if( totalEmployes % this.pageSize !=0){
-          this.totalPages=this.totalPages+1;
-        }
-        console.log(totalEmployes);
-      }
-    })
+  handlePrevious() {
+    if (this.currentPage > 1) {
+      this.currentPage--;
+      this.FetchEmployes();
+    }
   }
 
   /*--------------------------------- TRAITEMENT DE L'AJOUT ----------------------------- */
@@ -117,20 +102,12 @@ export class EmployeComponent {
         retraite: new Date(),
         performanceComment: '',
       };
-
-    // Abonnez-vous à l'observable getAllEmployes pour mettre à jour le tableau des employés
-    this.employeService.getAllEmployes(this.keyword,this.currentPage, this.pageSize).subscribe({
-      next: (resp) => {
-        this.employes = resp.body as Employe[];
-        let totalEmployes: number = parseInt(resp.headers.get('x-total-count')!);
-        this.totalPages = Math.floor(totalEmployes / this.pageSize);
-        if (totalEmployes % this.pageSize !== 0) {
-          this.totalPages = this.totalPages + 1;
-        }
-        console.log(totalEmployes);
-      },
-    });
-    this.employeService.getAllEmployes(this.keyword,this.currentPage,this.pageSize);
+      this.employeService
+        .getAllEmployes(this.keyword, this.currentPage, this.pageSize)
+        .subscribe((response: EmployeResponse) => {
+          this.employes = response.content;
+          this.totalPages = response.totalPages;
+        });
       this.modalService.dismissAll();
     });
     this.toaster.success('New empolye added successfully', 'Success', {
@@ -165,12 +142,13 @@ export class EmployeComponent {
   // }
   modifierEmploye() {
     this.employeService.updateEmploye(this.employe).subscribe(() => {
-      // Mettez à jour la liste existante avec le nouvel employé modifié
-      const index = this.employes.findIndex(e => e.id === this.employe.id);
-      if (index !== -1) {
-        this.employes[index] = this.employe;
-      }
-      this.modalService.activeInstances.closed;
+      this.employeService
+        .getAllEmployes(this.keyword, this.currentPage, this.pageSize)
+        .subscribe((response: EmployeResponse) => {
+          this.employes = response.content;
+          this.totalPages = response.totalPages;
+          this.modalService.activeInstances.closed;
+        });
     });
     this.toaster.warning('The employee modified successfully', 'Warning', {
       timeOut: 3000,

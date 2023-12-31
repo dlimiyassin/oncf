@@ -1,7 +1,9 @@
 import { Injectable } from '@angular/core';
 import { Employe } from '../models/employe.model';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
+import { EmployeResponse } from '../models/employe-response.model';
+
 
 @Injectable({
   providedIn: 'root',
@@ -11,16 +13,16 @@ export class EmployeService {
 
   constructor(private http: HttpClient) {}
 
-  getAll(): Observable<Employe[]> {
-    return this.http.get<Employe[]>(this.apiUrl);
-  }
 
-  getAllEmployes(keyword : string , page : number  , size : number ){
+  getAllEmployes(
+    keyword: string = '',
+    page: number,
+    size: number
+  ): Observable<EmployeResponse> {
     const url = `${this.apiUrl}?keyword=${keyword}&page=${page}&size=${size}`;
-    return this.http.get(url,{observe:'response'});
+    return this.http.get<EmployeResponse>(url);
   }
-
-
+  
   getAllNotifications(): Observable<Employe[]> {
     const url = `${this.apiUrl}/notify`;
     return this.http.get<Employe[]>(url);
@@ -62,14 +64,4 @@ export class EmployeService {
 
     return `${differenceInDays} days left`;
   }
-
-  //******************Search************
-
-  searchEmployes(keyword: string, page: number, size: number): Observable<Employe[]> {
-    const url = `${this.apiUrl}/search?keyword=${keyword}&page=${page}&size=${size}`;
-    return this.http.get<Employe[]>(url);
-  }
-
-
-
 }
