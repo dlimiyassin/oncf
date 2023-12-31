@@ -2,12 +2,13 @@
   <div class="d-flex justify-content-between mb-0 mt-4">
     <button class="btn btn-primary fw-bold mb-3" (click)="ajouterEmployeModal(AjouterModal)">Add New Employe</button>
     <div class="search-bar me-5 pe-5 pe-3 w-50">
-      <form class="search-form d-flex align-items-center" method="POST" action="#">
-        <input type="text" name="query" placeholder="Search" title="Enter search keyword">
+      <form (submit)="getEmployes()" class="search-form d-flex align-items-center" method="POST" action="#">
+        <input type="text" [(ngModel)]="keyword" name="query" placeholder="Search" title="Enter search keyword">
         <button type="submit" title="Search"><i class="bi bi-search"></i></button>
       </form>
     </div><!-- End Search Bar -->
   </div>
+
   <div class="card me-3">
     <div class="card-body table-responsive-xl ">
       <table class="table table-hover table-striped">
@@ -40,7 +41,25 @@
           </tr>
         </tbody>
       </table>
+
+      <div class="d-flex justify-content-center">
+        <button (click)="previousPage()" [disabled]="currentPage === 0" class="btn btn-outline-primary m-1">Previous</button>
+        <ul class="nav nav-pills">
+          <li *ngFor="let page of [].constructor(this.totalPages); let i=index">
+            <button (click)="goToPage(i)"
+              [ngClass]="currentPage==i?'btn btn-primary m-1':'btn btn-outline-primary m-1'">
+              {{i+1}}
+            </button>
+          </li>
+        </ul>
+        <button (click)="nextPage()" [disabled]="currentPage === totalPages - 1" class="btn btn-outline-primary m-1">Next</button>
+      </div>
+
     </div>
+
+  </div>
+
+
   </div>
 
   <!-- ajouter Modal -->

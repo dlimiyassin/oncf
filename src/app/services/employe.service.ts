@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Employe } from '../models/employe.model';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root',
@@ -11,9 +11,16 @@ export class EmployeService {
 
   constructor(private http: HttpClient) {}
 
-  getAllEmployes(): Observable<Employe[]> {
+  getAll(): Observable<Employe[]> {
     return this.http.get<Employe[]>(this.apiUrl);
   }
+
+  getAllEmployes(keyword : string , page : number  , size : number ){
+    const url = `${this.apiUrl}?keyword=${keyword}&page=${page}&size=${size}`;
+    return this.http.get(url,{observe:'response'});
+  }
+
+
   getAllNotifications(): Observable<Employe[]> {
     const url = `${this.apiUrl}/notify`;
     return this.http.get<Employe[]>(url);
@@ -55,5 +62,14 @@ export class EmployeService {
 
     return `${differenceInDays} days left`;
   }
+
+  //******************Search************
+
+  searchEmployes(keyword: string, page: number, size: number): Observable<Employe[]> {
+    const url = `${this.apiUrl}/search?keyword=${keyword}&page=${page}&size=${size}`;
+    return this.http.get<Employe[]>(url);
+  }
+
+
 
 }

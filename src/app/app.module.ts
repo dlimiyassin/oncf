@@ -26,6 +26,7 @@ import { ToastrModule } from 'ngx-toastr';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ContratNotificationComponent } from './contrat-notification/contrat-notification.component';
 import { DashboardLayoutComponent } from './dashboard-layout/dashboard-layout.component';
+import { NgxPaginationModule } from 'ngx-pagination';
 @NgModule({
   declarations: [
     AppComponent,
@@ -53,8 +54,10 @@ import { DashboardLayoutComponent } from './dashboard-layout/dashboard-layout.co
     FormsModule,
     HttpClientModule,
     BrowserAnimationsModule,
-    BrowserAnimationsModule, 
-    ToastrModule.forRoot(), NgbModule, 
+    BrowserAnimationsModule,
+    ToastrModule.forRoot(),
+    NgbModule,
+    NgxPaginationModule
   ],
   providers: [
     {

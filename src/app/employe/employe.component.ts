@@ -18,6 +18,12 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class EmployeComponent {
   employes: Employe[] = [];
+  displayedEmployes: Employe[] = [];
+  totalPages : number = 0
+  keyword : string = '';
+  pageSize: number = 5; // Nombre d'éléments par page
+  currentPage: number = 0; // Numéro de page actuel
+
   employe: Employe = {
     id: 0,
     cni: '',
@@ -57,9 +63,42 @@ export class EmployeComponent {
 
   /*--------------------------------- fETCH DATA FOR TABLE ----------------------------- */
   ngOnInit(): void {
-    this.employeService
-      .getAllEmployes()
-      .subscribe((employes) => (this.employes = employes));
+    this.getEmployes();
+  }
+
+
+  previousPage() {
+    if (this.currentPage > 0) {
+      this.currentPage--;
+      this.getEmployes();
+    }
+  }
+
+  nextPage() {
+    if (this.currentPage < this.totalPages - 1) {
+      this.currentPage++;
+      this.getEmployes();
+    }
+  }
+
+  goToPage(page : number){
+  this.currentPage=page;
+  this.getEmployes();
+  }
+
+  getEmployes(){
+    this.employeService.getAllEmployes(this.keyword,this.currentPage,this.pageSize).
+    subscribe({
+      next : (resp) =>{
+        this.employes = resp.body as Employe[];
+        let totalEmployes : number = parseInt(resp.headers.get('x-total-count')!);
+        this.totalPages = Math.floor(totalEmployes/this.pageSize);
+        if( totalEmployes % this.pageSize !=0){
+          this.totalPages=this.totalPages+1;
+        }
+        console.log(totalEmployes);
+      }
+    })
   }
 
   /*--------------------------------- TRAITEMENT DE L'AJOUT ----------------------------- */
@@ -78,9 +117,20 @@ export class EmployeComponent {
         retraite: new Date(),
         performanceComment: '',
       };
-      this.employeService
-        .getAllEmployes()
-        .subscribe((employes) => (this.employes = employes));
+
+    // Abonnez-vous à l'observable getAllEmployes pour mettre à jour le tableau des employés
+    this.employeService.getAllEmployes(this.keyword,this.currentPage, this.pageSize).subscribe({
+      next: (resp) => {
+        this.employes = resp.body as Employe[];
+        let totalEmployes: number = parseInt(resp.headers.get('x-total-count')!);
+        this.totalPages = Math.floor(totalEmployes / this.pageSize);
+        if (totalEmployes % this.pageSize !== 0) {
+          this.totalPages = this.totalPages + 1;
+        }
+        console.log(totalEmployes);
+      },
+    });
+    this.employeService.getAllEmployes(this.keyword,this.currentPage,this.pageSize);
       this.modalService.dismissAll();
     });
     this.toaster.success('New empolye added successfully', 'Success', {
@@ -102,17 +152,31 @@ export class EmployeComponent {
   }
 
   /*--------------------------------- TRAITEMENT DE LA MODIFICATION ----------------------------- */
+  // modifierEmploye() {
+  //   this.employeService.updateEmploye(this.employe).subscribe(() => {
+  //     this.employeService.getAllEmployes().subscribe((employes) => {
+  //       this.employes = employes;
+  //       this.modalService.activeInstances.closed;
+  //     });
+  //   });
+  //   this.toaster.warning('The empolye modified successfully', 'Warning', {
+  //     timeOut: 3000,
+  //   });
+  // }
   modifierEmploye() {
     this.employeService.updateEmploye(this.employe).subscribe(() => {
-      this.employeService.getAllEmployes().subscribe((employes) => {
-        this.employes = employes;
-        this.modalService.activeInstances.closed;
-      });
+      // Mettez à jour la liste existante avec le nouvel employé modifié
+      const index = this.employes.findIndex(e => e.id === this.employe.id);
+      if (index !== -1) {
+        this.employes[index] = this.employe;
+      }
+      this.modalService.activeInstances.closed;
     });
-    this.toaster.warning('The empolye modified successfully', 'Warning', {
+    this.toaster.warning('The employee modified successfully', 'Warning', {
       timeOut: 3000,
     });
   }
+
   modifierEmployeModal(modifierEmployee: any, id: number) {
     this.modalService
       .open(modifierEmployee, { ariaLabelledBy: 'modifier-modal-title' })
@@ -146,4 +210,20 @@ export class EmployeComponent {
       timeOut: 3000,
     });
   }
+
+    /*----------------- TRAITEMENT DE LA RECHERCHE ------------------------- */
+    // searchEmployes() {
+    //   this.currentPage=1;
+    //   this.totalPages=0;
+    //   this.employeService.searchEmployes(this.keyword, this.currentPage, this.pageSize)
+    //     .subscribe({
+    //       next: (resp) => {
+    //         this.employes = resp;
+    //         // Mettez à jour le nombre total de pages ou effectuez d'autres opérations nécessaires
+    //       },
+    //       error: (error) => {
+    //         console.error('Error during search:', error);
+    //       },
+    //     });
+    //}
 }
