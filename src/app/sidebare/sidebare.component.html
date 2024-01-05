@@ -1,34 +1,27 @@
-<!-- ======= Sidebar ======= -->
-<aside id="sidebar" class="sidebar">
+<div class="sidenav" [ngClass]="collapsed ? 'sidenav-collapsed': ''">
+    <div class="logo-container">
+        <button class="logo" (click)="toggleCollapse()">
 
-    <ul class="sidebar-nav" id="sidebar-nav">
+            <img class="myImg" src="../assets/images/sidebar.png" />
 
-        <li class="nav-item" routerLinkActive="active">
-            <a class="nav-link " routerLink="/">
-                <i class="bi bi-grid"></i>
-                <span>Dashboard</span>
+        </button>
+
+
+        <div class="logo-text" @fadeInOut *ngIf="collapsed">ONCF</div>
+        <button class="btn-close" @rotate *ngIf="collapsed" (click)="closeSidenav()">
+            <i class="fa fa-times" aria-hidden="true"></i>
+
+        </button>
+    </div>
+    <ul class="sidenav-nav">
+        <li class="sidenav-nav-item" *ngFor="let data of navData">
+            <a class="sidenav-nav-link" [routerLink]="[data.routeLink]" routerLinkActive="active"
+                [routerLinkActiveOptions]="{exact: true}">
+                <i class="sidenav-link-icon" [class]="data.icon"></i>
+                <span class="sidenav-link-text" @fadeInOut *ngIf="collapsed">
+                    {{data.label}}
+                </span>
             </a>
-        </li><!-- End Dashboard Nav -->
-
-        <li class="nav-item">
-            <a class="nav-link collapsed" data-bs-target="#components-nav" data-bs-toggle="collapse" href="#">
-                <i class="bi bi-menu-button-wide"></i><span>RH Formation</span><i
-                    class="bi bi-chevron-down ms-auto"></i>
-            </a>
-            <ul id="components-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
-                <li>
-                    <a routerLink="/dashboard/contrat" routerLinkActive="active">
-                        <i class="bi bi-circle"></i><span>Contrats</span>
-                    </a>
-                </li>
-                <li>
-                    <a  routerLinkActive="active" >
-                        <i class="bi bi-circle"></i><span>Gestion de carriere</span>
-                    </a>
-                </li>
-            </ul>
-        </li><!-- End Components Nav -->
-
+        </li>
     </ul>
-
-</aside><!-- End Sidebar-->
+</div>

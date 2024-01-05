@@ -1,147 +1,116 @@
-:root {
-    scroll-behavior: smooth;
-}
-
-a {
-    color: #0080ff;
-    text-decoration: none;
-}
-
-a:hover {
-    color: #0080ff;
-    text-decoration: none;
-}
-
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-    font-family: "Nunito", sans-serif;
-}
-
-/*--------------------------------------------------------------
-# Sidebar
---------------------------------------------------------------*/
-.sidebar {
+.sidenav {
+    background: #ffffff;
+    transition: all 0.5s ease;
     position: fixed;
+    z-index: 1;
     top: 60px;
-    left: 0;
-    bottom: 0;
-    width: 300px;
-    z-index: 996;
-    transition: all 0.3s;
-    padding: 20px;
-    overflow-y: auto;
-    scrollbar-width: thin;
-    scrollbar-color: #aab7cf transparent;
-    box-shadow: 0px 0px 20px 0px rgba(1, 41, 112, 0.1);
-    background-color: #fff;
+    left: 0px;
+    width: 5rem;
+    min-height: 100vh;
+    height: auto;
+    box-shadow: 0.063rem 0 1.25rem 0 #8690a3;
 }
 
-.sidebar::-webkit-scrollbar {
-    width: 5px;
-    height: 8px;
-    background-color: #fff;
-}
-
-.sidebar::-webkit-scrollbar-thumb {
-    background-color: #aab7cf;
-}
-
-.sidebar-nav,
-.sidebar-nav li {
-    padding: 0;
-    margin: 0;
-    list-style: none;
-}
-
-.sidebar-nav .nav-item {
-    margin-bottom: 5px;
-}
-
-.sidebar-nav .nav-link {
+.sidenav .logo-container {
     display: flex;
     align-items: center;
-    font-size: 15px;
-    font-weight: 600;
-    color: #0080ff;
-    transition: 0.3;
-    background: #f6f9ff;
-    padding: 10px 15px;
-    border-radius: 4px;
+    padding: 0.938rem 0.938rem 0 0.938rem;
+    /* width: 100%; */
 }
 
-.sidebar-nav .nav-link i {
-    font-size: 16px;
-    margin-right: 10px;
-    color: #0080ff;
-}
-
-.sidebar-nav .nav-link.collapsed {
-    color: #181819;
+.sidenav .logo-container .logo {
     background: #fff;
+    text-align: center;
+    width: 3rem;
+    min-width: 3rem;
+    border-radius: 0.313rem;
+    padding: 0.313rem;
+    font-size: 24px;
+    font-weight: 900;
+    cursor: pointer;
+    border: none;
 }
 
-.sidebar-nav .nav-link.collapsed i {
-    color: #899bbd;
+.sidenav .logo-container .logo-text {
+    margin-left: 1.5rem;
+    font-size: 24px;
+    font-weight: 700;
+    color: #000000;
 }
 
-.sidebar-nav .nav-link:hover {
-    color: #0080ff;
-    background: #f6f9ff;
+.sidenav .logo-container .btn-close {
+    margin-left: auto;
+    cursor: pointer;
+    width: 2rem;
+    height: 2rem;
+    border-radius: 50%;
+    background-color: transparent;
+    border: none;
 }
 
-.sidebar-nav .nav-link:hover i {
-    color: #0080ff;
+.sidenav .logo-container .btn-close .fa-times {
+    color: #fff;
+    font-size: 24px;
 }
 
-.sidebar-nav .nav-link.active {
-    color: #ff0000; /* Red color for the active link */
-    background: #f6f9ff;
+.sidenav-collapsed {
+    width: 16.5625rem;
 }
 
-.sidebar-nav .nav-link .bi-chevron-down {
-    margin-right: 0;
-    transition: transform 0.2s ease-in-out;
-}
-
-.sidebar-nav .nav-link:not(.collapsed) .bi-chevron-down {
-    transform: rotate(180deg);
-}
-
-.sidebar-nav .nav-content {
-    padding: 5px 0 0 0;
-    margin: 0;
+.sidenav-nav {
     list-style: none;
+    padding: 0.938rem;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: calc(100% - 3.65rem);
+    cursor: pointer;
 }
 
-.sidebar-nav .nav-content a {
+.sidenav-nav .sidenav-nav-item {
+    width: 100%;
+    margin-bottom: 0.625rem;
+}
+
+.sidenav-nav .sidenav-nav-item .sidenav-nav-link {
     display: flex;
     align-items: center;
-    font-size: 14px;
-    font-weight: 600;
-    color: #0e0e0e;
-    transition: 0.3;
-    padding: 10px 0 10px 40px;
-    transition: 0.3s;
+    height: 3rem;
+    color: #000000;
+    text-decoration: none;
+    border-radius: 0.625rem;
+    transition: all 0.3s ease;
 }
 
-.sidebar-nav .nav-content a i {
-    font-size: 6px;
-    margin-right: 8px;
-    line-height: 0;
-    border-radius: 50%;
+.sidenav-nav .sidenav-nav-item .sidenav-nav-link .sidenav-link-icon {
+    font-size: 22px;
+    width: 2rem;
+    min-width: 2rem;
+    margin: 0 0.5rem;
+    text-align: center;
 }
 
-.sidebar-nav .nav-content a:hover,
-.sidebar-nav .nav-content a.active {
-    color: #4154f1;
+.sidenav-nav .sidenav-nav-item .sidenav-nav-link .sidenav-link-text {
+    margin-left: 1.5rem;
 }
 
-.sidebar-nav .nav-content a.active i {
-    background-color: #4154f1;
+.sidenav-nav .sidenav-nav-item:hover .sidenav-nav-link {
+    background-color: #000000;
+    color: #ffffff;
 }
-/* ... Your existing CSS ... */
 
+.active {
+    background-color: #000000;
+}
+
+.active .sidenav-link-icon,
+.active .sidenav-link-text {
+    color: rgb(0, 123, 255);
+}
+
+.myImg {
+    max-width: 50px;
+    max-height: 30px;
+    padding-top: 1%;
+}
