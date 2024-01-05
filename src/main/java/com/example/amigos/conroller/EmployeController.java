@@ -10,7 +10,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 import java.util.Optional;
 
@@ -21,10 +20,6 @@ public class EmployeController {
     @Autowired
     EmployeService employeService;
 
-//    @GetMapping()
-//    public List<Employe> getAllEmploye(){
-//        return employeService.getAllEmploye();
-//    }
     @GetMapping()
     public ResponseEntity<PaginationResponse<Employe>> getAllUsers(@RequestParam(value = "keyword", defaultValue = "") String keyword,
                                                           @RequestParam(value = "page", defaultValue = "1") int page,
@@ -59,13 +54,4 @@ public class EmployeController {
         employeService.delete(id);
     }
 
-    @GetMapping("/profile/{email}")
-    public Optional<User> profile(@PathVariable String email){
-        return employeService.profile(email);
-    }
-
-    @PutMapping("/profile/{email}")
-    public Optional<User> updateProfile(@PathVariable String email, @RequestBody User user){
-        return employeService.updateProfile(email,user);
-    }
 }

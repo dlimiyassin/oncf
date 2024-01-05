@@ -47,6 +47,15 @@ public class User implements UserDetails {
     @Column
     private String gender;
 
+    @Column(name = "imageName")
+    private String imageName;
+
+    @Column(name = "imageType")
+    private String imageType;
+
+    @Column(name = "picByte", length = 100000)
+    private byte[] picByte;
+
     @Column(name = "verification_code", length = 64)
     private String verificationCode;
 
@@ -54,6 +63,9 @@ public class User implements UserDetails {
 
     @Enumerated(EnumType.STRING)
     private Role role;
+
+    public User(String originalFilename, String contentType, byte[] bytes) {
+    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

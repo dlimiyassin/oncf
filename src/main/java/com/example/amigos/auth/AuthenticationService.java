@@ -15,10 +15,17 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.Optional;
+import java.util.zip.DataFormatException;
+import java.util.zip.Deflater;
+import java.util.zip.Inflater;
 
 import jakarta.mail.MessagingException;
+import org.springframework.web.multipart.MultipartFile;
+
 @Service
 @RequiredArgsConstructor
 public class AuthenticationService {
@@ -170,5 +177,88 @@ public class AuthenticationService {
             // Old password doesn't match
             return false;
         }
+    }
+
+    public void uploadPicture(MultipartFile file, String email) throws IOException {
+        System.out.println("Original Image Byte Size - " + file.getBytes().length);
+        Optional<User> search = repository.findByEmail(email);
+        if (search.isEmpty()) {
+            System.out.println("this email does not exist ");
+        }
+
+        User updatedUser = search.get();
+        updatedUser.setImageName(file.getOriginalFilename());
+        updatedUser.setImageType(file.getContentType());
+        updatedUser.setPicByte(compressBytes(file.getBytes()));
+        repository.save(updatedUser);
+    }
+    // compress the image bytes before storing it in the database
+    public static byte[] compressBytes(byte[] data) {
+        Deflater deflater = new Deflater();
+        deflater.setInput(data);
+        deflater.finish();
+
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream(data.length);
+        byte[] buffer = new byte[1024];
+        while (!deflater.finished()) {
+            int count = deflater.deflate(buffer);
+            outputStream.write(buffer, 0, count);
+        }
+        try {
+            outputStream.close();
+        } catch (IOException e) {
+        }
+        System.out.println("Compressed Image Byte Size - " + outputStream.toByteArray().length);
+
+        return outputStream.toByteArray();
+    }
+
+    // uncompress the image bytes before returning it to the angular application
+    public static byte[] decompressBytes(byte[] data) {
+        Inflater inflater = new Inflater();
+        inflater.setInput(data);
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream(data.length);
+        byte[] buffer = new byte[1024];
+        try {
+            while (!inflater.finished()) {
+                int count = inflater.inflate(buffer);
+                outputStream.write(buffer, 0, count);
+            }
+            outputStream.close();
+        } catch (IOException ioe) {
+        } catch (DataFormatException e) {
+        }
+        return outputStream.toByteArray();
+    }
+
+    public void removePicture(String email) {
+        final Optional<User> search = repository.findByEmail(email);
+        User user = search.get();
+        user.setPicByte(null);
+        user.setImageType(null);
+        user.setImageName(null);
+        repository.save(user);
+    }
+
+    public PictureResponse getPicture(String email) {
+        final Optional<User> retrievedImage = repository.findByEmail(email);
+        PictureResponse img = new PictureResponse(retrievedImage.get().getImageName(), retrievedImage.get().getImageType(), decompressBytes(retrievedImage.get().getPicByte()));
+        return img;
+    }
+
+    public Optional<User> profile(String email) {
+        return repository.findByEmail(email);
+    }
+
+    public Optional<User> updateProfile(String email, User user) {
+        Optional<User> search = repository.findByEmail(email);
+        if (search.isEmpty()) {
+            return Optional.empty();
+        }
+        User updatedUser = search.get();
+        updatedUser.setFirstname(user.getFirstname());
+        updatedUser.setLastname(user.getLastname());
+        updatedUser.setBirthdate(user.getBirthdate());
+        return Optional.of(repository.save(updatedUser));
     }
 }

@@ -12,6 +12,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 @EnableJpaRepositories
@@ -21,6 +22,7 @@ public interface EmployeRepository extends PagingAndSortingRepository<Employe, L
     Employe findById(Long id);
     Employe save(Employe em);
     void deleteById(Long id);
+
     @Query("SELECT e FROM Employe e WHERE TIMESTAMPDIFF(DAY, CURRENT_DATE, e.retraite) BETWEEN 0 AND 90 ORDER BY e.retraite")
     List<Employe> findEmployeesWithRetirementInNext3Months();
 

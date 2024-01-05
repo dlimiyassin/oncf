@@ -67,19 +67,5 @@ public class EmployeService {
    employeRepository.deleteById(id);
   }
 
-    public Optional<User> profile(String email) {
-       return userRepository.findByEmail(email);
-    }
-
-    public Optional<User> updateProfile(String email, User user) {
-        Optional<User> search = userRepository.findByEmail(email);
-        if (search.isEmpty()) {
-            return Optional.empty();
-        }
-        User updatedUser = search.get();
-        updatedUser.setFirstname(user.getFirstname());
-        updatedUser.setLastname(user.getLastname());
-       return Optional.of(userRepository.save(updatedUser));
-    }
 
 }
