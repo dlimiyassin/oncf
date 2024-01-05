@@ -4,6 +4,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { EmployeResponse } from '../models/employe-response.model';
 
+
 @Injectable({
   providedIn: 'root',
 })
@@ -11,6 +12,7 @@ export class EmployeService {
   private apiUrl = 'http://localhost:8080/api/employe';
 
   constructor(private http: HttpClient) {}
+
 
   getAllEmployes(
     keyword: string = '',
@@ -20,6 +22,7 @@ export class EmployeService {
     const url = `${this.apiUrl}?keyword=${keyword}&page=${page}&size=${size}`;
     return this.http.get<EmployeResponse>(url);
   }
+  
   getAllNotifications(): Observable<Employe[]> {
     const url = `${this.apiUrl}/notify`;
     return this.http.get<Employe[]>(url);

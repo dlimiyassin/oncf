@@ -14,6 +14,7 @@ import { NgForm } from '@angular/forms';
 })
 export class EmployeComponent {
   employes: Employe[] = [];
+  displayedEmployes: Employe[] = [];
   employe: Employe = {
     id: 0,
     cni: '',
@@ -40,6 +41,7 @@ export class EmployeComponent {
     retraite: new Date(),
     performanceComment: '',
   };
+  
   keyword: string = ''; // fro search on table
   currentPage: number = 1;
   pageSize: number = 5;
@@ -153,6 +155,17 @@ export class EmployeComponent {
   }
 
   /*--------------------------------- TRAITEMENT DE LA MODIFICATION ----------------------------- */
+  // modifierEmploye() {
+  //   this.employeService.updateEmploye(this.employe).subscribe(() => {
+  //     this.employeService.getAllEmployes().subscribe((employes) => {
+  //       this.employes = employes;
+  //       this.modalService.activeInstances.closed;
+  //     });
+  //   });
+  //   this.toaster.warning('The empolye modified successfully', 'Warning', {
+  //     timeOut: 3000,
+  //   });
+  // }
   modifierEmploye() {
     this.employeService.updateEmploye(this.employe).subscribe(() => {
       this.employeService
@@ -163,10 +176,11 @@ export class EmployeComponent {
           this.modalService.activeInstances.closed;
         });
     });
-    this.toaster.warning('The empolye modified successfully', 'Warning', {
+    this.toaster.warning('The employee modified successfully', 'Warning', {
       timeOut: 3000,
     });
   }
+
   modifierEmployeModal(modifierEmployee: any, id: number) {
     this.modalService
       .open(modifierEmployee, { ariaLabelledBy: 'modifier-modal-title' })
@@ -202,4 +216,20 @@ export class EmployeComponent {
       timeOut: 3000,
     });
   }
+
+    /*----------------- TRAITEMENT DE LA RECHERCHE ------------------------- */
+    // searchEmployes() {
+    //   this.currentPage=1;
+    //   this.totalPages=0;
+    //   this.employeService.searchEmployes(this.keyword, this.currentPage, this.pageSize)
+    //     .subscribe({
+    //       next: (resp) => {
+    //         this.employes = resp;
+    //         // Mettez à jour le nombre total de pages ou effectuez d'autres opérations nécessaires
+    //       },
+    //       error: (error) => {
+    //         console.error('Error during search:', error);
+    //       },
+    //     });
+    //}
 }

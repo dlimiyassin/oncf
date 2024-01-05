@@ -26,7 +26,9 @@ import { ToastrModule } from 'ngx-toastr';
 import { NgbDatepickerModule, NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ContratNotificationComponent } from './contrat-notification/contrat-notification.component';
 import { DashboardLayoutComponent } from './dashboard-layout/dashboard-layout.component';
+
 import { QuizRhComponent } from './quiz-rh/quiz-rh.component';
+
 
 @NgModule({
   declarations: [
@@ -57,8 +59,10 @@ import { QuizRhComponent } from './quiz-rh/quiz-rh.component';
     HttpClientModule,
     NgbDatepickerModule,
     BrowserAnimationsModule,
+
     BrowserAnimationsModule, 
     ToastrModule.forRoot(), NgbModule,
+
   ],
   providers: [
     {
