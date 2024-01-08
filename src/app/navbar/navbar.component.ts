@@ -57,6 +57,7 @@ export class NavbarComponent implements OnInit {
         console.log(err);
       },
     });
+    this.getImage();
   }
   handleLogout() {
     this.token.remove();
@@ -74,4 +75,23 @@ export class NavbarComponent implements OnInit {
   timeLeftValue(date: Date): string {
     return this.employe.timeLeft(date);
   }
+  /*----------------- get profile picture ------------------*/
+  retrievedImage: any;
+  base64Data: any;
+  retrieveResponse: any;
+
+  getImage() {
+    this.account.getImage(this.tokenInfos.sub).subscribe({
+      next: (res) => {
+        console.log(res);
+        this.retrieveResponse = res;
+        this.base64Data = this.retrieveResponse.picByte;
+        this.retrievedImage = 'data:image/jpeg;base64,' + this.base64Data;
+      },
+      error: (err) => {
+        console.log(err);
+      },
+    });
+  }
+
 }

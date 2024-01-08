@@ -1,14 +1,23 @@
+<<<<<<< HEAD
 <div class="col-12 mt-5">
   <div class="d-flex justify-content-between mb-0 mt-4">
     <button class="btn btn-primary  fw-bold mb-3" (click)="ajouterEmployeModal(AjouterModal)">Add New Employe</button>
     <div class="search-bar me-5 pe-5 pe-3 w-50">
       <form #searchFrom="ngForm" class="search-form d-flex align-items-center" (ngSubmit)="handleGoToPage(searchFrom.value.name)">
+=======
+<div class="col-12 mt-5 ">
+  <div class="d-flex justify-content-around mb-0 mt-4">
+    <button class="btn btn-primary fw-bold mb-3" (click)="ajouterEmployeModal(AjouterModal)">Add New Employe</button>
+    <span>size :{{pageSize}} screen :{{screenWidth}}</span>
+    <div class="search-bar" style="width: 30vw;">
+      <form #searchFrom="ngForm" class="search-form d-flex align-items-center"
+        (ngSubmit)="handleGoToPage(searchFrom.value.name)">
+>>>>>>> 4fa8afef87bad4f734e11d34d7e7cdbd56e63ee6
         <input type="text" name="name" placeholder="Search" ngModel>
         <button type="submit"><i class="bi bi-search"></i></button>
       </form>
-    </div>
+    </div><!-- End Search Bar -->
   </div>
-
   <div class="card me-3">
     <div class="card-body table-responsive-xl ">
       <table class="table table-hover table-striped">
@@ -43,11 +52,34 @@
             </td>
           </tr>
         </tbody>
+        <tfoot>
+          <td colspan="20" class="text-center">
+            <nav aria-label="Page navigation example" class="mt-2 pb-0">
+              <ul class="pagination justify-content-center">
+                <li class="page-item m-1" [class.disabled]="currentPage == 1">
+                  <button (click)="handlePrevious()" class="page-link btn" aria-label="Previous">
+                    <span style="color: #0080ff; font-weight:600;" aria-hidden="true">&laquo; Previous</span>
+                  </button>
+                </li>
+                <li *ngFor="let Page of [].constructor(totalPages); let i = index;" class="page-item">
+                  <button [ngClass]="currentPage==(i+1)?'btn btn-primary m-1':'page-link btn m-1'"
+                    (click)="handleGoToPage('',i+1)">
+                    {{ i + 1 }}
+                  </button>
+                </li>
+                <li class="page-item m-1" [class.disabled]="currentPage == totalPages">
+                  <button (click)="handleNext()" class="page-link btn" aria-label="Next">
+                    <span style="color: #0080ff; font-weight:600;" aria-hidden="true">Next &raquo;</span>
+                  </button>
+                </li>
+              </ul>
+            </nav>
+          </td>
+        </tfoot>
       </table>
-
     </div>
-
   </div>
+<<<<<<< HEAD
 
 
   </div>
@@ -74,6 +106,38 @@
 
 
 
+=======
+  <!-- Pagination with limit -->
+  <!-- 
+      <ul class="pagination justify-content-center">
+  <li class="page-item m-1" [class.disabled]="currentPage == 1">
+    <button (click)="handlePrevious()" class="page-link btn" aria-label="Previous">
+      <span style="color: #0080ff; font-weight:600;" aria-hidden="true">&laquo; Previous</span>
+    </button>
+  </li>
+  <ng-container *ngIf="totalPages <= 3; else showLimitedPages">
+    <li *ngFor="let Page of [].constructor(totalPages); let i = index;" class="page-item">
+      <button [ngClass]="currentPage==(i+1)?'btn btn-primary m-1':'page-link btn m-1'" (click)="handleGoToPage('',i+1)">
+        {{ i + 1 }}
+      </button>
+    </li>
+  </ng-container>
+  <ng-template #showLimitedPages>
+    <li *ngFor="let Page of [].constructor(3); let i = index;" class="page-item">
+      <button [ngClass]="currentPage==(i + currentPage - 1)?'btn btn-primary m-1':'page-link btn m-1'"
+        (click)="handleGoToPage('',i + currentPage - 1)">
+        {{ i + currentPage - 1 }}
+      </button>
+    </li>
+  </ng-template>
+  <li class="page-item m-1" [class.disabled]="currentPage == totalPages">
+    <button (click)="handleNext()" class="page-link btn" aria-label="Next">
+      <span style="color: #0080ff; font-weight:600;" aria-hidden="true">Next &raquo;</span>
+    </button>
+  </li>
+</ul>
+     -->
+>>>>>>> 4fa8afef87bad4f734e11d34d7e7cdbd56e63ee6
   <!-- ajouter Modal -->
   <ng-template #AjouterModal let-modal>
     <div class="modal-header pb-0">
@@ -166,10 +230,12 @@
           <label for="email" class="form-label">Email :</label>
           <input type="email" class="form-control" id="email" [(ngModel)]="employe.email" name="email" required>
         </div>
-        <div class="mb-2">
-          <label for="birthDate" class="form-label">Date de naissance :</label>
-          <input type="date" class="form-control" id="birthDate" [ngModel]="formatDate(employe.birthDate)"
-            name="birthDate" required>
+        <div class="form-group row mb-3">
+          <label for="birthdate" class="col-md-4 col-lg-3 col-form-label">birthdate</label>
+          <div class="col-md-8 col-lg-9">
+            <input type="date" class="form-control" name="birthdate" [ngModel]="formatDate(employe.birthDate)"
+              (input)="onBirthDateInput($event)">
+          </div>
         </div>
         <div class="mb-2">
           <label for="rendement" class="form-label">Rendement :</label>

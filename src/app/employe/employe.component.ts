@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, HostListener } from '@angular/core';
 import { Employe } from '../models/employe.model';
 import { EmployeService } from '../services/employe.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
@@ -46,6 +46,8 @@ export class EmployeComponent {
   }
 
 
+=======
+>>>>>>> 4fa8afef87bad4f734e11d34d7e7cdbd56e63ee6
   employe: Employe = {
     id: 0,
     cni: '',
@@ -72,6 +74,7 @@ export class EmployeComponent {
     retraite: new Date(),
     performanceComment: '',
   };
+
   closeResult!: string; // for modal pop up
 
   constructor(
@@ -83,6 +86,7 @@ export class EmployeComponent {
 
   /*--------------------------------- fETCH DATA FOR TABLE ----------------------------- */
   ngOnInit(): void {
+    this.adjustPageSize();
     this.FetchEmployes();
   }
   FetchEmployes() {
@@ -93,9 +97,34 @@ export class EmployeComponent {
         this.totalPages = response.totalPages;
       });
   }
+  /*--------------------------------- costimaze table with screen width ----------------------------- */
+  @HostListener('window:resize', ['$event'])
+  onResize(event: Event): void {
+    this.adjustPageSize();
+  }
+  screenWidth!: number;
+  adjustPageSize(): void {
+    const screenWidth = window.innerWidth;
+    this.screenWidth = screenWidth;
+    if (screenWidth <= 1163) {
+      this.pageSize = 5;
+    } else if (1164 <= screenWidth && screenWidth <= 1280) {
+      this.pageSize = 6;
+    } else if (1281 <= screenWidth && screenWidth <= 1422) {
+      this.pageSize = 7;
+    } else if (1423 <= screenWidth && screenWidth <= 1600) {
+      this.pageSize = 9;
+    } else if (1601 <= screenWidth && screenWidth <= 1707) {
+      this.pageSize = 10;
+    } else if (1708 <= screenWidth && screenWidth <= 1920) {
+      this.pageSize = 12;
+    }
+    this.FetchEmployes();
+  }
+
   /*-------------------------------------- Pagination ------------------------------------ */
-  handleGoToPage(keyword? : string, page?: number ) {
-    this.currentPage = page || 1 ;
+  handleGoToPage(keyword?: string, page?: number) {
+    this.currentPage = page || 1;
     this.keyword = keyword || '';
     this.FetchEmployes();
   }
@@ -190,9 +219,11 @@ export class EmployeComponent {
       this.employe = employe;
     });
   }
-
   formatDate(date: Date | null): string {
     return this.datePipe.transform(date, 'yyyy-MM-dd') ?? '';
+  }
+  onBirthDateInput(event: any) {
+    this.employe.birthDate = new Date(event.target.value);
   }
 
   /*--------------------------------- TRAITEMENT DE LA SUPPERSION ----------------------------- */

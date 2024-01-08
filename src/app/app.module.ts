@@ -23,10 +23,13 @@ import { ForgetPasswordComponent } from './email-verification/forget-password/fo
 import { AskForEmailComponent } from './email-verification/ask-for-email/ask-for-email.component';
 import { NewPasswordComponent } from './email-verification/new-password/new-password.component';
 import { ToastrModule } from 'ngx-toastr';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbDatepickerModule, NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ContratNotificationComponent } from './contrat-notification/contrat-notification.component';
 import { DashboardLayoutComponent } from './dashboard-layout/dashboard-layout.component';
-import { NgxPaginationModule } from 'ngx-pagination';
+
+import { QuizRhComponent } from './quiz-rh/quiz-rh.component';
+
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -46,6 +49,7 @@ import { NgxPaginationModule } from 'ngx-pagination';
     NewPasswordComponent,
     ContratNotificationComponent,
     DashboardLayoutComponent,
+    QuizRhComponent,
   ],
   imports: [
     BrowserModule,
@@ -53,11 +57,12 @@ import { NgxPaginationModule } from 'ngx-pagination';
     ReactiveFormsModule,
     FormsModule,
     HttpClientModule,
+    NgbDatepickerModule,
     BrowserAnimationsModule,
-    BrowserAnimationsModule,
-    ToastrModule.forRoot(),
-    NgbModule,
-    NgxPaginationModule
+
+    BrowserAnimationsModule, 
+    ToastrModule.forRoot(), NgbModule,
+
   ],
   providers: [
     {

@@ -1,10 +1,10 @@
 <body class="container-fluid">
     <app-navbar></app-navbar>
     <div class="row">
-        <div class="col-3 ">
+        <div [ngClass]="{'col-1': !sideNavCollapsed, 'col-3': sideNavCollapsed}">
             <app-sidebare></app-sidebare>
         </div>
-        <div class="col-9 mt-5 container">
+        <div [ngClass]="{'col-11': !sideNavCollapsed, 'col-9': sideNavCollapsed}" class="mt-5 container">
             <router-outlet></router-outlet>
         </div>
     </div>

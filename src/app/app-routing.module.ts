@@ -15,6 +15,8 @@ import { AskForEmailComponent } from './email-verification/ask-for-email/ask-for
 import { NewPasswordComponent } from './email-verification/new-password/new-password.component';
 import { ContratNotificationComponent } from './contrat-notification/contrat-notification.component';
 import { DashboardLayoutComponent } from './dashboard-layout/dashboard-layout.component';
+import { QuizRhComponent } from './quiz-rh/quiz-rh.component';
+
 
 const routes: Routes = [
   { path: '', component: HomeComponent, canActivate: [afterAuthGuard] },
@@ -40,6 +42,7 @@ const routes: Routes = [
       { path: '', component: DashboardComponent },
       { path: 'profile/:email', component: ProfileComponent },
       { path: 'contrat', component: ContratNotificationComponent },
+      { path: 'quiz-rh', component: QuizRhComponent },
     ],
   },
 ];

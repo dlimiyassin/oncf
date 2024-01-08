@@ -22,19 +22,31 @@ export class AccountService {
 
   // fetch user data
   getUserByEmail(email: string): Observable<User> {
-    const url = `${this.apiUrl}/${email}`;
+    const url = `http://localhost:8080/api/auth/profile/${email}`;
     return this.http.get<User>(url);
   }
 
-  updateUser(user : User): Observable<User>{
-  const { firstname, lastname } = user;
-
-  // Create a new object with the selected properties
-  const updatedUser = {
-    firstname,
-    lastname,
-  };
-    const url = `${this.apiUrl}/${user.email}`
+  updateUser(user: User): Observable<User> {
+    const { firstname, lastname, birthdate } = user;
+    const updatedUser = {
+      firstname,
+      lastname,
+      birthdate,
+    };
+    const url = `http://localhost:8080/api/auth/profile/${user.email}`;
     return this.http.put<User>(url, updatedUser);
+  }
+
+  uploadImage(uploadImageData : any, email : string): Observable<any> {
+    const url = `http://localhost:8080/api/auth/profile/upload/${email}`;
+    return this.http.post<any>(url, uploadImageData, { observe: 'response'});
+  }
+  getImage(email : any): Observable<any>{
+    const url = `http://localhost:8080/api/auth/profile/upload/get/${email}`;
+   return this.http.get<any>(url);
+  }
+  removePicture(email : string): Observable<any> {
+    const url = `http://localhost:8080/api/auth/profile/removePic/${email}`;
+    return this.http.put<any>(url, {});
   }
 }
