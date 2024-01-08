@@ -1,6 +1,6 @@
 <div class="col-12 mt-5">
   <div class="d-flex justify-content-between mb-0 mt-4">
-    <button class="btn btn-primary fw-bold mb-3" (click)="ajouterEmployeModal(AjouterModal)">Add New Employe</button>
+    <button class="btn btn-primary  fw-bold mb-3" (click)="ajouterEmployeModal(AjouterModal)">Add New Employe</button>
     <div class="search-bar me-5 pe-5 pe-3 w-50">
       <form #searchFrom="ngForm" class="search-form d-flex align-items-center" (ngSubmit)="handleGoToPage(searchFrom.value.name)">
         <input type="text" name="name" placeholder="Search" ngModel>
@@ -69,50 +69,73 @@
         </button>
       </li>
     </ul>
+
   </nav>
+
+
 
   <!-- ajouter Modal -->
   <ng-template #AjouterModal let-modal>
     <div class="modal-header pb-0">
       <h4 class="modal-title" id="ajouter-modal-title">Ajouter</h4>
     </div>
-    <form (submit)="ajouterEmploye()" #myForm="ngForm" class="px-3">
+    <form (submit)="ajouterEmploye()" [formGroup]="employeForm" #myForm="ngForm" class="px-3">
       <div class="mb-2">
         <label for="cni" class="form-label">Cni :</label>
-        <input type="text" class="form-control" id="cni" [(ngModel)]="newEmploye.cni" name="cni" required>
+        <input type="text" formControlName="cni" class="form-control" id="cni" [(ngModel)]="newEmploye.cni" name="cni" required>
+      </div>
+      <div *ngIf="employeForm.get('cni')?.invalid && employeForm.get('cni')?.touched || employeForm.get('cni')?.dirty" style="color: red;">
+        <div *ngIf="employeForm.get('cni')?.getError('required')">This field is required</div>
+        <div *ngIf="employeForm.get('cni')?.getError('minlength')">This field is min 6 caracteres</div>
       </div>
       <div class="mb-2">
         <label for="lastname" class="form-label">Nom:</label>
-        <input type="text" class="form-control" id="lastname" [(ngModel)]="newEmploye.lastname" name="lastname"
+        <input type="text" formControlName="lastname" class="form-control" id="lastname" [(ngModel)]="newEmploye.lastname" name="lastname"
           required>
+      </div>
+      <div *ngIf="employeForm.get('lastname')?.invalid && employeForm.get('lastname')?.touched || employeForm.get('lastname')?.dirty" style="color: red;">
+        <div *ngIf="employeForm.get('lastname')?.getError('required')">Entrer le nom</div>
+        <div *ngIf="employeForm.get('lastname')?.getError('minlength')">This field is min 3 caracteres</div>
       </div>
       <div class="mb-2">
         <label for="firstname" class="form-label">Prénom:</label>
-        <input type="text" class="form-control" id="firstname" [(ngModel)]="newEmploye.firstname" name="firstname"
-          required>
+        <input type="text" formControlName="firstname" class="form-control" id="firstname" [(ngModel)]="newEmploye.firstname" name="firstname" required>
+      </div>
+      <div *ngIf="employeForm.get('firstname')?.invalid && employeForm.get('firstname')?.touched || employeForm.get('firstname')?.dirty" style="color: red;">
+        <div *ngIf="employeForm.get('firstname')?.getError('required')">Entrer le prénom</div>
+        <div *ngIf="employeForm.get('firstname')?.getError('minlength')">This field is min 3 caracteres</div>
       </div>
       <div class="mb-2">
         <label for="email" class="form-label">Email:</label>
-        <input type="email" class="form-control" id="email" [(ngModel)]="newEmploye.email" name="email" required>
+        <input type="email" formControlName="email" class="form-control" id="email" [(ngModel)]="newEmploye.email" name="email" required>
+      </div>
+      <div *ngIf="employeForm.get('email')?.invalid && employeForm.get('email')?.touched || employeForm.get('email')?.dirty" style="color: red;">
+        <div *ngIf="employeForm.get('email')?.getError('required')">Entrer le courriel</div>
+        <div *ngIf="employeForm.get('email')?.getError('email')">This field is email</div>
       </div>
       <div class="mb-2">
         <label for="birthDate" class="form-label">Date de naissance :</label>
-        <input type="date" class="form-control" id="birthDate" [(ngModel)]="newEmploye.birthDate" name="birthDate"
-          required>
+        <input type="date" formControlName="birthDate" class="form-control" id="birthDate" [(ngModel)]="newEmploye.birthDate" name="birthDate" required>
+      </div>
+      <div *ngIf="employeForm.get('birthDate')?.invalid && employeForm.get('birthDate')?.touched || employeForm.get('birthDate')?.dirty" style="color: red;">
+        <div *ngIf="employeForm.get('birthDate')?.getError('required')">Entrer la date de naissance</div>
       </div>
       <div class="mb-2">
         <label for="rendement" class="form-label">Rendement :</label>
-        <input type="number" class="form-control" id="rendement" [(ngModel)]="newEmploye.rendement" name="rendement"
-          required>
+        <input type="number" class="form-control" id="rendement" [(ngModel)]="newEmploye.rendement" name="rendement" required>
       </div>
       <div class="mb-2">
         <label for="objectif" class="form-label">Objectif :</label>
-        <input type="number" class="form-control" id="objectif" [(ngModel)]="newEmploye.objectif" name="objectif"
-          required>
+        <input type="number" formControlName="objectif" class="form-control" id="objectif" [(ngModel)]="newEmploye.objectif" name="objectif" required>
       </div>
+      <div *ngIf="employeForm.get('objectif')?.invalid && employeForm.get('objectif')?.touched || employeForm.get('objectif')?.dirty" style="color: red;">
+        <div *ngIf="employeForm.get('objectif')?.getError('required')">Entrer L'objectif</div>
+        <div *ngIf="employeForm.get('objectif')?.getError('objectifPositif')">L'objectif doit être positif</div>
+      </div>
+
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" (click)="modal.dismiss('Cross click')">Close</button>
-        <button type="submit" class="btn btn-primary" [disabled]="!myForm.form.valid">Save</button>
+        <button type="submit" class="btn btn-primary" [disabled]="employeForm.invalid">Save</button>
       </div>
     </form>
   </ng-template>

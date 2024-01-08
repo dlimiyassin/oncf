@@ -1,3 +1,13 @@
+input.ng-valid {
+  border-color: #42c201 !important;
+  border-width: 2px;
+}
+
+input.ng-invalid.ng-touched {
+    border-color: #f58c84;
+    border-width:   2px;
+}
+
 #navbar{
   min-height: 10vh;
   justify-content: space-between;

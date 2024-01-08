@@ -9,14 +9,34 @@
       <div class="container">
 
 
-        <form>
-          <input type="text" name="firstname" [(ngModel)]="registerObj.firstname" placeholder="First name">
-          <input type="text" name="lastname" [(ngModel)]="registerObj.lastname" placeholder="Last name">
-          <input type="email" name="email" [(ngModel)]="registerObj.email" placeholder="Email">
+        <form [formGroup]="userForm">
+          <input type="text" formControlName="firstname" name="firstname" [(ngModel)]="registerObj.firstname" placeholder="First name">
+          <div *ngIf="userForm.get('firstname')?.invalid && userForm.get('firstname')?.touched || userForm.get('firstname')?.dirty" style="color: red;">
+            <div *ngIf="userForm.get('firstname')?.getError('required')">This field is required</div>
+            <div *ngIf="userForm.get('firstname')?.getError('minlength')">This field is min 6 caracteres</div>
+          </div>
+          <input type="text" formControlName="lastname" name="lastname" [(ngModel)]="registerObj.lastname" placeholder="Last name">
+          <div *ngIf="userForm.get('lastname')?.invalid && userForm.get('lastname')?.touched || userForm.get('lastname')?.dirty" style="color: red;">
+            <div *ngIf="userForm.get('lastname')?.getError('required')">This field is required</div>
+            <div *ngIf="userForm.get('lastname')?.getError('minlength')">This field is min 6 caracteres</div>
+          </div>
+          <input type="email" formControlName="email" name="email" [(ngModel)]="registerObj.email" placeholder="Email">
+          <div *ngIf="userForm.get('email')?.invalid && userForm.get('email')?.touched || userForm.get('email')?.dirty" style="color: red;">
+            <div *ngIf="userForm.get('email')?.getError('required')">This field is required</div>
+            <div *ngIf="userForm.get('email')?.getError('minlength')">This field is min 6 caracteres</div>
+          </div>
           <!-- <label for="password">Password</label> -->
-          <input type="password" name="password" [(ngModel)]="registerObj.password" placeholder="Password">
+          <input type="password" formControlName="password"  name="password" [(ngModel)]="registerObj.password" placeholder="Password">
+          <div *ngIf="userForm.get('password')?.invalid && userForm.get('password')?.touched || userForm.get('password')?.dirty" style="color: red;">
+            <div *ngIf="userForm.get('password')?.getError('required')">This field is required</div>
+            <div *ngIf="userForm.get('password')?.getError('minlength')">This field is min 6 caracteres</div>
+          </div>
 
-          <input type="date" name="birthdate" [(ngModel)]="registerObj.birthdate">
+          <input type="date" formControlName="birthDate" name="birthdate" [(ngModel)]="registerObj.birthdate">
+          <div *ngIf="userForm.get('birthDate')?.invalid && userForm.get('birthDate')?.touched || userForm.get('birthDate')?.dirty" style="color: red;">
+            <div *ngIf="userForm.get('birthDate')?.getError('required')">This field is required</div>
+            <div *ngIf="userForm.get('birthDate')?.getError('minlength')">This field is min 6 caracteres</div>
+          </div>
 
           <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
             <input type="radio" class="btn-check" name="gender" [(ngModel)]="registerObj.gender" id="btnradio1"
@@ -31,7 +51,7 @@
                 <div class="align-center" >{{ errorMessage }}</div>
             </div>
 
-          <button (click)="onRegister()" class="item btn btn-dark">Join Us<i class="bi bi-arrow-right"></i></button>
+          <button (click)="onRegister()"  [disabled]="userForm.invalid" class="item btn btn-dark">Join Us<i class="bi bi-arrow-right"></i></button>
         </form>
       </div>
     </div>

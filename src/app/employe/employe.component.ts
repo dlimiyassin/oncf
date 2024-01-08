@@ -5,7 +5,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { DatePipe } from '@angular/common';
 import { ToastrService } from 'ngx-toastr';
 import { EmployeResponse } from '../models/employe-response.model';
-import { NgForm } from '@angular/forms';
+import { AbstractControl, FormControl, FormGroup, NgForm, ValidationErrors, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-employe',
@@ -17,8 +17,34 @@ export class EmployeComponent {
   displayedEmployes: Employe[] = [];
   totalPages : number = 0
   keyword : string = '';
-  pageSize: number = 5; // Nombre d'éléments par page
-  currentPage: number = 0; // Numéro de page actuel
+  pageSize: number = 6; // Nombre d'éléments par page
+  currentPage: number = 1; // Numéro de page actuel
+
+  employeForm = new FormGroup({
+    cni : new FormControl(null,[Validators.required,Validators.minLength(6)]),
+    lastname : new FormControl(null,[Validators.required,Validators.minLength(3)]),
+    firstname : new FormControl(null,[Validators.required,Validators.minLength(3)]),
+    email : new FormControl(null,[Validators.required,Validators.email]),
+    birthDate : new FormControl(null,Validators.required),
+    rendement : new FormControl(null,[Validators.required,this.rendementValidation]),
+    objectif : new FormControl(null,[Validators.required,this.objectifValidation])
+
+  });
+
+  objectifValidation (control : AbstractControl){
+    if(control.value > 0){
+      return null;
+    }
+    return{ objectifPositif : true}
+  }
+
+  rendementValidation (control : AbstractControl){
+    if(control.value > 0){
+      return null;
+    }
+    return { rendementValidatio : true }
+  }
+
 
   employe: Employe = {
     id: 0,
@@ -129,17 +155,7 @@ export class EmployeComponent {
   }
 
   /*--------------------------------- TRAITEMENT DE LA MODIFICATION ----------------------------- */
-  // modifierEmploye() {
-  //   this.employeService.updateEmploye(this.employe).subscribe(() => {
-  //     this.employeService.getAllEmployes().subscribe((employes) => {
-  //       this.employes = employes;
-  //       this.modalService.activeInstances.closed;
-  //     });
-  //   });
-  //   this.toaster.warning('The empolye modified successfully', 'Warning', {
-  //     timeOut: 3000,
-  //   });
-  // }
+
   modifierEmploye() {
     this.employeService.updateEmploye(this.employe).subscribe(() => {
       this.employeService
@@ -189,19 +205,4 @@ export class EmployeComponent {
     });
   }
 
-    /*----------------- TRAITEMENT DE LA RECHERCHE ------------------------- */
-    // searchEmployes() {
-    //   this.currentPage=1;
-    //   this.totalPages=0;
-    //   this.employeService.searchEmployes(this.keyword, this.currentPage, this.pageSize)
-    //     .subscribe({
-    //       next: (resp) => {
-    //         this.employes = resp;
-    //         // Mettez à jour le nombre total de pages ou effectuez d'autres opérations nécessaires
-    //       },
-    //       error: (error) => {
-    //         console.error('Error during search:', error);
-    //       },
-    //     });
-    //}
 }

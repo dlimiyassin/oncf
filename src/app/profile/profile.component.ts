@@ -40,7 +40,7 @@ export class ProfileComponent implements OnInit {
   @Input() email!: string;
   ngOnInit(): void {
     console.log(this.email);
-    this.account.getUserByEmail('dlimiyassine13@gmail.com').subscribe({
+    this.account.getUserByEmail(this.email).subscribe({
       next: (user) => {
         this.user = user;
       },
