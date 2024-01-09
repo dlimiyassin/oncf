@@ -1,8 +1,9 @@
-CODE PLAYGROUND CSS input.ng-valid {
-    background-color: #79ba6a;
+input.ng-valid {
+  border-color: #42c201;
+  border-width: 2px;
 }
 
-input.ng-invalid {
+input.ng-invalid.ng-touched {
     border-color: #f58c84;
     border-width: 2px;
 }
@@ -43,4 +44,12 @@ input.ng-invalid {
 .disabled {
     pointer-events: none;
     opacity: 0.6;
+}
+
+.btn-block{
+  background-color: #f58c84;
+}
+
+.form-label{
+  font-size: 18px;
 }

@@ -6,7 +6,7 @@
       <img src="../assets/images/Rectangle 9.png" alt="">
     </a>
   </div><!-- End Logo -->
-<!-- 
+<!--
   <div *ngIf="loggedIn" class="search-bar mt-3 " style="margin-left: auto;">
 
     <form class="search-form d-flex align-items-center" method="POST" action="#">
@@ -37,7 +37,7 @@
 
           <li *ngFor="let e of employes.slice(0, 3)" class="notification-item">
             <i class="bi bi-info-circle text-danger"></i>
-            <div> 
+            <div>
               <h4>{{ e.firstname }} {{ e.lastname }}</h4>
               <p>contrat va terminer le <span class="fw-bold">{{ formatDate(e.retraite) }}</span> </p>
               <p class="text-danger">{{ timeLeftValue(e.retraite) }}</p>
