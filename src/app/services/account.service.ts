@@ -37,15 +37,15 @@ export class AccountService {
     return this.http.put<User>(url, updatedUser);
   }
 
-  uploadImage(uploadImageData : any, email : string): Observable<any> {
+  uploadImage(uploadImageData: any, email: string): Observable<any> {
     const url = `http://localhost:8080/api/auth/profile/upload/${email}`;
-    return this.http.post<any>(url, uploadImageData, { observe: 'response'});
+    return this.http.post<any>(url, uploadImageData, { observe: 'response' });
   }
-  getImage(email : any): Observable<any>{
+  getImage(email: any): Observable<any> {
     const url = `http://localhost:8080/api/auth/profile/upload/get/${email}`;
-   return this.http.get<any>(url);
+    return this.http.get<any>(url);
   }
-  removePicture(email : string): Observable<any> {
+  removePicture(email: string): Observable<any> {
     const url = `http://localhost:8080/api/auth/profile/removePic/${email}`;
     return this.http.put<any>(url, {});
   }

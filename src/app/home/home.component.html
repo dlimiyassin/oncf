@@ -1,14 +1,17 @@
 <nav class="navbar " id="navbar">
-  <div class="container">
+
     <a class="navbar-brand" href="/">
       <img id="img-oncf" src="../assets/images/Rectangle 9.png" alt="" width="100" height="50">
     </a>
-  </div>
+    <div *ngIf="quizStatus">
+      <a routerLink="/quiz-employe" class="text-dark fw-ligth me-3">ask for personality test</a>
+    </div>
+
 </nav>
 
 
 <section class="back">
   <h1 id=""><span>L'avenir</span> se lit <span>sur nos ligne</span></h1>
-  <button class="btn btn-warning float-end" id="login" routerLink="/login">LOGIN</button>
-  <button class="btn" id="register" routerLink="/register">REGISTER</button>
+  <button class="btn btn-warning float-end" id="login" routerLink="/login">SIGN IN</button>
+  <button class="btn" id="register" routerLink="/register">SIGN UP</button>
 </section>

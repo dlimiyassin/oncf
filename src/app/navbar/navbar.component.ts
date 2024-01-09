@@ -62,9 +62,9 @@ export class NavbarComponent implements OnInit {
   handleLogout() {
     this.token.remove();
     this.account.changeAuthStatus(false);
-    this.router.navigateByUrl('/login');
+    this.router.navigateByUrl('/');
     this.toaster.success('You logged out successfully', 'Success', {
-      timeOut: 3000,
+      timeOut: 1000,
     });
   }
 
@@ -83,7 +83,6 @@ export class NavbarComponent implements OnInit {
   getImage() {
     this.account.getImage(this.tokenInfos.sub).subscribe({
       next: (res) => {
-        console.log(res);
         this.retrieveResponse = res;
         this.base64Data = this.retrieveResponse.picByte;
         this.retrievedImage = 'data:image/jpeg;base64,' + this.base64Data;

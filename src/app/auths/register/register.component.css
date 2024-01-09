@@ -102,3 +102,15 @@ input[type=text], input[type=email], input[type=password], input[type=date] {
 .item:hover {
  background-color: #878787;
 }
+h2.badge-style {
+  display: inline-block;
+  padding: 12px 24px;
+  padding-left: 150px;
+  padding-right: 150px;
+  font-size: 1rem;
+  font-weight: 500;
+  background-color: #000000;
+  color: #e8e8e8;
+  border-radius: 12px;
+  margin-bottom: 10px;
+}

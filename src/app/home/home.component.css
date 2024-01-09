@@ -52,6 +52,18 @@ font-weight: bold;
   font-weight: bold;
 }
 
+#test {
+  width: 200px;
+  height: 40px;
+  background-color: #000000;
+  color: rgb(255, 255, 255);
+  top: 13vh;
+  right: 65vw;
+  border-radius: 45.5px;
+  position: absolute;
+
+}
+
 h1{
   font-family: Inter, Helvetica, sans-serif;
   font-weight: bold;

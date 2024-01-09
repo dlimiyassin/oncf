@@ -16,16 +16,14 @@ import { NewPasswordComponent } from './email-verification/new-password/new-pass
 import { ContratNotificationComponent } from './contrat-notification/contrat-notification.component';
 import { DashboardLayoutComponent } from './dashboard-layout/dashboard-layout.component';
 import { QuizRhComponent } from './quiz-rh/quiz-rh.component';
+import { QuizEmployeComponent } from './quiz-employe/quiz-employe.component';
 
 
 const routes: Routes = [
   { path: '', component: HomeComponent, canActivate: [afterAuthGuard] },
   { path: 'login', component: LoginComponent, canActivate: [afterAuthGuard] },
-  {
-    path: 'register',
-    component: RegisterComponent,
-    canActivate: [afterAuthGuard],
-  },
+  { path: 'register', component: RegisterComponent, canActivate: [afterAuthGuard] },
+  { path: 'quiz-employe', component: QuizEmployeComponent },
 
   { path: 'verification', component: VerificationEmailComponent },
   { path: 'success', component: SuccessMessageComponent },
@@ -43,6 +41,7 @@ const routes: Routes = [
       { path: 'profile/:email', component: ProfileComponent },
       { path: 'contrat', component: ContratNotificationComponent },
       { path: 'quiz-rh', component: QuizRhComponent },
+      { path: 'quiz-employe', component: QuizEmployeComponent },
     ],
   },
 ];

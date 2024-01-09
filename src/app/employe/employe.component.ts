@@ -45,6 +45,9 @@ export class EmployeComponent {
     return { rendementValidatio : true }
   }
 
+
+=======
+>>>>>>> 4fa8afef87bad4f734e11d34d7e7cdbd56e63ee6
   employe: Employe = {
     id: 0,
     cni: '',

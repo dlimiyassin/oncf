@@ -1,0 +1,45 @@
+<div class="container-fluid mt-4 mb-5">
+
+    <div *ngIf="quizStatus">
+        <div *ngIf="loggedIn">
+            <button class="btn btn-lg btn-secondary ms-5  mb-0" routerLink="/dashboard/quiz-rh">
+                <i class="bi bi-arrow-left"></i>
+            </button>
+        </div>
+        <div class="row">
+            <div class="col-8 mx-auto">
+                <div class="card shadow-lg mt-5" *ngFor="let quiz of Quiz; let i = index;">
+                    <div class="card-header fw-bold text-center bg-info">Question {{ i + 1 }}/{{ Quiz.length }}</div>
+                    <div class="card-body ms-3">
+                        <div>
+                            <p class="text-center">{{ quiz.question }}</p>
+                        </div>
+                        <hr />
+                        <div class="form-check mb-2"
+                            *ngFor="let option of [quiz.option1, quiz.option2, quiz.option3, quiz.option4]; let j = index;">
+                            <input class="form-check-input" type="radio" [name]="'radio' + quiz.id" [id]="'radio' + j"
+                                (change)="onOptionSelected(quiz.id, option)" />
+                            <label class="form-check-label ms-1" [for]="'radio' + j">{{ option }}</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="mt-5">
+                    <button class="btn btn-info btn-xxl w-100" (click)="submitAnswers()">Submit Answers</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div *ngIf="!quizStatus" class="text-center">
+        <div *ngIf="loggedIn" class="d-flex justify-content-start mb-4">
+            <button class="btn btn-lg btn-secondary ms-5  mb-0" routerLink="/dashboard/quiz-rh">
+                <i class="bi bi-arrow-left"></i>
+            </button>
+        </div>
+        <div class="row">
+            <div class="col d-flex justify-content-center" >
+                <p class="alert w-75 alert-info">Personality test is currently disabled.</p>
+            </div>
+        </div>
+    </div>
+</div>
