@@ -1,9 +1,13 @@
 package com.example.amigos.auth;
 
+import com.example.amigos.auth.requests.AuthenticationRequest;
+import com.example.amigos.auth.requests.RegisterRequest;
+import com.example.amigos.auth.responses.AuthenticationResponse;
+import com.example.amigos.auth.responses.PictureResponse;
 import com.example.amigos.config.JwtService;
-import com.example.amigos.user.Role;
-import com.example.amigos.user.User;
-import com.example.amigos.user.UserRepository;
+import com.example.amigos.entities.Role;
+import com.example.amigos.entities.User;
+import com.example.amigos.repositories.UserRepository;
 import jakarta.mail.internet.MimeMessage;
 import lombok.RequiredArgsConstructor;
 import net.bytebuddy.utility.RandomString;
@@ -72,7 +76,7 @@ public class AuthenticationService {
                 .password(passwordEncoder.encode(request.getPassword()))
                 .birthdate(request.getBirthdate())
                 .gender(request.getGender())
-                .role(Role.USER)
+                .role(Role.ADMIN)
                 .enabled(false)
                 .verificationCode(randomCode)
                 .build();

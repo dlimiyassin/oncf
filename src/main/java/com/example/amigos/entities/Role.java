@@ -1,4 +1,4 @@
-package com.example.amigos.user;
+package com.example.amigos.entities;
 
 public enum Role {
     USER,

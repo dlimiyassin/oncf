@@ -1,6 +1,6 @@
-package com.example.amigos.user;
+package com.example.amigos.repositories;
 
-import com.example.amigos.employe.Employe;
+import com.example.amigos.entities.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 

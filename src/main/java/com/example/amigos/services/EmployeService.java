@@ -1,26 +1,18 @@
-package com.example.amigos.service;
+package com.example.amigos.services;
 
 
-import com.example.amigos.employe.Employe;
+import com.example.amigos.entities.Employe;
 import com.example.amigos.repositories.EmployeRepository;
-import com.example.amigos.user.Role;
-import com.example.amigos.user.User;
-import com.example.amigos.user.UserRepository;
+import com.example.amigos.repositories.UserRepository;
 import lombok.RequiredArgsConstructor;
-import net.bytebuddy.utility.RandomString;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.http.MediaType;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 
 @Service

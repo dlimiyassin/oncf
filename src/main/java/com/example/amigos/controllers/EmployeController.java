@@ -1,17 +1,15 @@
-package com.example.amigos.conroller;
+package com.example.amigos.controllers;
 
 
-import com.example.amigos.employe.Employe;
+import com.example.amigos.entities.Employe;
 import com.example.amigos.responses.PaginationResponse;
-import com.example.amigos.service.EmployeService;
-import com.example.amigos.user.User;
+import com.example.amigos.services.EmployeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/employe")

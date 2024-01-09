@@ -1,6 +1,5 @@
-package com.example.amigos.auth;
+package com.example.amigos.responses;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -10,7 +9,6 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class AuthenticationResponse {
-
-    private String accessToken;
+public class TestResult {
+    private int totalScore;
 }

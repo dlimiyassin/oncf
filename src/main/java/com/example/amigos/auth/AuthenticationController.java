@@ -1,6 +1,11 @@
 package com.example.amigos.auth;
 
-import com.example.amigos.user.User;
+import com.example.amigos.auth.requests.AuthenticationRequest;
+import com.example.amigos.auth.requests.RegisterRequest;
+import com.example.amigos.auth.responses.AuthenticationResponse;
+import com.example.amigos.auth.responses.PictureResponse;
+import com.example.amigos.auth.responses.UpdatePasswordResponse;
+import com.example.amigos.entities.User;
 import jakarta.mail.MessagingException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;

@@ -1,4 +1,4 @@
-    package com.example.amigos.employe;
+    package com.example.amigos.entities;
 
     import jakarta.persistence.*;
     import jakarta.validation.constraints.NotNull;
@@ -11,7 +11,8 @@
 
 
     @Entity
-    @Data @AllArgsConstructor @NoArgsConstructor
+    @Data @AllArgsConstructor
+    @NoArgsConstructor
     @Table( name = "employe")
     public class Employe {
 

@@ -1,5 +1,6 @@
-package com.example.amigos.auth;
+package com.example.amigos.auth.responses;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -9,11 +10,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class PictureResponse {
+public class AuthenticationResponse {
 
-    private String imageName;
-
-    private String imageType;
-
-    private byte[] picByte;
+    private String accessToken;
 }

@@ -1,6 +1,6 @@
 package com.example.amigos.config;
 
-import com.example.amigos.user.UserRepository;
+import com.example.amigos.repositories.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

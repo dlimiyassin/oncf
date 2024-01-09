@@ -1,4 +1,4 @@
-package com.example.amigos.auth;
+package com.example.amigos.auth.requests;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

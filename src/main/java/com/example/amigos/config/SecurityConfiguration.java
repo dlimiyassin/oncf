@@ -38,7 +38,7 @@ public class SecurityConfiguration {
                 .disable()
                 .authorizeHttpRequests()
 
-                .requestMatchers( "/api/auth/**").permitAll()
+                .requestMatchers( "/api/auth/**","/api/test/**","/api/test").permitAll()
 
                 .requestMatchers(AUTH_WHITELIST).permitAll()
 

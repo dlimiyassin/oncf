@@ -1,4 +1,4 @@
-package com.example.amigos.user;
+package com.example.amigos.entities;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -13,7 +13,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import java.time.LocalDate;
 import java.util.Collection;
-import java.util.Date;
 import java.util.List;
 
 @Data
