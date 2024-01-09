@@ -34,7 +34,7 @@ export class LoginComponent implements OnInit {
         console.log(data);
         this.authService.handleResponse(data),
           this.router.navigateByUrl('/dashboard');
-        this.toaster.success('You logged in successfully', 'Success', { timeOut: 2000 })
+        this.toaster.success('You logged in successfully', 'Success', { timeOut: 1000 })
       },
       error: (err) => {
         console.log(err);
