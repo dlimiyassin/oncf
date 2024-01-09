@@ -1,18 +1,12 @@
-<<<<<<< HEAD
-<div class="col-12 mt-5">
-  <div class="d-flex justify-content-between mb-0 mt-4">
-    <button class="btn btn-primary  fw-bold mb-3" (click)="ajouterEmployeModal(AjouterModal)">Add New Employe</button>
-    <div class="search-bar me-5 pe-5 pe-3 w-50">
-      <form #searchFrom="ngForm" class="search-form d-flex align-items-center" (ngSubmit)="handleGoToPage(searchFrom.value.name)">
-=======
 <div class="col-12 mt-5 ">
   <div class="d-flex justify-content-around">
     <button class="btn btn-primary fw-bold mb-3" (click)="ajouterEmployeModal(AjouterModal)">Add New Employe</button>
-    <span>size :{{pageSize}} screen :{{screenWidth}}</span>
+    <span><!--size :{{pageSize}} screen :{{screenWidth}}--></span>
     <div class="search-bar w-25" >
       <form #searchFrom="ngForm" class="search-form d-flex align-items-center"
         (ngSubmit)="handleGoToPage(searchFrom.value.name)">
->>>>>>> 4fa8afef87bad4f734e11d34d7e7cdbd56e63ee6
+
+
         <input type="text" name="name" placeholder="Search" ngModel>
         <button type="submit"><i class="bi bi-search"></i></button>
       </form>
@@ -79,8 +73,6 @@
       </table>
     </div>
   </div>
-<<<<<<< HEAD
-
 
   </div>
   <nav aria-label="Page navigation example" class="mt-4">
@@ -104,9 +96,6 @@
 
   </nav>
 
-
-
-=======
   <!-- Pagination with limit -->
   <!-- 
       <ul class="pagination justify-content-center">
@@ -137,7 +126,7 @@
   </li>
 </ul>
      -->
->>>>>>> 4fa8afef87bad4f734e11d34d7e7cdbd56e63ee6
+
   <!-- ajouter Modal -->
   <ng-template #AjouterModal let-modal>
     <div class="modal-header pb-0">
