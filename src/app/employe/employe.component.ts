@@ -9,8 +9,6 @@ import {
   AbstractControl,
   FormControl,
   FormGroup,
-  NgForm,
-  ValidationErrors,
   Validators,
 } from '@angular/forms';
 import { NewEmploye } from '../models/new-employe.model';
@@ -97,24 +95,12 @@ export class EmployeComponent {
 
   employeForm = new FormGroup({
     cni: new FormControl('', [Validators.required, Validators.minLength(6)]),
-    lastname: new FormControl('', [
-      Validators.required,
-      Validators.minLength(3),
-    ]),
-    firstname: new FormControl('', [
-      Validators.required,
-      Validators.minLength(3),
-    ]),
+    lastname: new FormControl('', [  Validators.required,  Validators.minLength(3),]),
+    firstname: new FormControl('', [  Validators.required,  Validators.minLength(3),]),
     email: new FormControl('', [Validators.required, Validators.email]),
     birthDate: new FormControl('', Validators.required),
-    rendement: new FormControl('', [
-      Validators.required,
-      this.rendementValidation,
-    ]),
-    objectif: new FormControl('', [
-      Validators.required,
-      this.objectifValidation,
-    ]),
+    rendement: new FormControl('', [Validators.required,this.rendementValidation,    ]),
+    objectif: new FormControl('', [Validators.required,this.objectifValidation,    ]),
   });
 
   objectifValidation(control: AbstractControl) {
@@ -138,12 +124,8 @@ export class EmployeComponent {
       lastname: this.employeForm.get('lastname')?.value as string,
       email: this.employeForm.get('email')?.value as string,
       birthDate: new Date(this.employeForm.get('birthDate')?.value as string),
-      rendement: this.employeForm.get('rendement')?.value
-        ? Number(this.employeForm.get('rendement')?.value)
-        : 0,
-      objectif: this.employeForm.get('objectif')?.value
-        ? Number(this.employeForm.get('objectif')?.value)
-        : 0,
+      rendement: this.employeForm.get('rendement')?.value? Number(this.employeForm.get('rendement')?.value): 0,
+      objectif: this.employeForm.get('objectif')?.value? Number(this.employeForm.get('objectif')?.value): 0,
     };
     this.employeService.createEmploye(newEmploye).subscribe(() => {
       this.ngOnInit();
@@ -173,24 +155,12 @@ export class EmployeComponent {
   editEmployeForm = new FormGroup({
     id: new FormControl('', [Validators.required]),
     cni: new FormControl('', [Validators.required, Validators.minLength(6)]),
-    lastname: new FormControl('', [
-      Validators.required,
-      Validators.minLength(3),
-    ]),
-    firstname: new FormControl('', [
-      Validators.required,
-      Validators.minLength(3),
-    ]),
+    lastname: new FormControl('', [Validators.required,Validators.minLength(3),]),
+    firstname: new FormControl('', [Validators.required,Validators.minLength(3),]),
     email: new FormControl('', [Validators.required, Validators.email]),
     birthDate: new FormControl('', Validators.required),
-    rendement: new FormControl('', [
-      Validators.required,
-      this.rendementValidation,
-    ]),
-    objectif: new FormControl('', [
-      Validators.required,
-      this.objectifValidation,
-    ]),
+    rendement: new FormControl('', [Validators.required,this.rendementValidation,]),
+    objectif: new FormControl('', [Validators.required,this.objectifValidation,]),
   });
 
   openEdit(content: TemplateRef<any>, id: number) {
@@ -222,12 +192,8 @@ export class EmployeComponent {
       lastname: this.editEmployeForm.get('lastname')?.value as string,
       email: this.editEmployeForm.get('email')?.value as string,
       birthDate: new Date(this.editEmployeForm.get('birthDate')?.value as string),
-      rendement: this.editEmployeForm.get('rendement')?.value
-        ? Number(this.editEmployeForm.get('rendement')?.value)
-        : 0,
-      objectif: this.editEmployeForm.get('objectif')?.value
-        ? Number(this.editEmployeForm.get('objectif')?.value)
-        : 0,
+      rendement: this.editEmployeForm.get('rendement')?.value? Number(this.editEmployeForm.get('rendement')?.value): 0,
+      objectif: this.editEmployeForm.get('objectif')?.value ? Number(this.editEmployeForm.get('objectif')?.value): 0,
     };
     this.employeService.updateEmploye(employe).subscribe(() => {
       this.ngOnInit();
