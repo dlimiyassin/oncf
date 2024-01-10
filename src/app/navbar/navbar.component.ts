@@ -34,6 +34,7 @@ export class NavbarComponent implements OnInit {
       this.loggedIn = value;
       this.tokenInfos = this.token.getInfos();
     });
+
     this.employe.getAllNotifications().subscribe({
       next: (employes) => {
         this.employes = employes.map(

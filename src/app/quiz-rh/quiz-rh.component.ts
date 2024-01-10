@@ -123,7 +123,6 @@ export class QuizRhComponent implements OnInit {
   getQuizById(id?: number) {
     this.quiz.getQuizByID(id).subscribe({
       next: (quiz) => {
-        console.log(quiz);
         this.updateQuizForm.setValue({
           id: String(quiz.id),
           question: quiz.question,

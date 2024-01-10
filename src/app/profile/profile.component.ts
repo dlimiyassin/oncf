@@ -1,4 +1,11 @@
-import { Component, Input, OnInit, inject } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  Input,
+  OnInit,
+  inject,
+} from '@angular/core';
 import { User } from '../models/user.model';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AccountService } from '../services/account.service';
@@ -12,6 +19,7 @@ import { ToastrService } from 'ngx-toastr';
   selector: 'app-profile',
   templateUrl: './profile.component.html',
   styleUrls: ['./profile.component.css'],
+  changeDetection: ChangeDetectionStrategy.Default,
 })
 export class ProfileComponent implements OnInit {
   constructor(
@@ -20,7 +28,8 @@ export class ProfileComponent implements OnInit {
     private token: TokenService,
     private routee: ActivatedRoute,
     private datePipe: DatePipe,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private cdr: ChangeDetectorRef
   ) {}
 
   @Input() email!: string; // retreive email value from the path
@@ -36,6 +45,7 @@ export class ProfileComponent implements OnInit {
   };
 
   ngOnInit(): void {
+    this.getImage();
     console.log(this.email);
     this.account.getUserByEmail(this.email).subscribe({
       next: (user) => {
@@ -45,7 +55,6 @@ export class ProfileComponent implements OnInit {
         console.log(err);
       },
     });
-    this.getImage();
   }
 
   /*-------------------------------- upload image --------------------------*/
@@ -55,24 +64,6 @@ export class ProfileComponent implements OnInit {
   retrieveResponse: any;
   public onFileChanged(event: any) {
     this.selectedFile = event.target.files[0];
-  }
-  onUpload() {
-    console.log(this.selectedFile);
-    const uploadImageData = new FormData();
-    uploadImageData.append(
-      'imageFile',
-      this.selectedFile,
-      this.selectedFile.name
-    );
-
-    this.account.uploadImage(uploadImageData, this.user.email).subscribe({
-      next: (res) => {
-          this.toastr.success('Image uploaded successfully', 'Success', { timeOut: 3000 });        
-      },
-      error: (err) => {        
-          this.toastr.success('Image uploaded successfully', 'Success', { timeOut: 3000 });  
-      }
-    });
   }
 
   getImage() {
@@ -88,17 +79,44 @@ export class ProfileComponent implements OnInit {
       },
     });
   }
+  onUpload() {
+    console.log(this.selectedFile);
+    const uploadImageData = new FormData();
+    uploadImageData.append(
+      'imageFile',
+      this.selectedFile,
+      this.selectedFile.name
+    );
 
+    this.account.uploadImage(uploadImageData, this.user.email).subscribe({
+      next: (res) => {
+        this.getImage();
+        this.toastr.success('Image uploaded successfully', 'Success', {
+          timeOut: 3000,
+        });
+      },
+      error: (err) => {
+        this.toastr.error('Image does not uploaded successfully', 'error', {
+          timeOut: 3000,
+        });
+      },
+    });
+  }
   removePicture() {
     this.account.removePicture(this.user.email).subscribe({
       next: (res) => {
-        this.toastr.success('Image removed successfully', 'Success', { timeOut: 3000 });  
+        this.retrievedImage = '';
+        this.toastr.success('Image removed successfully', 'Success', {
+          timeOut: 3000,
+        });
       },
       error: (err) => {
-               
-          this.toastr.error('Image not uploaded successfully', 'Error', { timeOut: 3000 });
+        this.toastr.error('Image not uploaded successfully', 'Error', {
+          timeOut: 3000,
+        });
       },
     });
+    this.ngOnInit();
   }
   /*-------------------------------- format date --------------------------*/
   formatDate(date: Date | null): string {
@@ -112,7 +130,9 @@ export class ProfileComponent implements OnInit {
   modifierUser() {
     this.account.updateUser(this.user).subscribe((res) => {
       console.log(res);
-      this.toastr.success('Profile updated successfully', 'Success', { timeOut: 3000  });
+      this.toastr.success('Profile updated successfully', 'Success', {
+        timeOut: 3000,
+      });
     });
   }
 
@@ -129,17 +149,26 @@ export class ProfileComponent implements OnInit {
       this.updatePwd.username = this.token.getInfos()?.sub;
       this.auth.updateProfilePassword(this.updatePwd).subscribe({
         next: (data) => {
-          this.toastr.success('Your password has been updated successfully','Success',{ timeOut: 3000 });
+          this.toastr.success(
+            'Your password has been updated successfully',
+            'Success',
+            { timeOut: 3000 }
+          );
           console.log(data);
         },
         error: (err) => {
-          this.toastr.error('The old password is not correct', 'Error', { timeOut: 3000, });
+          this.toastr.error('The old password is not correct', 'Error', {
+            timeOut: 3000,
+          });
           console.log(err);
         },
       });
     } else {
       this.toastr.warning(
-        'The new password should match the renew password','Warning', { timeOut: 3000 });
+        'The new password should match the renew password',
+        'Warning',
+        { timeOut: 3000 }
+      );
     }
   }
 }

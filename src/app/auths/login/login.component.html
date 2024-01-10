@@ -6,18 +6,30 @@
       <div class="col-6" id="div1">
         <div class="card-body">
           <h2 class="badge-style" ><strong>SIGN IN FORM</strong></h2>
-          <form >
+          <form [formGroup]="loginForm" (ngSubmit)="onLogin()">
             <div class="mb-3">
-              <input type="email" class="form-control" name="email" [(ngModel)]="loginObj.email"  placeholder="Email">
+              <input type="email" class="form-control" formControlName="email" required name="email"  placeholder="Email">
+              <div *ngIf="loginForm.get('email')?.invalid && loginForm.get('email')?.touched || loginForm.get('email')?.dirty">
+                <ul>
+                  <li *ngIf="loginForm.get('email')?.getError('required')" class="text-danger fw-bold mt-2 " style="text-align: left;">Email is required</li>
+                  <li *ngIf="loginForm.get('email')?.getError('email')" class="text-danger fw-bold mt-2 " style="text-align: left;">Invalid email</li>
+                </ul>
+               </div>
             </div>
             <div class="mb-3">
-              <input type="password" class="form-control" name="password" [(ngModel)]="loginObj.password"  placeholder="password">
+              <input type="password" class="form-control" formControlName="password" required name="password" placeholder="password">
+              <div *ngIf="loginForm.get('password')?.invalid && loginForm.get('password')?.touched || loginForm.get('password')?.dirty">
+                <ul>
+                  <li *ngIf="loginForm.get('password')?.getError('required')" class="text-danger fw-bold mt-2 " style="text-align: left;">Password is required</li>
+                  <li *ngIf="loginForm.get('password')?.getError('minlength')" class="text-danger fw-bold mt-2 " style="text-align: left;">Minimum : 4 caracters</li>
+                </ul>
+               </div>
             </div>
                   <!-- Display error message -->
                   <div *ngIf="errorMessage" class="alert alert-danger mt-3">
                     {{ errorMessage }}
                   </div>
-            <button (click)="onLogin()" class="item btn btn-dark">Sign In<i class="bi bi-arrow-right"></i></button>
+            <button class="item btn btn-dark">Sign In<i class="bi bi-arrow-right"></i></button>
           </form>
           <h4><a (click)="forgetPassword()" class="item" routerLink="" >Forget password ?</a></h4>
           <h5 class="item">Not a member ?<a routerLink="/register">Create an account</a></h5> 

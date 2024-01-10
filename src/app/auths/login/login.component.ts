@@ -5,6 +5,7 @@ import { TokenService } from '../../services/token.service';
 import { AccountService } from '../../services/account.service';
 import { DatePipe } from '@angular/common';
 import { ToastrService } from 'ngx-toastr';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -12,29 +13,33 @@ import { ToastrService } from 'ngx-toastr';
   providers: [DatePipe],
 })
 export class LoginComponent implements OnInit {
-  loginObj: any = {
-    email: '',
-    password: '',
-  };
+  loginForm = new FormGroup({
+    email: new FormControl('', [Validators.required, Validators.email]),
+    password: new FormControl('', [Validators.required, Validators.minLength(4)]),
+  });
   errorMessage: string | null = null;
   constructor(
     private authService: AuthService,
     private router: Router,
-    private token: TokenService,
-    private account: AccountService,
-    private toaster : ToastrService
+    private toaster: ToastrService
   ) {}
 
   ngOnInit(): void {}
 
   onLogin() {
     this.errorMessage = null;
-    this.authService.login(this.loginObj).subscribe({
+    const credentials = {
+      email: this.loginForm.get('email')?.value as string,
+      password: this.loginForm.get('password')?.value as string,
+    };
+    this.authService.login(credentials).subscribe({
       next: (data) => {
         console.log(data);
         this.authService.handleResponse(data),
           this.router.navigateByUrl('/dashboard');
-        this.toaster.success('You logged in successfully', 'Success', { timeOut: 1000 })
+        this.toaster.success('You logged in successfully', 'Success', {
+          timeOut: 1000,
+        });
       },
       error: (err) => {
         console.log(err);
