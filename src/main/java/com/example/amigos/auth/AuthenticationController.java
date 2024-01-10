@@ -108,9 +108,9 @@ public class AuthenticationController {
     }
     //---------------------------------upload profile picture-----------------------------------
     @PostMapping("/profile/upload/{email}")
-    public BodyBuilder uplaodImage(@RequestParam("imageFile") MultipartFile file, @PathVariable("email") String email) throws IOException {
+    public ResponseEntity<BodyBuilder>  uplaodImage(@RequestParam("imageFile") MultipartFile file, @PathVariable("email") String email) throws IOException {
         service.uploadPicture(file,email);
-        return ResponseEntity.status(HttpStatus.OK);
+        return new ResponseEntity<>(HttpStatus.CREATED);
     }
     @PutMapping("/profile/removePic/{email}")
     public ResponseEntity<String> removeImage(@PathVariable("email") String email) {
