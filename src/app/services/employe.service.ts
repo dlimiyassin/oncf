@@ -3,18 +3,15 @@ import { Employe } from '../models/employe.model';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { EmployeResponse } from '../models/employe-response.model';
-import { NewEmploye } from '../models/new-employe.model';
 import { UpdatedEmploye } from '../models/updated-employe.model';
-
+import { environment } from '../../environments/environment'
 
 @Injectable({
   providedIn: 'root',
 })
 export class EmployeService {
-  private apiUrl = 'http://localhost:8080/api/employe';
-
+  private apiUrl = environment.apiUrl + '/employe';
   constructor(private http: HttpClient) {}
-
 
   getAllEmployes(
     keyword: string = '',
@@ -22,9 +19,12 @@ export class EmployeService {
     size: number
   ): Observable<EmployeResponse> {
     const url = `${this.apiUrl}?keyword=${keyword}&page=${page}&size=${size}`;
-    return this.http.get<EmployeResponse>(url);
+    return this.http.get<EmployeResponse>(url, {
+      withCredentials: true,
+      responseType: 'json',
+    });
   }
-  
+
   getAllNotifications(): Observable<Employe[]> {
     const url = `${this.apiUrl}/notify`;
     return this.http.get<Employe[]>(url);
@@ -36,10 +36,13 @@ export class EmployeService {
     return this.http.get<Employe>(url);
   }
 
+
   // methode pour ajouter un Employe
-  createEmploye(employe: NewEmploye): Observable<Employe> {
-    return this.http.post<Employe>(this.apiUrl, employe);
+  createEmploye<N>(employe: N): Observable<N> {
+    return this.http.post<N>(this.apiUrl, employe);
   }
+
+
 
   // methode pour modifier un Employe
   updateEmploye(employe: UpdatedEmploye): Observable<Employe> {

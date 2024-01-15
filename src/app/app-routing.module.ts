@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { RouterModule, Routes, CanActivateFn } from '@angular/router';
+import { RouterModule, Routes } from '@angular/router';
 import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './auths/login/login.component';
 import { RegisterComponent } from './auths/register/register.component';
@@ -20,10 +20,10 @@ import { QuizEmployeComponent } from './quiz-employe/quiz-employe.component';
 
 
 const routes: Routes = [
-  { path: '', component: HomeComponent, canActivate: [afterAuthGuard] },
-  { path: 'login', component: LoginComponent, canActivate: [afterAuthGuard] },
-  { path: 'register', component: RegisterComponent, canActivate: [afterAuthGuard] },
-  { path: 'quiz-employe', component: QuizEmployeComponent },
+  { path: '', component: HomeComponent, title: 'Oncf', canActivate: [afterAuthGuard] },
+  { path: 'login', component: LoginComponent, title: 'Login', canActivate: [afterAuthGuard] },
+  { path: 'register', component: RegisterComponent, title: 'Register', canActivate: [afterAuthGuard] },
+  { path: 'quiz-employe', component: QuizEmployeComponent, title: 'Quiz' },
 
   { path: 'verification', component: VerificationEmailComponent },
   { path: 'success', component: SuccessMessageComponent },
@@ -37,11 +37,11 @@ const routes: Routes = [
     component: DashboardLayoutComponent,
     canActivate: [authGuard],
     children: [
-      { path: '', component: DashboardComponent },
-      { path: 'profile/:email', component: ProfileComponent },
-      { path: 'contrat', component: ContratNotificationComponent },
-      { path: 'quiz-rh', component: QuizRhComponent },
-      { path: 'quiz-employe', component: QuizEmployeComponent },
+      { path: '', component: DashboardComponent, title: 'Dashboard' },
+      { path: 'profile/:email', component: ProfileComponent , title: 'Profile'},
+      { path: 'contrat', component: ContratNotificationComponent , title: 'Notification'},
+      { path: 'quiz-rh', component: QuizRhComponent , title: 'RH'},
+      { path: 'quiz-employe', component: QuizEmployeComponent , title: 'Quiz'},
     ],
   },
 ];

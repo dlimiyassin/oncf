@@ -3,12 +3,13 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { TokenService } from './token.service';
 import { User } from '../models/user.model';
 import { HttpClient } from '@angular/common/http';
+import { environment } from './../../environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AccountService {
-  private apiUrl = 'http://localhost:8080/api/employe/profile';
+  private apiUrl = environment.apiUrl + '/auth/profile';
 
   private loggedIn = new BehaviorSubject<boolean>(this.Token.loggedIn());
 
@@ -22,7 +23,7 @@ export class AccountService {
 
   // fetch user data
   getUserByEmail(email: string): Observable<User> {
-    const url = `http://localhost:8080/api/auth/profile/${email}`;
+    const url = this.apiUrl + `/${email}`;
     return this.http.get<User>(url);
   }
 
@@ -33,20 +34,20 @@ export class AccountService {
       lastname,
       birthdate,
     };
-    const url = `http://localhost:8080/api/auth/profile/${user.email}`;
+    const url = this.apiUrl + `/${user.email}`;
     return this.http.put<User>(url, updatedUser);
   }
 
   uploadImage(uploadImageData: any, email: string): Observable<any> {
-    const url = `http://localhost:8080/api/auth/profile/upload/${email}`;
+    const url = this.apiUrl + `/upload/${email}`;
     return this.http.post<any>(url, uploadImageData, { observe: 'response' });
   }
   getImage(email: any): Observable<any> {
-    const url = `http://localhost:8080/api/auth/profile/upload/get/${email}`;
+    const url = this.apiUrl + `/upload/get/${email}`;
     return this.http.get<any>(url);
   }
   removePicture(email: string): Observable<any> {
-    const url = `http://localhost:8080/api/auth/profile/removePic/${email}`;
+    const url = this.apiUrl + `/removePic/${email}`;
     return this.http.put<any>(url, {});
   }
 }

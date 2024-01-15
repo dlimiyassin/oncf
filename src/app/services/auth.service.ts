@@ -4,24 +4,21 @@ import { jwtDecode } from 'jwt-decode';
 import { TokenService } from './token.service';
 import { AccountService } from './account.service';
 import { Observable, catchError } from 'rxjs';
-//import { BehaviorSubject } from 'rxjs';
+import { environment } from 'src/environments/environment';
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-  //isAuthenticated: boolean = false;
-  //roles: any;
-  //username: any;
-  //accessToken!: any;
-
   constructor(
     private http: HttpClient,
     private token: TokenService,
     private account: AccountService
   ) {}
 
+  private apiUrl = environment.apiUrl + '/auth';
+
   public login(data: { email: string; password: string }) {
-    return this.http.post('http://localhost:8080/api/auth/authenticate', data);
+    return this.http.post(this.apiUrl + '/authenticate', data);
   }
 
   register(data: {
@@ -32,7 +29,7 @@ export class AuthService {
     birthdate: Date;
     gender: string;
   }) {
-    return this.http.post('http://localhost:8080/api/auth/register', data);
+    return this.http.post(this.apiUrl + '/register', data);
   }
 
   handleResponse(data: any) {
@@ -41,15 +38,16 @@ export class AuthService {
   }
 
   forgetPassword(email: string) {
-    const url = `http://localhost:8080/api/auth/forget-password?email=${email}`;
+    const url = this.apiUrl + `/forget-password?email=${email}`;
     return this.http.get(url);
   }
 
-  updatePassword(data: { email: string; password: string , renewPassword: string}) {
-    return this.http.post(
-      'http://localhost:8080/api/auth/update-password',
-      data
-    );
+  updatePassword(data: {
+    email: string;
+    password: string;
+    renewPassword: string;
+  }) {
+    return this.http.post(this.apiUrl + '/update-password', data);
   }
 
   updateProfilePassword(data: {
@@ -57,9 +55,8 @@ export class AuthService {
     newPassword: string;
     renewPassword: string;
     username: string;
-  }) : Observable<string>
-  {
-    const url = `http://localhost:8080/api/auth/${data.username}/update-password?oldPassword=${data.oldPassword}&newPassword=${data.newPassword}`;
+  }): Observable<string> {
+    const url = this.apiUrl + `/${data.username}/update-password?oldPassword=${data.oldPassword}&newPassword=${data.newPassword}`;
     return this.http.put<string>(url, null);
   }
 

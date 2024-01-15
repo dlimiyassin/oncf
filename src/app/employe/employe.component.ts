@@ -11,7 +11,6 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
-import { NewEmploye } from '../models/new-employe.model';
 import { UpdatedEmploye } from '../models/updated-employe.model';
 
 @Component({
@@ -32,7 +31,7 @@ export class EmployeComponent {
     private datePipe: DatePipe,
     private modalService: NgbModal,
     private toaster: ToastrService
-  ) {}
+  ) {  }
 
   /*--------------------------------- fETCH DATA FOR TABLE ----------------------------- */
   ngOnInit(): void {
@@ -57,17 +56,17 @@ export class EmployeComponent {
     const screenWidth = window.innerWidth;
     this.screenWidth = screenWidth;
     if (screenWidth <= 1163) {
-      this.pageSize = 5;
+      this.pageSize = 3;
     } else if (1164 <= screenWidth && screenWidth <= 1280) {
-      this.pageSize = 6;
+      this.pageSize = 4;
     } else if (1281 <= screenWidth && screenWidth <= 1422) {
-      this.pageSize = 7;
+      this.pageSize = 5;
     } else if (1423 <= screenWidth && screenWidth <= 1600) {
-      this.pageSize = 9;
+      this.pageSize = 6;
     } else if (1601 <= screenWidth && screenWidth <= 1707) {
-      this.pageSize = 10;
+      this.pageSize = 7;
     } else if (1708 <= screenWidth && screenWidth <= 1920) {
-      this.pageSize = 12;
+      this.pageSize = 8;
     }
     this.FetchEmployes();
   }
@@ -118,7 +117,7 @@ export class EmployeComponent {
   }
 
   ajouterEmploye() {
-    const newEmploye: NewEmploye = {
+    const newEmploye = {
       cni: this.employeForm.get('cni')?.value as string,
       firstname: this.employeForm.get('firstname')?.value as string,
       lastname: this.employeForm.get('lastname')?.value as string,
