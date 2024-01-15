@@ -63,10 +63,10 @@ public class AuthenticationService {
 
     //-------------------------------register----------------------------
     public AuthenticationResponse register(RegisterRequest request, String siteURL)
-            throws UnsupportedEncodingException, MessagingException{
+            throws UnsupportedEncodingException, MessagingException {
 
         Optional<User> checkEmail = repository.findByEmail(request.getEmail());
-        if(checkEmail.isPresent()) throw new RuntimeException("user already exist !");
+        if (checkEmail.isPresent()) throw new RuntimeException("user already exist !");
 
         String randomCode = RandomString.make(64);
         var user = User.builder()
@@ -87,6 +87,7 @@ public class AuthenticationService {
                 .accessToken(jwtToken)
                 .build();
     }
+
     private void sendVerificationEmail(User user, String siteURL)
             throws MessagingException, UnsupportedEncodingException {
         String toAddress = user.getEmail();
@@ -116,6 +117,7 @@ public class AuthenticationService {
         mailSender.send(message);
 
     }
+
     public boolean verify(String verificationCode) {
         User user = repository.findByVerificationCode(verificationCode);
 
@@ -131,13 +133,13 @@ public class AuthenticationService {
 
     }
 
-    public void forgetPassword(String email) throws MessagingException, UnsupportedEncodingException{
+    public void forgetPassword(String email) throws MessagingException, UnsupportedEncodingException {
 
         String toAddress = email;
         String fromAddress = "oncf3308@gmail.com";
         String senderName = "Oncf Team";
         String subject = "Please update your password";
-        String content =  "Please click the link below to update your password:<br>"
+        String content = "Please click the link below to update your password:<br>"
                 + "<h3><a href=\"[[URL]]\" target=\"_self\">UPDATE</a></h3>"
                 + "Thank you,<br>"
                 + "ONCF TEAM.";
@@ -161,7 +163,7 @@ public class AuthenticationService {
 
     public void updatePassword(AuthenticationRequest request) {
         Optional<User> checkEmail = repository.findByEmail(request.getEmail());
-        if(checkEmail.isEmpty()) throw new RuntimeException("user does not exist !");
+        if (checkEmail.isEmpty()) throw new RuntimeException("user does not exist !");
         var user = repository.findByEmail(request.getEmail())
                 .orElseThrow();
         user.setPassword(passwordEncoder.encode(request.getPassword()));
@@ -196,6 +198,7 @@ public class AuthenticationService {
         updatedUser.setPicByte(compressBytes(file.getBytes()));
         repository.save(updatedUser);
     }
+
     // compress the image bytes before storing it in the database
     public static byte[] compressBytes(byte[] data) {
         Deflater deflater = new Deflater();
@@ -219,6 +222,9 @@ public class AuthenticationService {
 
     // uncompress the image bytes before returning it to the angular application
     public static byte[] decompressBytes(byte[] data) {
+        if (data == null) {
+            return new byte[0];
+        }
         Inflater inflater = new Inflater();
         inflater.setInput(data);
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream(data.length);
@@ -229,8 +235,7 @@ public class AuthenticationService {
                 outputStream.write(buffer, 0, count);
             }
             outputStream.close();
-        } catch (IOException ioe) {
-        } catch (DataFormatException e) {
+        } catch (IOException | DataFormatException ignored) {
         }
         return outputStream.toByteArray();
     }

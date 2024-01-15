@@ -52,9 +52,9 @@ public class TestPersonalityService {
     public List<QuizResponse> getQuiz() {
         List<Quiz> quizResponses = quizRepository.findAll();
         List<QuizResponse> quizResponsesList = new ArrayList<>();
-        for (Quiz entity: quizResponses){
+        for (Quiz entity : quizResponses) {
             ModelMapper modelMapper = new ModelMapper();
-            QuizResponse quizResponse = modelMapper.map(entity,QuizResponse.class);
+            QuizResponse quizResponse = modelMapper.map(entity, QuizResponse.class);
             quizResponsesList.add(quizResponse);
         }
         return quizResponsesList;
@@ -68,10 +68,9 @@ public class TestPersonalityService {
             // If the table is empty, insert a new QuizStatus with id = 1
             QuizStatus newQuizStatus = new QuizStatus();
             newQuizStatus.setId(1);
-            newQuizStatus.setStatus(false); // Set the default status, or modify as needed
+            newQuizStatus.setStatus(false);
             quizStatusRepository.save(newQuizStatus);
 
-            // Return the status of the newly inserted QuizStatus
             return newQuizStatus.getStatus();
         } else {
             // If the table is not empty, retrieve the existing QuizStatus with id = 1
@@ -85,10 +84,10 @@ public class TestPersonalityService {
     public void changeQuizStatus() {
         Optional<QuizStatus> quizStatus = quizStatusRepository.findById(1);
         Boolean status = quizStatus.get().getStatus();
-        if (status){
+        if (status) {
             quizStatus.get().setStatus(false);
             quizStatusRepository.save(quizStatus.get());
-        }else{
+        } else {
             quizStatus.get().setStatus(true);
             quizStatusRepository.save(quizStatus.get());
         }

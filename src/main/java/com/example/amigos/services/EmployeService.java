@@ -24,40 +24,41 @@ public class EmployeService {
     private UserRepository userRepository;
 
     private final PasswordEncoder passwordEncoder;
- //  public List<Employe> getAllEmploye(){
- //      return employeRepository.findAll();
- //  }
+    //  public List<Employe> getAllEmploye(){
+    //      return employeRepository.findAll();
+    //  }
 
     public Page<Employe> getAllEmployes(int page, int size, String keyword) {
         if (page > 0) page -= 1;
-        Pageable Pageable= PageRequest.of(page, size);
+        Pageable Pageable = PageRequest.of(page, size);
         Page<Employe> employePage;
-        if (!keyword.isEmpty()){
-            employePage =  employeRepository.findAllByUsername(Pageable,keyword);
+        if (!keyword.isEmpty()) {
+            employePage = employeRepository.findAllByUsername(Pageable, keyword);
 
-        }else{
+        } else {
             employePage = employeRepository.findAll(Pageable);
         }
         return employePage;
     }
-    public List<Employe> getAllNotifications(){
+
+    public List<Employe> getAllNotifications() {
         return employeRepository.findEmployeesWithRetirementInNext3Months();
     }
 
-   public Employe getEmployeById(Long id){
-       return employeRepository.findById(id);
-   }
+    public Employe getEmployeById(Long id) {
+        return employeRepository.findById(id);
+    }
 
-   public Employe saveEmpolye(Employe em){
-       int atteint = em.getRendement()*100/em.getObjectif();
-       em.setAtteint(atteint);
-       em.setRetraite(em.getBirthDate().plusYears(60));
-       return employeRepository.save(em);
-   }
+    public Employe saveEmpolye(Employe em) {
+        int atteint = em.getRendement() * 100 / em.getObjectif();
+        em.setAtteint(atteint);
+        em.setRetraite(em.getBirthDate().plusYears(60));
+        return employeRepository.save(em);
+    }
 
-  public void delete(Long id ){
-   employeRepository.deleteById(id);
-  }
+    public void delete(Long id) {
+        employeRepository.deleteById(id);
+    }
 
 
 }

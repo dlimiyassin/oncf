@@ -20,33 +20,34 @@ public class QuizController {
     QuizService quizService;
 
     @GetMapping()
-    public List<QuizResponse> getQuiz(){
+    public List<QuizResponse> getQuiz() {
         return quizService.getQuiz();
     }
 
     @PostMapping()
-    public QuizResponse addQuiz(@RequestBody QuizRequest quizRequest){
+    public QuizResponse addQuiz(@RequestBody QuizRequest quizRequest) {
         return quizService.addQuiz(quizRequest);
     }
 
     @PutMapping("/{id}")
-    public QuizResponse editQuiz(@RequestBody QuizRequest quizRequest, @PathVariable Long id){
-        return quizService.editQuiz(quizRequest,id);
+    public QuizResponse editQuiz(@RequestBody QuizRequest quizRequest, @PathVariable Long id) {
+        return quizService.editQuiz(quizRequest, id);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<QuizResponse> getQuizById(@PathVariable Long id){
+    public ResponseEntity<QuizResponse> getQuizById(@PathVariable Long id) {
         QuizResponse quizResponse = quizService.getQuizById(id);
-        return new ResponseEntity<>(quizResponse,HttpStatus.OK);
+        return new ResponseEntity<>(quizResponse, HttpStatus.OK);
     }
+
     @DeleteMapping("/{id}")
-    public ResponseEntity<Object> deleteQuiz(@PathVariable Long id){
+    public ResponseEntity<Object> deleteQuiz(@PathVariable Long id) {
         quizService.deleteQuiz(id);
-         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     @DeleteMapping()
-    public ResponseEntity<Object> deleteAllQuiz(){
+    public ResponseEntity<Object> deleteAllQuiz() {
         quizService.deleteAllQuiz();
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }

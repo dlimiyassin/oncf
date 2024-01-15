@@ -11,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.modelmapper.ModelMapper;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -25,9 +26,9 @@ public class QuizService {
     public List<QuizResponse> getQuiz() {
         List<Quiz> quizResponses = quizRepository.findAll();
         List<QuizResponse> quizResponsesList = new ArrayList<>();
-        for (Quiz entity: quizResponses){
+        for (Quiz entity : quizResponses) {
             ModelMapper modelMapper = new ModelMapper();
-            QuizResponse quizResponse = modelMapper.map(entity,QuizResponse.class);
+            QuizResponse quizResponse = modelMapper.map(entity, QuizResponse.class);
             quizResponsesList.add(quizResponse);
         }
         return quizResponsesList;
@@ -36,10 +37,10 @@ public class QuizService {
     public QuizResponse addQuiz(QuizRequest quizRequest) {
 
         ModelMapper modelMapper = new ModelMapper();
-        Quiz newQuiz = modelMapper.map(quizRequest,Quiz.class);
+        Quiz newQuiz = modelMapper.map(quizRequest, Quiz.class);
         Quiz quiz = quizRepository.save(newQuiz);
 
-        return modelMapper.map(quiz,QuizResponse.class);
+        return modelMapper.map(quiz, QuizResponse.class);
     }
 
     public QuizResponse editQuiz(QuizRequest quizRequest, Long id) {
@@ -53,18 +54,20 @@ public class QuizService {
         quiz.setOption4(quizRequest.getOption4());
         Quiz updatedQuiz = quizRepository.save(quiz);
         ModelMapper modelMapper = new ModelMapper();
-        return modelMapper.map(updatedQuiz,QuizResponse.class);
+        return modelMapper.map(updatedQuiz, QuizResponse.class);
     }
 
     public void deleteQuiz(Long id) {
         Optional<Quiz> quizOptional = quizRepository.findById(id);
-        if (quizOptional.isPresent()){
+        if (quizOptional.isPresent()) {
             quizRepository.deleteById(id);
-        }else { throw new RuntimeException("this quiz does not exist"); }
+        } else {
+            throw new RuntimeException("this quiz does not exist");
+        }
     }
 
     public void deleteAllQuiz() {
-    quizRepository.deleteAll();
+        quizRepository.deleteAll();
     }
 
     public QuizResponse getQuizById(Long id) {
@@ -72,7 +75,7 @@ public class QuizService {
         if (quizOptional.isEmpty()) throw new RuntimeException("this quiz does not exist");
         Quiz quiz = quizOptional.get();
         ModelMapper modelMapper = new ModelMapper();
-        return modelMapper.map(quiz,QuizResponse.class);
+        return modelMapper.map(quiz, QuizResponse.class);
     }
 
 }
