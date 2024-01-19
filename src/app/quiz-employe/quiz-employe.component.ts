@@ -1,15 +1,16 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { QuizService } from '../services/quiz.service';
 import { Quiz } from '../models/quiz';
 import { ToastrService } from 'ngx-toastr';
 import { AccountService } from '../services/account.service';
+import { Subject, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'app-quiz-employe',
   templateUrl: './quiz-employe.component.html',
   styleUrls: ['./quiz-employe.component.css'],
 })
-export class QuizEmployeComponent implements OnInit {
+export class QuizEmployeComponent implements OnInit, OnDestroy {
   constructor(
     private quizService: QuizService,
     private toaster: ToastrService,
@@ -17,45 +18,57 @@ export class QuizEmployeComponent implements OnInit {
   ) {}
   public loggedIn: boolean = false;
 
+  private ngUnsubscribe = new Subject<void>();
+  
   ngOnInit(): void {
     this.getQuiz();
     this.refeshAuthStatus();
     this.refreshQuizStatus();
   }
+  ngOnDestroy() {
+    this.ngUnsubscribe.next();
+    this.ngUnsubscribe.complete();
+  }
   /* ------------------------------------   Get auth satuts  -------------------------------------- */
   refeshAuthStatus() {
-    this.account.authStatus.subscribe((value) => {
-      this.loggedIn = value;
-    });
+    this.account.authStatus
+      .pipe(takeUntil(this.ngUnsubscribe))
+      .subscribe((value) => {
+        this.loggedIn = value;
+      });
   }
   /* ------------------------------------  Get quiz satuts  -------------------------------------- */
 
   quizStatus!: boolean;
   refreshQuizStatus() {
-    this.quizService.getQuizStatus().subscribe({
-      next: (status) => {
-        console.log(status);
-        this.quizStatus = status;
-      },
-      error: (err) => {
-        console.log(err);
-      },
-    });
+    this.quizService
+      .getQuizStatus()
+      .pipe(takeUntil(this.ngUnsubscribe))
+      .subscribe({
+        next: (status) => {
+          this.quizStatus = status;
+        },
+        error: (err) => {
+          console.log(err);
+        },
+      });
   }
   /*--------------------------------------Fetch Quizzes ------------------------------------ */
 
   Quiz: Quiz[] = [];
   getQuiz() {
-    this.quizService.getQuiztest().subscribe({
-      next: (response: Quiz[]) => {
-        console.log(response);
-        this.Quiz = response;
-        this.Quiz = this.shuffleQuizOptions(response); //  shuffle Options = khalat ajwiba (for whom cant speak english lol)
-      },
-      error: (err) => {
-        console.log(err);
-      },
-    });
+    this.quizService
+      .getQuiztest()
+      .pipe(takeUntil(this.ngUnsubscribe))
+      .subscribe({
+        next: (response: Quiz[]) => {
+          this.Quiz = response;
+          this.Quiz = this.shuffleQuizOptions(response); //  shuffle Options
+        },
+        error: (err) => {
+          console.log(err);
+        },
+      });
   }
 
   /*-------------------------------------- Shuffle Options ------------------------------------ */
@@ -95,21 +108,23 @@ export class QuizEmployeComponent implements OnInit {
   submitAnswers() {
     const submittedAnswers = this.selectedOptions;
 
-    this.quizService.submitAnswers(submittedAnswers).subscribe({
-      next: (rep: { totalScore: number }) => {
-        console.log(rep);
-        this.totalScore = rep.totalScore;
-        this.toaster.success(
-          'Your score is : ' + this.totalScore + ' / '+ this.Quiz.length * 4,
-          'Success',
-          { timeOut: 3000 }
-        );
-        this.ngOnInit();
-      },
-      error: (err) => {
-        console.log(err);
-      },
-    });
+    this.quizService
+      .submitAnswers(submittedAnswers)
+      .pipe(takeUntil(this.ngUnsubscribe))
+      .subscribe({
+        next: (rep: { totalScore: number }) => {
+          this.totalScore = rep.totalScore;
+          this.toaster.success(
+            'Your score is : ' + this.totalScore + ' / ' + this.Quiz.length * 4,
+            'Success',
+            { timeOut: 3000 }
+          );
+          this.getQuiz()
+        },
+        error: (err) => {
+          console.log(err);
+        },
+      });
   }
 
   /*--------------------- For binding the selected radio button to the selected option-------------------- */

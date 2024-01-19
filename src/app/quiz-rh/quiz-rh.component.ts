@@ -1,4 +1,4 @@
-import { Component, OnInit, inject, TemplateRef } from '@angular/core';
+import { Component, OnInit, inject, TemplateRef, OnDestroy } from '@angular/core';
 import { Quiz } from './../models/quiz';
 import { QuizService } from '../services/quiz.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
@@ -8,56 +8,70 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Subject, takeUntil } from 'rxjs';
 @Component({
   selector: 'app-quiz-rh',
   templateUrl: './quiz-rh.component.html',
   styleUrls: ['./quiz-rh.component.css'],
 })
-export class QuizRhComponent implements OnInit {
+export class QuizRhComponent implements OnInit, OnDestroy {
   constructor(private quiz: QuizService, private quizService: QuizService) {}
 
+  private ngUnsubscribe = new Subject<void>();
+  
   ngOnInit(): void {
     this.getQuiz();
     this.refreshQuizStatus();
+  }
+
+  ngOnDestroy() {
+    this.ngUnsubscribe.next();
+    this.ngUnsubscribe.complete();
   }
 
   /* ------------------------------------   Get quiz satuts  -------------------------------------- */
 
   quizStatus!: boolean;
   refreshQuizStatus() {
-    this.quizService.getQuizStatus().subscribe({
-      next: (status) => {
-        console.log(status);
-        this.quizStatus = status;
-      },
-      error: (err) => {
-        console.log(err);
-      },
-    });
+    this.quizService
+      .getQuizStatus()
+      .pipe(takeUntil(this.ngUnsubscribe))
+      .subscribe({
+        next: (status) => {
+          this.quizStatus = status;
+        },
+        error: (err) => {
+          console.log(err);
+        },
+      });
   }
   onToggleQuizStatus(): void {
-    this.quizService.changeQuizStatus().subscribe({
-      next: () => {
-        this.ngOnInit();
-      },
-      error: (err) => {
-        console.error('Error changing quiz status:', err);
-      },
-    });
+    this.quizService
+      .changeQuizStatus()
+      .pipe(takeUntil(this.ngUnsubscribe))
+      .subscribe({
+        next: () => {
+          this.refreshQuizStatus();
+        },
+        error: (err) => {
+          console.error('Error changing quiz status:', err);
+        },
+      });
   }
   /* ------------------------------------   Fetch All quizzes  -------------------------------------- */
   Quiz: Quiz[] = [];
   getQuiz() {
-    this.quiz.getQuiz().subscribe({
-      next: (response: Quiz[]) => {
-        console.log(response);
-        this.Quiz = response;
-      },
-      error: (err) => {
-        console.log(err);
-      },
-    });
+    this.quiz
+      .getQuiz()
+      .pipe(takeUntil(this.ngUnsubscribe))
+      .subscribe({
+        next: (response: Quiz[]) => {
+          this.Quiz = response;
+        },
+        error: (err) => {
+          console.log(err);
+        },
+      });
   }
 
   /* ------------------------------------     Add new quiz     -------------------------------------- */
@@ -78,16 +92,18 @@ export class QuizRhComponent implements OnInit {
       option3: this.NewQuizForm.get('option3')?.value as string,
       option4: this.NewQuizForm.get('option4')?.value as string,
     };
-    this.quiz.addQuiz(newQuiz).subscribe({
-      next: (rep: Quiz[]) => {
-        console.log(rep);
-        this.getQuiz();
-        this.NewQuizForm.reset();
-      },
-      error: (err) => {
-        console.log(err);
-      },
-    });
+    this.quiz
+      .addQuiz(newQuiz)
+      .pipe(takeUntil(this.ngUnsubscribe))
+      .subscribe({
+        next: (rep: Quiz[]) => {
+          this.getQuiz();
+          this.NewQuizForm.reset();
+        },
+        error: (err) => {
+          console.log(err);
+        },
+      });
   }
   openAddXl(content: TemplateRef<any>) {
     this.modalService.open(content, { size: 'xl' });
@@ -95,15 +111,17 @@ export class QuizRhComponent implements OnInit {
   /* ------------------------------------   Delete single quiz   -------------------------------------- */
 
   deleteQuizById(quizId?: number) {
-    this.quiz.deleteQuiz(quizId).subscribe({
-      next: (rep) => {
-        console.log(rep);
-        this.getQuiz();
-      },
-      error: (err) => {
-        console.log(err);
-      },
-    });
+    this.quiz
+      .deleteQuiz(quizId)
+      .pipe(takeUntil(this.ngUnsubscribe))
+      .subscribe({
+        next: (rep) => {
+          this.getQuiz();
+        },
+        error: (err) => {
+          console.log(err);
+        },
+      });
   }
   /* ----------------------------------------   Edit quizzes   -------------------------------------- */
 
@@ -121,21 +139,24 @@ export class QuizRhComponent implements OnInit {
     option4: new FormControl('', Validators.required),
   });
   getQuizById(id?: number) {
-    this.quiz.getQuizByID(id).subscribe({
-      next: (quiz) => {
-        this.updateQuizForm.setValue({
-          id: String(quiz.id),
-          question: quiz.question,
-          option1: quiz.option1,
-          option2: quiz.option2,
-          option3: quiz.option3,
-          option4: quiz.option4,
-        });
-      },
-      error: (err) => {
-        console.log(err);
-      },
-    });
+    this.quiz
+      .getQuizByID(id)
+      .pipe(takeUntil(this.ngUnsubscribe))
+      .subscribe({
+        next: (quiz) => {
+          this.updateQuizForm.setValue({
+            id: String(quiz.id),
+            question: quiz.question,
+            option1: quiz.option1,
+            option2: quiz.option2,
+            option3: quiz.option3,
+            option4: quiz.option4,
+          });
+        },
+        error: (err) => {
+          console.log(err);
+        },
+      });
   }
   quizId!: number;
   updateQuiz() {
@@ -147,29 +168,33 @@ export class QuizRhComponent implements OnInit {
       option3: this.updateQuizForm.get('option3')?.value as string,
       option4: this.updateQuizForm.get('option4')?.value as string,
     };
-    this.quiz.updateQuiz(newQuiz, quizId).subscribe({
-      next: (rep) => {
-        console.log(rep);
-        this.getQuiz();
-      },
-      error: (err) => {
-        console.log(err);
-      },
-    });
+    this.quiz
+      .updateQuiz(newQuiz, quizId)
+      .pipe(takeUntil(this.ngUnsubscribe))
+      .subscribe({
+        next: (rep) => {
+          this.getQuiz();
+        },
+        error: (err) => {
+          console.log(err);
+        },
+      });
   }
 
   /* ------------------------------------   Delete all quizzes   -------------------------------------- */
 
   deleteAllQuizzes() {
-    this.quiz.deleteAllQuiz().subscribe({
-      next: (rep) => {
-        console.log(rep);
-        this.getQuiz();
-      },
-      error: (err) => {
-        console.log(err);
-      },
-    });
+    this.quiz
+      .deleteAllQuiz()
+      .pipe(takeUntil(this.ngUnsubscribe))
+      .subscribe({
+        next: () => {
+          this.getQuiz();
+        },
+        error: (err) => {
+          console.log(err);
+        },
+      });
   }
 
   openConfirmationModal(content: TemplateRef<any>) {

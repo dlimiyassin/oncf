@@ -1,4 +1,4 @@
-import { Component, HostListener, TemplateRef } from '@angular/core';
+import { Component, HostListener, OnDestroy, OnInit, TemplateRef } from '@angular/core';
 import { Employe } from '../models/employe.model';
 import { EmployeService } from '../services/employe.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
@@ -11,13 +11,14 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
+import { Subject, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'app-employe',
   templateUrl: './employe.component.html',
   styleUrls: ['./employe.component.css'],
 })
-export class EmployeComponent {
+export class EmployeComponent implements OnInit, OnDestroy {
   employes: Employe[] = [];
   totalPages: number = 0;
   keyword: string = '';
@@ -29,18 +30,33 @@ export class EmployeComponent {
     private datePipe: DatePipe,
     private modalService: NgbModal,
     private toaster: ToastrService
-  ) {  }
+  ) {}
 
   /*--------------------------------- fETCH DATA FOR TABLE ----------------------------- */
+  private ngUnsubscribe = new Subject<void>();
+
   ngOnInit(): void {
+    this.employeService.employes$
+      .pipe(takeUntil(this.ngUnsubscribe))
+      .subscribe((employes) => {
+        this.employes = employes;
+      });
+
     this.adjustPageSize();
     this.FetchEmployes();
   }
+
+  ngOnDestroy() {
+    this.ngUnsubscribe.next();
+    this.ngUnsubscribe.complete();
+  }
+
   FetchEmployes() {
     this.employeService
       .getAllEmployes(this.keyword, this.currentPage, this.pageSize)
+      .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe((response: EmployeResponse) => {
-        this.employes = response.content;
+        this.employeService.updateEmployesStore(response.content);
         this.totalPages = response.totalPages;
       });
   }
@@ -92,12 +108,24 @@ export class EmployeComponent {
 
   employeForm = new FormGroup({
     cni: new FormControl('', [Validators.required, Validators.minLength(6)]),
-    lastname: new FormControl('', [  Validators.required,  Validators.minLength(3),]),
-    firstname: new FormControl('', [  Validators.required,  Validators.minLength(3),]),
+    lastname: new FormControl('', [
+      Validators.required,
+      Validators.minLength(3),
+    ]),
+    firstname: new FormControl('', [
+      Validators.required,
+      Validators.minLength(3),
+    ]),
     email: new FormControl('', [Validators.required, Validators.email]),
     birthDate: new FormControl('', Validators.required),
-    rendement: new FormControl('', [Validators.required,this.rendementValidation,    ]),
-    objectif: new FormControl('', [Validators.required,this.objectifValidation,    ]),
+    rendement: new FormControl('', [
+      Validators.required,
+      this.rendementValidation,
+    ]),
+    objectif: new FormControl('', [
+      Validators.required,
+      this.objectifValidation,
+    ]),
   });
 
   objectifValidation(control: AbstractControl) {
@@ -121,14 +149,21 @@ export class EmployeComponent {
       lastname: this.employeForm.get('lastname')?.value as string,
       email: this.employeForm.get('email')?.value as string,
       birthDate: new Date(this.employeForm.get('birthDate')?.value as string),
-      rendement: this.employeForm.get('rendement')?.value? Number(this.employeForm.get('rendement')?.value): 0,
-      objectif: this.employeForm.get('objectif')?.value? Number(this.employeForm.get('objectif')?.value): 0,
+      rendement: this.employeForm.get('rendement')?.value
+        ? Number(this.employeForm.get('rendement')?.value)
+        : 0,
+      objectif: this.employeForm.get('objectif')?.value
+        ? Number(this.employeForm.get('objectif')?.value)
+        : 0,
     };
-    this.employeService.createEmploye(newEmploye).subscribe(() => {
-      this.FetchEmployes();
-      this.employeForm.reset();
-      this.modalService.dismissAll();
-    });
+    this.employeService
+      .createEmploye(newEmploye)
+      .pipe(takeUntil(this.ngUnsubscribe))
+      .subscribe(() => {
+        this.FetchEmployes();
+        this.employeForm.reset();
+        this.modalService.dismissAll();
+      });
     this.toaster.success('New employee added successfully', 'Success', {
       timeOut: 3000,
     });
@@ -140,9 +175,12 @@ export class EmployeComponent {
   /*--------------------------------- TRAITEMENT DE LA SUPPERSION ----------------------------- */
 
   supprimerEmploye(id: number) {
-    this.employeService.deleteEmploye(id).subscribe(() => {
-      this.employes = this.employes.filter((employe) => employe.id !== id);
-    });
+    this.employeService
+      .deleteEmploye(id)
+      .pipe(takeUntil(this.ngUnsubscribe))
+      .subscribe(() => {
+        this.employes = this.employes.filter((employe) => employe.id !== id);
+      });
     this.toaster.error('The empolye deleted successfully', 'Error', {
       timeOut: 3000,
     });
@@ -152,12 +190,24 @@ export class EmployeComponent {
   editEmployeForm = new FormGroup({
     id: new FormControl('', [Validators.required]),
     cni: new FormControl('', [Validators.required, Validators.minLength(6)]),
-    lastname: new FormControl('', [Validators.required,Validators.minLength(3),]),
-    firstname: new FormControl('', [Validators.required,Validators.minLength(3),]),
+    lastname: new FormControl('', [
+      Validators.required,
+      Validators.minLength(3),
+    ]),
+    firstname: new FormControl('', [
+      Validators.required,
+      Validators.minLength(3),
+    ]),
     email: new FormControl('', [Validators.required, Validators.email]),
     birthDate: new FormControl('', Validators.required),
-    rendement: new FormControl('', [Validators.required,this.rendementValidation,]),
-    objectif: new FormControl('', [Validators.required,this.objectifValidation,]),
+    rendement: new FormControl('', [
+      Validators.required,
+      this.rendementValidation,
+    ]),
+    objectif: new FormControl('', [
+      Validators.required,
+      this.objectifValidation,
+    ]),
   });
 
   openEdit(content: TemplateRef<any>, id: number) {
@@ -166,42 +216,52 @@ export class EmployeComponent {
   }
 
   getEmployeById(id: number) {
-    this.employeService.getEmployeById(id).subscribe((employe) => {
-      this.editEmployeForm.setValue({
-        id: String(employe.id),
-        cni: employe.cni,
-        firstname: employe.firstname,
-        lastname: employe.lastname,
-        email: employe.email,
-        birthDate: this.formatDate(new Date(employe.birthDate)),
-        rendement: String(employe.rendement),
-        objectif: String(employe.objectif),
+    this.employeService
+      .getEmployeById(id)
+      .pipe(takeUntil(this.ngUnsubscribe))
+      .subscribe((employe) => {
+        this.editEmployeForm.setValue({
+          id: String(employe.id),
+          cni: employe.cni,
+          firstname: employe.firstname,
+          lastname: employe.lastname,
+          email: employe.email,
+          birthDate: this.formatDate(new Date(employe.birthDate)),
+          rendement: String(employe.rendement),
+          objectif: String(employe.objectif),
+        });
       });
-      console.log(this.editEmployeForm);
-    });
   }
- 
+
   modifierEmploye() {
     const employe = {
-      id: Number(this.editEmployeForm.get('id')?.value) ,
+      id: Number(this.editEmployeForm.get('id')?.value),
       cni: this.editEmployeForm.get('cni')?.value as string,
       firstname: this.editEmployeForm.get('firstname')?.value as string,
       lastname: this.editEmployeForm.get('lastname')?.value as string,
       email: this.editEmployeForm.get('email')?.value as string,
-      birthDate: new Date(this.editEmployeForm.get('birthDate')?.value as string),
-      rendement: this.editEmployeForm.get('rendement')?.value? Number(this.editEmployeForm.get('rendement')?.value): 0,
-      objectif: this.editEmployeForm.get('objectif')?.value ? Number(this.editEmployeForm.get('objectif')?.value): 0,
+      birthDate: new Date(
+        this.editEmployeForm.get('birthDate')?.value as string
+      ),
+      rendement: this.editEmployeForm.get('rendement')?.value
+        ? Number(this.editEmployeForm.get('rendement')?.value)
+        : 0,
+      objectif: this.editEmployeForm.get('objectif')?.value
+        ? Number(this.editEmployeForm.get('objectif')?.value)
+        : 0,
     };
-    this.employeService.updateEmploye(employe, employe.id).subscribe(() => {
-      this.FetchEmployes()
-    });
+    this.employeService
+      .updateEmploye(employe, employe.id)
+      .pipe(takeUntil(this.ngUnsubscribe))
+      .subscribe(() => {
+        this.FetchEmployes();
+      });
     this.toaster.success('The employee modified successfully', 'Success', {
       timeOut: 3000,
     });
   }
-  
+
   formatDate(date: Date | null): string {
     return this.datePipe.transform(date, 'yyyy-MM-dd') ?? '';
   }
-
 }

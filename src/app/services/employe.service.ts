@@ -12,6 +12,13 @@ export class EmployeService {
   private apiUrl = environment.apiUrl + '/employe';
   constructor(private http: HttpClient) {}
 
+  private employesStore = new BehaviorSubject<Employe[]>([]);
+  employes$ = this.employesStore.asObservable();
+
+  updateEmployesStore(employes: Employe[]): void {
+    this.employesStore.next(employes);
+  }
+
   getAllEmployes(
     keyword: string = '',
     page: number,
@@ -35,13 +42,10 @@ export class EmployeService {
     return this.http.get<Employe>(url);
   }
 
-
   // methode pour ajouter un Employe
   createEmploye<N>(employe: N): Observable<N> {
     return this.http.post<N>(this.apiUrl, employe);
   }
-
-
 
   // methode pour modifier un Employe
   updateEmploye<N>(employe: N, id: number): Observable<N> {

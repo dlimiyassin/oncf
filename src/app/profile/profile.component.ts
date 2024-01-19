@@ -3,33 +3,30 @@ import {
   ChangeDetectorRef,
   Component,
   Input,
+  OnDestroy,
   OnInit,
-  inject,
 } from '@angular/core';
 import { User } from '../models/user.model';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AccountService } from '../services/account.service';
-import { Observable } from 'rxjs';
-import { switchMap } from 'rxjs/operators';
 import { DatePipe } from '@angular/common';
 import { AuthService } from '../services/auth.service';
 import { TokenService } from '../services/token.service';
 import { ToastrService } from 'ngx-toastr';
+import { Subject, takeUntil } from 'rxjs';
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.component.html',
   styleUrls: ['./profile.component.css'],
   changeDetection: ChangeDetectionStrategy.Default,
 })
-export class ProfileComponent implements OnInit {
+export class ProfileComponent implements OnInit, OnDestroy {
   constructor(
     private account: AccountService,
     private auth: AuthService,
     private token: TokenService,
-    private routee: ActivatedRoute,
     private datePipe: DatePipe,
-    private toastr: ToastrService,
-    private cdr: ChangeDetectorRef
+    private toastr: ToastrService
   ) {}
 
   @Input() email!: string; // retreive email value from the path
@@ -44,19 +41,24 @@ export class ProfileComponent implements OnInit {
     image: '',
   };
 
+  private ngUnsubscribe = new Subject<void>();
+
   ngOnInit(): void {
     this.getImage();
-    console.log(this.email);
-    this.account.getUserByEmail(this.email).subscribe({
-      next: (user) => {
-        this.user = user;
-      },
-      error: (err) => {
-        console.log(err);
-      },
-    });
+    this.account
+      .getUserByEmail(this.email)
+      .pipe(takeUntil(this.ngUnsubscribe))
+      .subscribe({
+        next: (user) => {
+          this.user = user;
+        }
+      });
   }
 
+  ngOnDestroy() {
+    this.ngUnsubscribe.next();
+    this.ngUnsubscribe.complete();
+  }
   /*-------------------------------- upload image --------------------------*/
   selectedFile!: File;
   retrievedImage: any;
@@ -67,20 +69,21 @@ export class ProfileComponent implements OnInit {
   }
 
   getImage() {
-    this.account.getImage(this.email).subscribe({
-      next: (res) => {
-        console.log(res);
-        this.retrieveResponse = res;
-        this.base64Data = this.retrieveResponse.picByte;
-        this.retrievedImage = 'data:image/jpeg;base64,' + this.base64Data;
-      },
-      error: (err) => {
-        console.log(err);
-      },
-    });
+    this.account
+      .getImage(this.email)
+      .pipe(takeUntil(this.ngUnsubscribe))
+      .subscribe({
+        next: (res) => {
+          this.retrieveResponse = res;
+          this.base64Data = this.retrieveResponse.picByte;
+          this.retrievedImage = 'data:image/jpeg;base64,' + this.base64Data;
+        },
+        error: (err) => {
+          console.log(err);
+        },
+      });
   }
   onUpload() {
-    console.log(this.selectedFile);
     const uploadImageData = new FormData();
     uploadImageData.append(
       'imageFile',
@@ -88,35 +91,41 @@ export class ProfileComponent implements OnInit {
       this.selectedFile.name
     );
 
-    this.account.uploadImage(uploadImageData, this.user.email).subscribe({
-      next: (res) => {
-        this.getImage();
-        this.toastr.success('Image uploaded successfully', 'Success', {
-          timeOut: 3000,
-        });
-      },
-      error: (err) => {
-        this.toastr.error('Image does not uploaded successfully', 'error', {
-          timeOut: 3000,
-        });
-      },
-    });
+    this.account
+      .uploadImage(uploadImageData, this.user.email)
+      .pipe(takeUntil(this.ngUnsubscribe))
+      .subscribe({
+        next: (res) => {
+          this.getImage();
+          this.toastr.success('Image uploaded successfully', 'Success', {
+            timeOut: 3000,
+          });
+        },
+        error: (err) => {
+          this.toastr.error('Image does not uploaded successfully', 'error', {
+            timeOut: 3000,
+          });
+        },
+      });
   }
   removePicture() {
-    this.account.removePicture(this.user.email).subscribe({
-      next: (res) => {
-        this.retrievedImage = '';
-        this.toastr.success('Image removed successfully', 'Success', {
-          timeOut: 3000,
-        });
-      },
-      error: (err) => {
-        this.toastr.error('Image not uploaded successfully', 'Error', {
-          timeOut: 3000,
-        });
-      },
-    });
-    this.ngOnInit();
+    this.account
+      .removePicture(this.user.email)
+      .pipe(takeUntil(this.ngUnsubscribe))
+      .subscribe({
+        next: (res) => {
+          this.retrievedImage = '';
+          this.toastr.success('Image removed successfully', 'Success', {
+            timeOut: 3000,
+          });
+        },
+        error: (err) => {
+          this.toastr.error('Image not uploaded successfully', 'Error', {
+            timeOut: 3000,
+          });
+        },
+      });
+    this.getImage()
   }
   /*-------------------------------- format date --------------------------*/
   formatDate(date: Date | null): string {
@@ -128,12 +137,14 @@ export class ProfileComponent implements OnInit {
   }
   /*-------------------------------- update user details --------------------------*/
   modifierUser() {
-    this.account.updateUser(this.user).subscribe((res) => {
-      console.log(res);
-      this.toastr.success('Profile updated successfully', 'Success', {
-        timeOut: 3000,
+    this.account
+      .updateUser(this.user)
+      .pipe(takeUntil(this.ngUnsubscribe))
+      .subscribe((res) => {
+        this.toastr.success('Profile updated successfully', 'Success', {
+          timeOut: 3000,
+        });
       });
-    });
   }
 
   /*-------------------------------- update user password --------------------------*/
@@ -147,22 +158,24 @@ export class ProfileComponent implements OnInit {
   updatePassword() {
     if (this.updatePwd.newPassword == this.updatePwd.renewPassword) {
       this.updatePwd.username = this.token.getInfos()?.sub;
-      this.auth.updateProfilePassword(this.updatePwd).subscribe({
-        next: (data) => {
-          this.toastr.success(
-            'Your password has been updated successfully',
-            'Success',
-            { timeOut: 3000 }
-          );
-          console.log(data);
-        },
-        error: (err) => {
-          this.toastr.error('The old password is not correct', 'Error', {
-            timeOut: 3000,
-          });
-          console.log(err);
-        },
-      });
+      this.auth
+        .updateProfilePassword(this.updatePwd)
+        .pipe(takeUntil(this.ngUnsubscribe))
+        .subscribe({
+          next: (data) => {
+            this.toastr.success(
+              'Your password has been updated successfully',
+              'Success',
+              { timeOut: 3000 }
+            );
+          },
+          error: (err) => {
+            this.toastr.error('The old password is not correct', 'Error', {
+              timeOut: 3000,
+            });
+            console.log(err);
+          },
+        });
     } else {
       this.toastr.warning(
         'The new password should match the renew password',
