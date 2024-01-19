@@ -3,7 +3,6 @@ import { Employe } from '../models/employe.model';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { EmployeResponse } from '../models/employe-response.model';
-import { UpdatedEmploye } from '../models/updated-employe.model';
 import { environment } from '../../environments/environment'
 
 @Injectable({
@@ -45,9 +44,9 @@ export class EmployeService {
 
 
   // methode pour modifier un Employe
-  updateEmploye(employe: UpdatedEmploye): Observable<Employe> {
-    const url = `${this.apiUrl}/${employe.id}`;
-    return this.http.put<Employe>(url, employe);
+  updateEmploye<N>(employe: N, id: number): Observable<N> {
+    const url = `${this.apiUrl}/${id}`;
+    return this.http.put<N>(url, employe);
   }
 
   // methode pour supprimer un Employe

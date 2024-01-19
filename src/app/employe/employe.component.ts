@@ -11,7 +11,6 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
-import { UpdatedEmploye } from '../models/updated-employe.model';
 
 @Component({
   selector: 'app-employe',
@@ -20,7 +19,6 @@ import { UpdatedEmploye } from '../models/updated-employe.model';
 })
 export class EmployeComponent {
   employes: Employe[] = [];
-  displayedEmployes: Employe[] = [];
   totalPages: number = 0;
   keyword: string = '';
   pageSize: number = 6; // Nombre d'éléments par page
@@ -127,11 +125,11 @@ export class EmployeComponent {
       objectif: this.employeForm.get('objectif')?.value? Number(this.employeForm.get('objectif')?.value): 0,
     };
     this.employeService.createEmploye(newEmploye).subscribe(() => {
-      this.ngOnInit();
+      this.FetchEmployes();
       this.employeForm.reset();
       this.modalService.dismissAll();
     });
-    this.toaster.success('New empolye added successfully', 'Success', {
+    this.toaster.success('New employee added successfully', 'Success', {
       timeOut: 3000,
     });
   }
@@ -184,7 +182,7 @@ export class EmployeComponent {
   }
  
   modifierEmploye() {
-    const employe : UpdatedEmploye = {
+    const employe = {
       id: Number(this.editEmployeForm.get('id')?.value) ,
       cni: this.editEmployeForm.get('cni')?.value as string,
       firstname: this.editEmployeForm.get('firstname')?.value as string,
@@ -194,8 +192,8 @@ export class EmployeComponent {
       rendement: this.editEmployeForm.get('rendement')?.value? Number(this.editEmployeForm.get('rendement')?.value): 0,
       objectif: this.editEmployeForm.get('objectif')?.value ? Number(this.editEmployeForm.get('objectif')?.value): 0,
     };
-    this.employeService.updateEmploye(employe).subscribe(() => {
-      this.ngOnInit();
+    this.employeService.updateEmploye(employe, employe.id).subscribe(() => {
+      this.FetchEmployes()
     });
     this.toaster.success('The employee modified successfully', 'Success', {
       timeOut: 3000,
