@@ -1,9 +1,8 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http';
-import { jwtDecode } from 'jwt-decode';
+import { HttpClient} from '@angular/common/http';
 import { TokenService } from './token.service';
 import { AccountService } from './account.service';
-import { Observable, catchError } from 'rxjs';
+import { Observable} from 'rxjs';
 import { environment } from 'src/environments/environment';
 @Injectable({
   providedIn: 'root',

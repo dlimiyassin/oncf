@@ -1,13 +1,11 @@
 import {
   ChangeDetectionStrategy,
-  ChangeDetectorRef,
   Component,
   Input,
   OnDestroy,
   OnInit,
 } from '@angular/core';
 import { User } from '../models/user.model';
-import { ActivatedRoute, Router } from '@angular/router';
 import { AccountService } from '../services/account.service';
 import { DatePipe } from '@angular/common';
 import { AuthService } from '../services/auth.service';

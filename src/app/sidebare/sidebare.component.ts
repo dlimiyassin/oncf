@@ -1,9 +1,3 @@
-import { inject, TemplateRef } from '@angular/core';
-import {
-  NgbDatepickerModule,
-  NgbOffcanvas,
-  OffcanvasDismissReasons,
-} from '@ng-bootstrap/ng-bootstrap';
 import {
   animate,
   keyframes,

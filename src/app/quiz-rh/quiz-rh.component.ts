@@ -3,12 +3,11 @@ import { Quiz } from './../models/quiz';
 import { QuizService } from '../services/quiz.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import {
-  ReactiveFormsModule,
   FormControl,
   FormGroup,
   Validators,
 } from '@angular/forms';
-import { BehaviorSubject, Subject, takeUntil } from 'rxjs';
+import { Subject, takeUntil } from 'rxjs';
 @Component({
   selector: 'app-quiz-rh',
   templateUrl: './quiz-rh.component.html',
