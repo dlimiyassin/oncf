@@ -14,6 +14,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.Optional;
@@ -26,6 +27,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
+
 @RestController
 @RequestMapping("/api/auth")
 @RequiredArgsConstructor
@@ -36,25 +38,22 @@ public class AuthenticationController {
 
     //---------------------------------login-----------------------------------
     @PostMapping("/authenticate")
-    public ResponseEntity<AuthenticationResponse> authenticate(
-            @RequestBody AuthenticationRequest request
-    ) {
+    public ResponseEntity<AuthenticationResponse> authenticate(@RequestBody AuthenticationRequest request) {
         return ResponseEntity.ok(service.authenticate(request));
     }
 
     //---------------------------------register--------------------------------
     @PostMapping("/register")
-    public ResponseEntity<AuthenticationResponse> register(
-            @RequestBody @Valid RegisterRequest request,
-            HttpServletRequest requestUrl
-    )throws UnsupportedEncodingException, MessagingException{
+    public ResponseEntity<AuthenticationResponse> register(@RequestBody @Valid RegisterRequest request, HttpServletRequest requestUrl) throws UnsupportedEncodingException, MessagingException {
 
         return new ResponseEntity<>(service.register(request, getSiteURL(requestUrl)), HttpStatus.CREATED);
     }
+
     private String getSiteURL(HttpServletRequest request) {
         String siteURL = request.getRequestURL().toString();
         return siteURL.replace(request.getServletPath(), "");
     }
+
     //---------------------------------Verification by email-----------------------------------
     @GetMapping("/verify")
     public void verifyUser(@RequestParam("code") String code, HttpServletResponse response) throws IOException, IOException {
@@ -67,11 +66,13 @@ public class AuthenticationController {
         }
 
     }
+
     //---------------------------------forget password-----------------------------------
     @GetMapping("/forget-password")
     public void forgetPassword(@RequestParam("email") String email) throws MessagingException, UnsupportedEncodingException {
         service.forgetPassword(email);
     }
+
     //---------------------------------update password-----------------------------------
     @PostMapping("/update-password")
     public void forgetPwd(@RequestBody AuthenticationRequest request) {
@@ -79,43 +80,42 @@ public class AuthenticationController {
     }
 
     @PutMapping("/{username}/update-password")
-    public ResponseEntity<UpdatePasswordResponse> updatePassword(
-            @PathVariable String username,
-            @RequestParam("oldPassword") String oldPassword,
-            @RequestParam("newPassword") String newPassword) {
+    public ResponseEntity<UpdatePasswordResponse> updatePassword(@PathVariable String username, @RequestParam("oldPassword") String oldPassword, @RequestParam("newPassword") String newPassword) {
 
         boolean success = service.updateProfilePassword(username, oldPassword, newPassword);
 
         if (success) {
-            return ResponseEntity.ok(new UpdatePasswordResponse("Password updated successfully"));
+            return new ResponseEntity<>(new UpdatePasswordResponse("Password updated successfully"), HttpStatus.OK);
         } else {
-            return new ResponseEntity<>(new UpdatePasswordResponse("Password updated successfully"),HttpStatus.UNAUTHORIZED);
-            //return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid old password");
+            return new ResponseEntity<>(new UpdatePasswordResponse("Old password is incorrect"), HttpStatus.UNAUTHORIZED);
         }
     }
 
     //---------------------------------update profile-----------------------------------
 
     @GetMapping("/profile/{email}")
-    public Optional<User> profile(@PathVariable String email){
+    public Optional<User> profile(@PathVariable String email) {
         return service.profile(email);
     }
 
     @PutMapping("/profile/{email}")
-    public Optional<User> updateProfile(@PathVariable String email, @RequestBody User user){
-        return service.updateProfile(email,user);
+    public Optional<User> updateProfile(@PathVariable String email, @RequestBody User user) {
+        return service.updateProfile(email, user);
     }
+
     //---------------------------------upload profile picture-----------------------------------
     @PostMapping("/profile/upload/{email}")
-    public ResponseEntity<BodyBuilder>  uplaodImage(@RequestParam("imageFile") MultipartFile file, @PathVariable("email") String email) throws IOException {
-        service.uploadPicture(file,email);
+    public ResponseEntity<BodyBuilder> uplaodImage(@RequestParam("imageFile") MultipartFile file, @PathVariable("email") String email) throws IOException {
+        service.uploadPicture(file, email);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
+
     @PutMapping("/profile/removePic/{email}")
     public ResponseEntity<String> removeImage(@PathVariable("email") String email) {
         service.removePicture(email);
         return new ResponseEntity<>(HttpStatus.ACCEPTED);
     }
+
     @GetMapping("/profile/upload/get/{email}")
     public PictureResponse getImage(@PathVariable("email") String email) throws IOException {
         return service.getPicture(email);

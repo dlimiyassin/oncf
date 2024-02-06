@@ -3,7 +3,6 @@ package com.example.amigos.controllers;
 import com.example.amigos.requests.EmployeResponse;
 import com.example.amigos.responses.QuizResponse;
 import com.example.amigos.responses.TestResult;
-import com.example.amigos.services.QuizService;
 import com.example.amigos.services.TestPersonalityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

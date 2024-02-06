@@ -22,6 +22,7 @@ import org.springframework.stereotype.Service;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.zip.DataFormatException;
 import java.util.zip.Deflater;
@@ -172,7 +173,7 @@ public class AuthenticationService {
     }
 
     public boolean updateProfilePassword(String username, String oldPassword, String newPassword) {
-        User user = repository.findByEmail(username).orElseThrow();
+        User user = repository.findByEmail(username).orElseThrow(() -> new NoSuchElementException("User not found"));
 
         if (passwordEncoder.matches(oldPassword, user.getPassword())) {
             // Old password matches, update the password
