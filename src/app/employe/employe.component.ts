@@ -1,4 +1,10 @@
-import { Component, HostListener, OnDestroy, OnInit, TemplateRef } from '@angular/core';
+import {
+  Component,
+  HostListener,
+  OnDestroy,
+  OnInit,
+  TemplateRef,
+} from '@angular/core';
 import { Employe } from '../models/employe.model';
 import { EmployeService } from '../services/employe.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
@@ -32,7 +38,7 @@ export class EmployeComponent implements OnInit, OnDestroy {
     private toaster: ToastrService
   ) {}
 
-  /*--------------------------------- fETCH DATA FOR TABLE ----------------------------- */
+  /*--------------------------------- fETCH DATA FOR TABLE. ----------------------------- */
   private ngUnsubscribe = new Subject<void>();
 
   ngOnInit(): void {
