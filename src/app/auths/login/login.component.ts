@@ -46,9 +46,10 @@ export class LoginComponent implements OnInit {
       },
       error: (err) => {
         console.log(err);
-        if (err.status === 403) {
+        if (err.status === 401) {
           // Handle incorrect credentials error
           this.errorMessage = 'Password or email is incorrect';
+          console.log(err)
         } else {
           // Handle other errors
           this.errorMessage = 'An unexpected error occurred. Please try again.';

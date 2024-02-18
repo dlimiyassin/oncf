@@ -8,15 +8,15 @@ import { environment } from 'src/environments/environment';
   providedIn: 'root',
 })
 export class QuizService {
-  private apiUrlForQuiz = environment.apiUrl+'/quiz';
-  private apiUrlForTest = environment.apiUrl;
+  private apiUrlForQuiz = environment.apiUrl + '/quiz';
+  private apiUrlForTest = environment.apiUrl + '/test';
   constructor(private http: HttpClient) {}
 
   getQuiz(): Observable<Quiz[]> {
     return this.http.get<Quiz[]>(this.apiUrlForQuiz);
   }
   getQuiztest(): Observable<Quiz[]> {
-    return this.http.get<Quiz[]>(this.apiUrlForTest+'/test');
+    return this.http.get<Quiz[]>(this.apiUrlForTest);
   }
   getQuizByID(quizId?: number): Observable<Quiz> {
     const url = `${this.apiUrlForQuiz}/${quizId}`;
@@ -40,14 +40,17 @@ export class QuizService {
   submitAnswers(
     submittedAnswers: { questionId: number; selectedOption: string }[]
   ): Observable<{ totalScore: number }> {
-    const url = this.apiUrlForTest + '/test';
+    const url = this.apiUrlForTest;
     return this.http.post<{ totalScore: number }>(url, submittedAnswers);
   }
 
   getQuizStatus(): Observable<boolean> {
-    return this.http.get<boolean>(this.apiUrlForTest + '/test/get-status');
+    return this.http.get<boolean>(this.apiUrlForTest + '/get-status');
   }
   changeQuizStatus(): Observable<void> {
-    return this.http.get<void>(this.apiUrlForTest + '/test/change-status');
+    return this.http.get<void>(this.apiUrlForTest + '/change-status');
+  }
+  checkEmail(email: string): Observable<boolean> {
+    return this.http.get<boolean>(this.apiUrlForTest + `/employe-auth?email=${email}`);
   }
 }

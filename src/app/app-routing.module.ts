@@ -17,13 +17,15 @@ import { ContratNotificationComponent } from './contrat-notification/contrat-not
 import { DashboardLayoutComponent } from './dashboard-layout/dashboard-layout.component';
 import { QuizRhComponent } from './quiz-rh/quiz-rh.component';
 import { QuizEmployeComponent } from './quiz-employe/quiz-employe.component';
+import { EmployeAuthComponent } from './employe-auth/employe-auth.component';
 
 
 const routes: Routes = [
   { path: '', component: HomeComponent, title: 'Oncf', canActivate: [afterAuthGuard] },
   { path: 'login', component: LoginComponent, title: 'Login', canActivate: [afterAuthGuard] },
   { path: 'register', component: RegisterComponent, title: 'Register', canActivate: [afterAuthGuard] },
-  { path: 'quiz-employe', component: QuizEmployeComponent, title: 'Quiz' },
+  { path: 'quiz-employe/:email', component: QuizEmployeComponent, title: 'Quiz' },
+  { path: 'employe-auth', component: EmployeAuthComponent },
 
   { path: 'verification', component: VerificationEmailComponent },
   { path: 'success', component: SuccessMessageComponent },

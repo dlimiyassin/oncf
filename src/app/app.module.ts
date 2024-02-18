@@ -29,6 +29,7 @@ import { DashboardLayoutComponent } from './dashboard-layout/dashboard-layout.co
 import { NgbAccordionModule } from '@ng-bootstrap/ng-bootstrap';
 import { QuizRhComponent } from './quiz-rh/quiz-rh.component';
 import { QuizEmployeComponent } from './quiz-employe/quiz-employe.component';
+import { EmployeAuthComponent } from './employe-auth/employe-auth.component';
 
 @NgModule({
   declarations: [
@@ -51,6 +52,7 @@ import { QuizEmployeComponent } from './quiz-employe/quiz-employe.component';
     DashboardLayoutComponent,
     QuizRhComponent,
     QuizEmployeComponent,
+    EmployeAuthComponent,
   ],
   imports: [
     BrowserModule,

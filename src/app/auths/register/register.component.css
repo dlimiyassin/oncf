@@ -19,9 +19,11 @@ input.ng-invalid.ng-touched {
   position: absolute;
 }
 
-#login-oncf{
-  text-decoration: none;
+#login-oncf {
+  text-decoration: dashed;
   color: black;
+  font-weight: bold;
+  margin-right: 50px;
 }
 
 #div1{
@@ -113,4 +115,41 @@ h2.badge-style {
   color: #e8e8e8;
   border-radius: 12px;
   margin-bottom: 10px;
+}
+.header {
+  transition: all 0.5s;
+  z-index: 997;
+  height: 60px;
+  box-shadow: 0px 2px 20px rgba(1, 41, 112, 0.1);
+  background-color: #fff;
+  padding-left: 20px;
+  /* Toggle Sidebar Button */
+  /* Search Bar */
+}
+
+.logo img {
+  max-height: 26px;
+}
+
+.logo span {
+  font-size: 26px;
+  font-weight: 700;
+  color: #012970;
+  font-family: "Nunito", sans-serif;
+}
+
+.header-nav ul {
+  list-style: none;
+}
+
+.header-nav>ul {
+  margin: 0;
+  padding: 0;
+}
+
+.header-nav .nav-icon {
+  font-size: 22px;
+  color: #012970;
+  margin-right: 25px;
+  position: relative;
 }
