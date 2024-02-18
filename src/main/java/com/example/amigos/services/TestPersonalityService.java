@@ -1,17 +1,24 @@
 package com.example.amigos.services;
 
+import com.example.amigos.entities.Employe;
 import com.example.amigos.entities.Quiz;
 import com.example.amigos.entities.QuizStatus;
+import com.example.amigos.repositories.EmployeRepository;
 import com.example.amigos.repositories.QuizRepository;
 import com.example.amigos.repositories.QuizStatusRepository;
 import com.example.amigos.requests.EmployeResponse;
 import com.example.amigos.responses.QuizResponse;
 import com.example.amigos.responses.TestResult;
+import jakarta.mail.MessagingException;
+import jakarta.mail.internet.MimeMessage;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -23,7 +30,53 @@ public class TestPersonalityService {
     QuizRepository quizRepository;
 
     @Autowired
+    private JavaMailSender mailSender;
+
+    @Autowired
+    private final  EmployeRepository employeRepository;
+
+    @Autowired
     QuizStatusRepository quizStatusRepository;
+
+    public boolean isAuthenticated(String email) throws MessagingException, UnsupportedEncodingException {
+        Optional<Employe> employe = employeRepository.findByEmail(email);
+        if (employe.isPresent()){
+            sendVerificationEmail(employe.get());
+            return true;
+        }else {
+            return false;
+        }
+
+    }
+    private void sendVerificationEmail(Employe employe)
+            throws MessagingException, UnsupportedEncodingException {
+        String toAddress = employe.getEmail();
+        String fromAddress = "oncf3308@gmail.com";
+        String senderName = "Oncf Team";
+        String subject = "Personality Quiz";
+        String content = "Dear [[name]],<br>"
+                + "Please click the link below to start your quiz:<br>"
+                + "<h3><a href=\"[[URL]]\" target=\"_self\">Pass Quiz</a></h3>"
+                + "Good luck,<br>"
+                + "ONCF TEAM.";
+
+        MimeMessage message = mailSender.createMimeMessage();
+        MimeMessageHelper helper = new MimeMessageHelper(message);
+
+        helper.setFrom(fromAddress, senderName);
+        helper.setTo(toAddress);
+        helper.setSubject(subject);
+        String fullName = employe.getFirstname() + " " + employe.getLastname();
+        content = content.replace("[[name]]", fullName);
+        String verifyURL = "http://localhost:4200/#/quiz-employe/" + employe.getEmail() ;
+
+        content = content.replace("[[URL]]", verifyURL);
+
+        helper.setText(content, true);
+
+        mailSender.send(message);
+
+    }
 
     public TestResult calculateTestResult(List<EmployeResponse> employeResponses) {
         int totalScore = 0;

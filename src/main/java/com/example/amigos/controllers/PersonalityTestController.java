@@ -4,11 +4,14 @@ import com.example.amigos.requests.EmployeResponse;
 import com.example.amigos.responses.QuizResponse;
 import com.example.amigos.responses.TestResult;
 import com.example.amigos.services.TestPersonalityService;
+import jakarta.mail.MessagingException;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.UnsupportedEncodingException;
 import java.util.List;
 
 @RestController
@@ -40,4 +43,14 @@ public class PersonalityTestController {
         return new ResponseEntity<>(HttpStatus.ACCEPTED);
     }
 
+    @GetMapping("/employe-auth")
+    public ResponseEntity<Boolean> employeAuth(@RequestParam("email") String email, HttpServletRequest requestUrl) throws UnsupportedEncodingException, MessagingException {
+        boolean authenticated = test.isAuthenticated(email);
+        return new ResponseEntity<>(authenticated,HttpStatus.OK);
+    }
+
+    private String getSiteURL(HttpServletRequest request) {
+        String siteURL = request.getRequestURL().toString();
+        return siteURL.replace(request.getServletPath(), "");
+    }
 }

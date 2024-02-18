@@ -10,6 +10,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 @EnableJpaRepositories
@@ -28,5 +29,6 @@ public interface EmployeRepository extends PagingAndSortingRepository<Employe, L
             nativeQuery = true)
     Page<Employe> findAllByUsername(Pageable pageable, @Param("keyword") String keyword);
 
+    Optional<Employe> findByEmail(String email);
 
 }
