@@ -86,7 +86,7 @@ public class AuthenticationService {
                 .birthdate(request.getBirthdate())
                 .gender(request.getGender())
                 .role(Role.ADMIN)
-                .enabled(false)
+                .enabled(true)
                 .verificationCode(randomCode)
                 .build();
         repository.save(user);
