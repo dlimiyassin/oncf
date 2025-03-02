@@ -1,0 +1,15 @@
+version: "3"
+
+services:
+  OncfFrontendService:
+    container_name: OncfFrontend
+    image: dlimiyassin/oncf-frontend:latest
+    ports:
+      - "${FRONTEND_HOST_PORT}:${FRONTEND_CONTAINER_PORT}"
+    networks:
+      - oncf-network
+    env_file:
+      - .env
+networks:
+  oncf-network:
+    driver: bridge

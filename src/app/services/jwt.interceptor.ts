@@ -12,10 +12,7 @@ import { TokenService } from './token.service';
 export class JwtInterceptor implements HttpInterceptor {
   #tokkenService = inject(TokenService);
 
-  intercept(
-    request: HttpRequest<unknown>,
-    next: HttpHandler
-  ): Observable<HttpEvent<unknown>> {
+  intercept( request: HttpRequest<unknown>, next: HttpHandler ): Observable<HttpEvent<unknown>> {
     if (!request.url.includes('/auth') && !request.url.includes('/test')) {
       let newRequest = request.clone({
         headers: request.headers.set(
