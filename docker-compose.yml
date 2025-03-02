@@ -1,0 +1,53 @@
+version: '3'
+
+services:
+  OncfDatabaseService:
+    image: mysql:8.0
+    container_name: OncfDatabase
+    restart: unless-stopped
+    healthcheck:
+      test: [ "CMD", "mysqladmin", "ping", "-h", "localhost" ]
+      interval: 5s
+      timeout: 10s
+      retries: 10
+    volumes:
+      - ./OncfDatabase:/var/lib/mysql
+    networks:
+      - oncf-network
+    env_file:
+      - .env
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DATABASE_PASSWORD}
+      MYSQL_DATABASE: ${DATABASE_NAME}
+    ports:
+      - "${DatabaseHostPort}:${DatabaseContainerPort}"
+
+  OncfRestApiService:
+    image: dlimiyassin/oncf-rest-api:latest
+    container_name: OncfRestApi
+    restart: unless-stopped
+    depends_on:
+      OncfDatabaseService:
+        condition: service_healthy
+    networks:
+      - oncf-network
+    env_file:
+      - .env
+    environment:
+      SPRING_DATASOURCE_USERNAME: ${DATABASE_USERNAME}
+      SPRING_DATASOURCE_PASSWORD: ${DATABASE_PASSWORD}
+      SPRING_DATASOURCE_URL: jdbc:mysql://OncfDatabaseService:${DatabaseContainerPort}/${DATABASE_NAME}
+      SPRING_JPA_HIBERNATE_DDL_AUTO: ${DDL_AUTO}
+      SPRING_JPA_PROPERTIES_HIBERNATE_DIALECT: org.hibernate.dialect.MariaDBDialect
+      SPRING_MAIL_HOST: ${SPRING_MAIL_HOST}
+      SPRING_MAIL_PORT: ${SPRING_MAIL_PORT}
+      SPRING_MAIL_USERNAME: ${EMAIL_USER}
+      SPRING_MAIL_PASSWORD: ${EMAIL_PASSWORD}
+      SPRING_MAIL_PROPERTIES_MAIL_SMTP_AUTH: ${MAIL_SMTP_AUTH}
+      SPRING_MAIL_PROPERTIES_MAIL_SMTP_STARTTLS_ENABLE: ${SMTP_STARTTLS_ENABLE}
+    ports:
+      - "${RestApiHostPort}:${RestApiContainerPort}"
+
+networks:
+  oncf-network:
+    driver: bridge

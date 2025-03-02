@@ -25,7 +25,10 @@ public class WebConfig implements WebMvcConfigurer {
         final UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         final CorsConfiguration config = new CorsConfiguration();
         config.setAllowCredentials(true);
-        config.setAllowedOrigins(Collections.singletonList("http://localhost:4200"));
+        config.setAllowedOrigins(Arrays.asList(
+                "http://159.65.38.164:8024",
+                "http://localhost:8024"
+        ));
         config.setAllowedHeaders(Collections.singletonList("*"));
         config.setExposedHeaders(exposedHeader);
         config.setAllowedMethods(Arrays.stream(HttpMethod.values()).map(HttpMethod::name).collect(Collectors.toList()));
