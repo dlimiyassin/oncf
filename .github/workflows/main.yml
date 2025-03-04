@@ -3,7 +3,7 @@ name: Atlas Service Frontend Pipeline For Test
 on:
   push:
     branches:
-      - test
+      - frontend
 
 jobs:
   build-image:
