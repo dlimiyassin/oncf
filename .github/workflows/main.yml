@@ -1,4 +1,4 @@
-name: Atlas Service Frontend Pipeline For Test
+name: Oncf Frontend Pipeline For Test
 
 on:
   push:
