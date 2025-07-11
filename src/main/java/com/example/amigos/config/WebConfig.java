@@ -27,7 +27,8 @@ public class WebConfig implements WebMvcConfigurer {
         config.setAllowCredentials(true);
         config.setAllowedOrigins(Arrays.asList(
                 "http://159.65.38.164:8024",
-                "http://localhost:8024"
+                "http://localhost:8024",
+                "http://localhost:4200"
         ));
         config.setAllowedHeaders(Collections.singletonList("*"));
         config.setExposedHeaders(exposedHeader);
