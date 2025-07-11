@@ -25,10 +25,11 @@ import { Subject, takeUntil } from 'rxjs';
   styleUrls: ['./employe.component.css'],
 })
 export class EmployeComponent implements OnInit, OnDestroy {
+  saving: boolean = false;
   employes: Employe[] = [];
   totalPages: number = 0;
   keyword: string = '';
-  pageSize: number = 6; // Nombre d'éléments par page
+  pageSize: number = 8; // Nombre d'éléments par page
   currentPage: number = 1; // Numéro de page actuel
 
   constructor(
@@ -76,17 +77,17 @@ export class EmployeComponent implements OnInit, OnDestroy {
     const screenWidth = window.innerWidth;
     this.screenWidth = screenWidth;
     if (screenWidth <= 1163) {
-      this.pageSize = 3;
+      this.pageSize = 5 ;
     } else if (1164 <= screenWidth && screenWidth <= 1280) {
-      this.pageSize = 4;
-    } else if (1281 <= screenWidth && screenWidth <= 1422) {
-      this.pageSize = 5;
-    } else if (1423 <= screenWidth && screenWidth <= 1600) {
       this.pageSize = 6;
-    } else if (1601 <= screenWidth && screenWidth <= 1707) {
+    } else if (1281 <= screenWidth && screenWidth <= 1422) {
       this.pageSize = 7;
-    } else if (1708 <= screenWidth && screenWidth <= 1920) {
+    } else if (1423 <= screenWidth && screenWidth <= 1600) {
       this.pageSize = 8;
+    } else if (1601 <= screenWidth && screenWidth <= 1707) {
+      this.pageSize = 9;
+    } else if (1708 <= screenWidth && screenWidth <= 1920) {
+      this.pageSize = 10;
     }
     this.FetchEmployes();
   }

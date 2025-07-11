@@ -1,192 +1,201 @@
-<div class="col-12 mt-3 ">
-  <div class="d-flex justify-content-around">
-    <button class="btn btn-primary btn-sm fw-bold mb-3" (click)="openAdd(AjouterModal)">Add New Employe</button>
-    <span><!--size :{{pageSize}} screen :{{screenWidth}}--></span>
-    <div class="search-bar w-25">
-      <form #searchFrom="ngForm" class="search-form d-flex align-items-center"
-        (ngSubmit)="handleGoToPage(searchFrom.value.name)">
-
-
-        <input type="text" name="name" placeholder="Search" ngModel>
-        <button type="submit"><i class="bi bi-search"></i></button>
+<div class="col-12 mt-3">
+  <div class="d-flex justify-content-between align-items-center flex-wrap">
+    <button class="btn btn-primary btn-sm fw-bold py-2 mb-3" (click)="openAdd(AjouterModal)">
+      <i class="bi bi-plus-circle me-1"></i> Add Employee
+    </button>
+    
+    <div class="search-bar mb-3 mt-2" [class.w-100]="screenWidth < 768" [class.w-25]="screenWidth >= 768">
+      <form #searchFrom="ngForm" class="search-form d-flex align-items-center" 
+            (ngSubmit)="handleGoToPage(searchFrom.value.name)">
+        <input type="text" name="name" placeholder="Search employees..." ngModel>
+        <button type="submit" class="btn btn-link p-0">
+          <i class="bi bi-search"></i>
+        </button>
       </form>
-    </div><!-- End Search Bar -->
-  </div>
-  <div class="card me-3">
-    <div class="card-body table-responsive-xl pb-0">
-      <table class="table table-hover table-striped">
-        <thead>
-          <th class="pb-2 pt-0 ">CNI</th>
-          <th class="pb-2 pt-0">First Name</th>
-          <th class="pb-2 pt-0">Last Name</th>
-          <th class="pb-2 pt-0">Goal</th>
-          <th class="pb-2 pt-0">Reach</th>
-          <th class="pb-2 pt-0">Prod.</th>
-          <th class="pb-2 pt-0">Birthdate</th>
-          <th class="pb-2 pt-0">Retirement</th>
-          <th class="pb-2 pt-0">Update</th>
-          <th class="pb-2 pt-0">Delete</th>
-        </thead>
-        <tbody *ngIf="employes.length === 0">
-          <td colspan="20" class="alert alert-info text-center rounded-4 border-0">No Records found ...!</td>
-        </tbody>
-        <tbody>
-          <tr class="align-middle" *ngFor="let e of employes">
-            <td class="px-1">{{e.cni}}</td>
-            <td class="px-1">{{e.lastname}}</td>
-            <td class="px-1">{{e.firstname}}</td>
-            <td class="px-1">{{e.objectif}}</td>
-            <td class="px-1">{{e.rendement}}</td>
-            <td class="px-1">{{e.atteint}}%</td>
-            <td class="px-1">{{formatDate(e.birthDate)}}</td>
-            <td class="px-1">{{formatDate(e.retraite)}}</td>
-            <td><button class="btn btn-success" (click)="openEdit(modifierEmployee, e.id)"><i
-                  class="bi bi-pencil"></i></button></td>
-            <td><button class="btn btn-danger" (click)="supprimerEmploye(e.id)"><i class="bi bi-trash"></i></button>
-            </td>
-          </tr>
-        </tbody>
-        <tfoot>
-          <td colspan="20" class="text-center">
-            <nav aria-label="Page navigation example" class="mt-2 pb-0">
-              <ul class="pagination justify-content-center">
-                <li class="page-item m-1" [class.disabled]="currentPage == 1">
-                  <button (click)="handlePrevious()" class="page-link btn" aria-label="Previous">
-                    <span style="color: #0080ff; font-weight:600;" aria-hidden="true">&laquo; Previous</span>
-                  </button>
-                </li>
-                <li *ngFor="let Page of [].constructor(totalPages); let i = index;" class="page-item">
-                  <button [ngClass]="currentPage==(i+1)?'btn btn-primary m-1':'page-link btn m-1'"
-                    (click)="handleGoToPage('',i+1)">
-                    {{ i + 1 }}
-                  </button>
-                </li>
-                <li class="page-item m-1" [class.disabled]="currentPage == totalPages">
-                  <button (click)="handleNext()" class="page-link btn" aria-label="Next">
-                    <span style="color: #0080ff; font-weight:600;" aria-hidden="true">Next &raquo;</span>
-                  </button>
-                </li>
-              </ul>
-            </nav>
-          </td>
-        </tfoot>
-      </table>
     </div>
   </div>
 
+  <div class="card">
+    <div class="card-body p-0">
+      <div class="table-responsive">
+        <table class="table table-hover mb-0">
+          <thead class="table-light">
+            <tr>
+              <th class="py-3 px-3">CNI</th>
+              <th class="py-3 px-3">First Name</th>
+              <th class="py-3 px-3">Last Name</th>
+              <th class="py-3 px-3">Goal</th>
+              <th class="py-3 px-3">Reach</th>
+              <th class="py-3 px-3">Prod.</th>
+              <th class="py-3 px-3">Birthdate</th>
+              <th class="py-3 px-3">Retirement</th>
+              <th class="py-3 px-3 text-center">Actions</th>
+            </tr>
+          </thead>
+          <tbody *ngIf="employes.length === 0">
+            <tr>
+              <td colspan="20" class="text-center py-4">
+                <div class="alert alert-info rounded-3 border-0 shadow-sm">
+                  <i class="bi bi-info-circle me-2"></i>No records found
+                </div>
+              </td>
+            </tr>
+          </tbody>
+          <tbody *ngIf="employes.length > 0">
+            <tr *ngFor="let e of employes" class="align-middle">
+              <td class="px-3">{{e.cni}}</td>
+              <td class="px-3">{{e.lastname}}</td>
+              <td class="px-3">{{e.firstname}}</td>
+              <td class="px-3">{{e.objectif}}</td>
+              <td class="px-3">{{e.rendement}}</td>
+              <td class="px-3">
+                <span class="badge" 
+                      [class.bg-success]="e.atteint >= 100"
+                      [class.bg-warning]="e.atteint >= 50 && e.atteint < 100"
+                      [class.bg-danger]="e.atteint < 50">
+                  {{e.atteint}}%
+                </span>
+              </td>
+              <td class="px-3">{{formatDate(e.birthDate)}}</td>
+              <td class="px-3">{{formatDate(e.retraite)}}</td>
+              <td class="px-3 text-center">
+                <div class="d-flex justify-content-center gap-2">
+                  <button class="btn-action btn btn-sm btn-outline-success" 
+                          (click)="openEdit(modifierEmployee, e.id)"
+                          title="Edit">
+                    <i class="bi bi-pencil"></i>
+                  </button>
+                  <button class="btn-action btn btn-sm btn-outline-danger" 
+                          (click)="supprimerEmploye(e.id)"
+                          title="Delete">
+                    <i class="bi bi-trash"></i>
+                  </button>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      
+      <div class="p-3 border-top" *ngIf="employes.length > 0">
+        <nav aria-label="Page navigation">
+          <ul class="pagination justify-content-center mb-0">
+            <li class="page-item" [class.disabled]="currentPage == 1">
+              <button class="page-link" (click)="handlePrevious()" aria-label="Previous">
+                <span aria-hidden="true">&laquo;</span>
+              </button>
+            </li>
+            <li *ngFor="let Page of [].constructor(totalPages); let i = index;" class="page-item" 
+                [class.active]="currentPage == (i+1)">
+              <button class="page-link" (click)="handleGoToPage('',i+1)">
+                {{ i + 1 }}
+              </button>
+            </li>
+            <li class="page-item" [class.disabled]="currentPage == totalPages">
+              <button class="page-link" (click)="handleNext()" aria-label="Next">
+                <span aria-hidden="true">&raquo;</span>
+              </button>
+            </li>
+          </ul>
+        </nav>
+      </div>
+    </div>
+  </div>
 </div>
 
-
-
-<!-- ajouter Modal -->
+<!-- Add Employee Modal -->
 <ng-template #AjouterModal let-modal>
-  <div class="modal-header pb-0">
-    <h4 class="modal-title" id="ajouter-modal-title">Ajouter</h4>
+  <div class="modal-header">
+    <h5 class="modal-title fw-bold">Add New Employee</h5>
+    <button type="button" class="btn-close" (click)="modal.dismiss('Cross click')" aria-label="Close"></button>
   </div>
-  <form (submit)="ajouterEmploye()" [formGroup]="employeForm" class="px-3">
-    <div class="row mb-2">
-      <label for="cni" class="col-2 col-form-label fs-6 mt-2">Card Id</label>
-      <div class="col-sm-10 mt-1">
-        <input type="text" formControlName="cni" class="form-control" id="cni" name="cni" required>
-        <div *ngIf="employeForm.get('cni')?.invalid && employeForm.get('cni')?.touched || employeForm.get('cni')?.dirty"
-          style="color: red;">
-          <div *ngIf="employeForm.get('cni')?.getError('required')">Card Id is required</div>
-          <div *ngIf="employeForm.get('cni')?.getError('minlength')">It requires 6 caracters at least</div>
-        </div>
+  <form (submit)="ajouterEmploye()" [formGroup]="employeForm" class="px-4 py-3">
+    <div class="mb-3">
+      <label for="cni" class="form-label">Card ID</label>
+      <input type="text" formControlName="cni" class="form-control" id="cni" placeholder="Enter card ID">
+      <div *ngIf="employeForm.get('cni')?.invalid && (employeForm.get('cni')?.touched || employeForm.get('cni')?.dirty)" 
+           class="invalid-feedback d-block">
+        <div *ngIf="employeForm.get('cni')?.errors?.['required']">Card ID is required</div>
+        <div *ngIf="employeForm.get('cni')?.errors?.['minlength']">Minimum 6 characters required</div>
       </div>
     </div>
 
-    <div class="row mb-2">
-      <label for="lastname" class="col-2 col-form-label fs-6 mt-2">Last name</label>
-      <div class="col-10">
-        <input type="text" formControlName="lastname" class="form-control" id="lastname" name="lastname" required>
-        <div
-          *ngIf="employeForm.get('lastname')?.invalid && employeForm.get('lastname')?.touched || employeForm.get('lastname')?.dirty"
-          style="color: red;">
-          <div *ngIf="employeForm.get('lastname')?.getError('required')">Last name is required</div>
-          <div *ngIf="employeForm.get('lastname')?.getError('minlength')">It requires 4 caracters at least</div>
-        </div>
-      </div>
-
-    </div>
-    <div class="row mb-2">
-      <label for="firstname" class="col-2 col-form-label fs-6 mt-2">First name</label>
-      <div class="col-10">
-        <input type="text" formControlName="firstname" class="form-control" id="firstname" name="firstname" required>
-        <div
-          *ngIf="employeForm.get('firstname')?.invalid && employeForm.get('firstname')?.touched || employeForm.get('firstname')?.dirty"
-          style="color: red;">
-          <div *ngIf="employeForm.get('firstname')?.getError('required')">First name is required</div>
-          <div *ngIf="employeForm.get('firstname')?.getError('minlength')">It requires 4 caracters at least</div>
-        </div>
+    <div class="mb-3">
+      <label for="lastname" class="form-label">Last Name</label>
+      <input type="text" formControlName="lastname" class="form-control" id="lastname" placeholder="Enter last name">
+      <div *ngIf="employeForm.get('lastname')?.invalid && (employeForm.get('lastname')?.touched || employeForm.get('lastname')?.dirty)" 
+           class="invalid-feedback d-block">
+        <div *ngIf="employeForm.get('lastname')?.errors?.['required']">Last name is required</div>
+        <div *ngIf="employeForm.get('lastname')?.errors?.['minlength']">Minimum 4 characters required</div>
       </div>
     </div>
 
-    <div class="row mb-2">
-      <label for="email" class="col-2 col-form-label fs-6 mt-2">Email</label>
-      <div class="col-10">
-        <input type="email" formControlName="email" class="form-control" id="email" name="email" required>
-        <div
-          *ngIf="employeForm.get('email')?.invalid && employeForm.get('email')?.touched || employeForm.get('email')?.dirty"
-          style="color: red;">
-          <div *ngIf="employeForm.get('email')?.getError('required')">Email is required</div>
-          <div *ngIf="employeForm.get('email')?.getError('email')">invalid email</div>
-        </div>
+    <div class="mb-3">
+      <label for="firstname" class="form-label">First Name</label>
+      <input type="text" formControlName="firstname" class="form-control" id="firstname" placeholder="Enter first name">
+      <div *ngIf="employeForm.get('firstname')?.invalid && (employeForm.get('firstname')?.touched || employeForm.get('firstname')?.dirty)" 
+           class="invalid-feedback d-block">
+        <div *ngIf="employeForm.get('firstname')?.errors?.['required']">First name is required</div>
+        <div *ngIf="employeForm.get('firstname')?.errors?.['minlength']">Minimum 4 characters required</div>
       </div>
     </div>
 
-    <div class="row mb-2">
-      <label for="birthDate" class="col-2 col-form-label fs-6 mt-2">Birthdate</label>
-      <div class="col-10">
-        <input type="date" formControlName="birthDate" class="form-control" id="birthDate" name="birthDate" required>
-        <div
-          *ngIf="employeForm.get('birthDate')?.invalid && employeForm.get('birthDate')?.touched || employeForm.get('birthDate')?.dirty"
-          style="color: red;">
-          <div *ngIf="employeForm.get('birthDate')?.getError('required')">Birthdate is required</div>
-        </div>
+    <div class="mb-3">
+      <label for="email" class="form-label">Email</label>
+      <input type="email" formControlName="email" class="form-control" id="email" placeholder="Enter email">
+      <div *ngIf="employeForm.get('email')?.invalid && (employeForm.get('email')?.touched || employeForm.get('email')?.dirty)" 
+           class="invalid-feedback d-block">
+        <div *ngIf="employeForm.get('email')?.errors?.['required']">Email is required</div>
+        <div *ngIf="employeForm.get('email')?.errors?.['email']">Please enter a valid email</div>
       </div>
     </div>
 
-    <div class="row mb-2">
-      <label for="rendement" class="col-2 col-form-label fs-6 mt-2">Production</label>
-      <div class="col-10">
-        <input type="number" formControlName="rendement" class="form-control" id="rendement" name="rendement" required>
-        <div
-          *ngIf="employeForm.get('rendement')?.invalid && employeForm.get('rendement')?.touched || employeForm.get('rendement')?.dirty"
-          style="color: red;">
-          <div *ngIf="employeForm.get('rendement')?.getError('required')">Production field is required</div>
-          <div *ngIf="employeForm.get('rendement')?.getError('rendementValidation')">Set a positive number</div>
-        </div>
+    <div class="mb-3">
+      <label for="birthDate" class="form-label">Birthdate</label>
+      <input type="date" formControlName="birthDate" class="form-control" id="birthDate">
+      <div *ngIf="employeForm.get('birthDate')?.invalid && (employeForm.get('birthDate')?.touched || employeForm.get('birthDate')?.dirty)" 
+           class="invalid-feedback d-block">
+        <div *ngIf="employeForm.get('birthDate')?.errors?.['required']">Birthdate is required</div>
       </div>
     </div>
 
-    <div class="row mb-2">
-      <label for="objectif" class="col-2 col-form-label fs-6 mt-2">Goal</label>
-      <div class="col-10">
-        <input type="number" formControlName="objectif" class="form-control" id="objectif" name="objectif" required>
-        <div
-          *ngIf="employeForm.get('objectif')?.invalid && employeForm.get('objectif')?.touched || employeForm.get('objectif')?.dirty"
-          style="color: red;">
-          <div *ngIf="employeForm.get('objectif')?.getError('required')">Set the Goal</div>
-          <div *ngIf="employeForm.get('objectif')?.getError('objectifPositif')">Set a positive number</div>
-        </div>
+    <div class="mb-3">
+      <label for="rendement" class="form-label">Production</label>
+      <input type="number" formControlName="rendement" class="form-control" id="rendement" placeholder="Enter production">
+      <div *ngIf="employeForm.get('rendement')?.invalid && (employeForm.get('rendement')?.touched || employeForm.get('rendement')?.dirty)" 
+           class="invalid-feedback d-block">
+        <div *ngIf="employeForm.get('rendement')?.errors?.['required']">Production is required</div>
+        <div *ngIf="employeForm.get('rendement')?.errors?.['rendementValidation']">Please enter a positive number</div>
       </div>
     </div>
-    <div class="modal-footer">
-      <button type="button" class="btn btn-secondary" (click)="modal.dismiss('Cross click')">Close</button>
-      <button type="submit" class="btn btn-primary" [disabled]="!employeForm.valid">Save</button>
+
+    <div class="mb-3">
+      <label for="objectif" class="form-label">Goal</label>
+      <input type="number" formControlName="objectif" class="form-control" id="objectif" placeholder="Enter goal">
+      <div *ngIf="employeForm.get('objectif')?.invalid && (employeForm.get('objectif')?.touched || employeForm.get('objectif')?.dirty)" 
+           class="invalid-feedback d-block">
+        <div *ngIf="employeForm.get('objectif')?.errors?.['required']">Goal is required</div>
+        <div *ngIf="employeForm.get('objectif')?.errors?.['objectifPositif']">Please enter a positive number</div>
+      </div>
+    </div>
+
+    <div class="modal-footer border-0 pt-3">
+      <button type="button" class="btn btn-outline-secondary" (click)="modal.dismiss('Cross click')">Cancel</button>
+      <button type="submit" class="btn btn-primary" [disabled]="!employeForm.valid">
+        <span >Save Employee</span>
+      </button>
     </div>
   </form>
 </ng-template>
 
-<!-- modal Modification -->
-
+<!-- Edit Employee Modal -->
 <ng-template #modifierEmployee let-modal>
-  <div class="modal-header pb-0">
-    <h4 class="modal-title" id="ajouter-modal-title">Ajouter</h4>
+  <div class="modal-header">
+    <h5 class="modal-title fw-bold">Edit Employee</h5>
+    <button type="button" class="btn-close" (click)="modal.dismiss('Cross click')" aria-label="Close"></button>
   </div>
-  <form (submit)="modifierEmploye()" [formGroup]="editEmployeForm" class="px-3">
-    <div class="row mb-2">
+  <form (submit)="modifierEmploye()" [formGroup]="editEmployeForm" class="px-4 py-3">
+        <div class="row mb-2">
       <label for="cni" class="col-2 col-form-label fs-6 mt-2">Card Id</label>
       <div class="col-sm-10 mt-1">
         <input type="text" formControlName="cni" class="form-control" id="cni" name="cni" required>
@@ -273,9 +282,13 @@
         </div>
       </div>
     </div>
-    <div class="modal-footer">
-      <button type="button" class="btn btn-secondary" (click)="modal.dismiss('Cross click')">Close</button>
-      <button type="submit" class="btn btn-primary" [disabled]="!editEmployeForm.valid" (click)="modal.close('Close click')">Save</button>
+    <div class="modal-footer border-0 pt-3">
+      <button type="button" class="btn btn-outline-secondary" (click)="modal.dismiss('Cross click')">Cancel</button>
+      <button type="submit" class="btn btn-primary" [disabled]="!editEmployeForm.valid" (click)="modal.close('Close click')">
+        <span >Update Employee</span>
+
+      </button>
     </div>
   </form>
 </ng-template>
+

@@ -28,6 +28,8 @@ export class AuthService {
     birthdate: Date;
     gender: string;
   }) {
+    console.log("service called");
+    
     return this.http.post(this.apiUrl + '/register', data);
   }
 

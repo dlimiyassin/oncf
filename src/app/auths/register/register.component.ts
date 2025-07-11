@@ -31,14 +31,23 @@ export class RegisterComponent implements OnInit {
   ngOnInit(): void {}
 errorMessage! : string;
   onRegister() {
+        console.log("method called");
+        console.log(this.registerObj);
+        
     this.authService.register(this.registerObj).subscribe({
       next: (data) => {
+        console.log("next called");
+        
         console.log(data);
         this.router.navigateByUrl('/verification');
       },
       error: (err) => {
+        console.log("err called");
         console.log(err);
-        this.errorMessage="This user is already exist!"
+        //this.errorMessage="This user is already exist!"
+      },complete() {
+        console.log("complete called");
+          
       },
     });
   }

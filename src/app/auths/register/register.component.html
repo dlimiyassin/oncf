@@ -24,30 +24,30 @@
       <div class="container">
 
 
-        <form [formGroup]="userForm">
-          <input type="text" formControlName="firstname" name="firstname" [(ngModel)]="registerObj.firstname" placeholder="First name">
+        <form >
+          <input type="text" name="firstname" [(ngModel)]="registerObj.firstname" placeholder="First name">
           <ul *ngIf="userForm.get('firstname')?.invalid && userForm.get('firstname')?.touched || userForm.get('firstname')?.dirty" style="color: red;">
             <li *ngIf="userForm.get('firstname')?.getError('required')" class="text-danger fw-bold" style="text-align: left;">This field is required</li>
             <li *ngIf="userForm.get('firstname')?.getError('minlength')" class="text-danger fw-bold" style="text-align: left;">This field is min 6 caracteres</li>
           </ul>
-          <input type="text" formControlName="lastname" name="lastname" [(ngModel)]="registerObj.lastname" placeholder="Last name">
+          <input type="text" name="lastname" [(ngModel)]="registerObj.lastname" placeholder="Last name">
           <ul *ngIf="userForm.get('lastname')?.invalid && userForm.get('lastname')?.touched || userForm.get('lastname')?.dirty" style="color: red;">
             <li *ngIf="userForm.get('lastname')?.getError('required')" class="text-danger fw-bold" style="text-align: left;">This field is required</li>
             <li *ngIf="userForm.get('lastname')?.getError('minlength')" class="text-danger fw-bold" style="text-align: left;">This field is min 6 caracteres</li>
           </ul>
-          <input type="email" formControlName="email" name="email" [(ngModel)]="registerObj.email" placeholder="Email">
+          <input type="email"  name="email" [(ngModel)]="registerObj.email" placeholder="Email">
           <ul *ngIf="userForm.get('email')?.invalid && userForm.get('email')?.touched || userForm.get('email')?.dirty" style="color: red;">
             <li *ngIf="userForm.get('email')?.getError('required')" class="text-danger fw-bold" style="text-align: left;">This field is required</li>
             <li *ngIf="userForm.get('email')?.getError('minlength')" class="text-danger fw-bold" style="text-align: left;">This field is min 6 caracteres</li>
           </ul>
           <!-- <label for="password">Password</label> -->
-          <input type="password" formControlName="password"  name="password" [(ngModel)]="registerObj.password" placeholder="Password">
+          <input type="password"  name="password" [(ngModel)]="registerObj.password" placeholder="Password">
           <ul *ngIf="userForm.get('password')?.invalid && userForm.get('password')?.touched || userForm.get('password')?.dirty" style="color: red;">
             <li *ngIf="userForm.get('password')?.getError('required')" class="text-danger fw-bold" style="text-align: left;">This field is required</li>
             <li *ngIf="userForm.get('password')?.getError('minlength')" class="text-danger fw-bold" style="text-align: left;">This field is min 6 caracteres</li>
           </ul>
 
-          <input type="date" formControlName="birthDate" name="birthdate" [(ngModel)]="registerObj.birthdate">
+          <input type="date"  name="birthdate" [(ngModel)]="registerObj.birthdate">
           <ul *ngIf="userForm.get('birthDate')?.invalid && userForm.get('birthDate')?.touched || userForm.get('birthDate')?.dirty" style="color: red;">
             <li *ngIf="userForm.get('birthDate')?.getError('required')" class="text-danger fw-bold" style="text-align: left;">This field is required</li>
             <li *ngIf="userForm.get('birthDate')?.getError('minlength')" class="text-danger fw-bold" style="text-align: left;">This field is min 6 caracteres</li>
@@ -66,7 +66,7 @@
                 <div class="align-center" >{{ errorMessage }}</div>
             </div>
 
-          <button (click)="onRegister()"  [disabled]="userForm.invalid" class="item btn btn-dark">Join Us<i class="bi bi-arrow-right"></i></button>
+          <button (click)="onRegister()"  class="item btn btn-dark">Join Us<i class="bi bi-arrow-right"></i></button>
         </form>
       </div>
     </div>
